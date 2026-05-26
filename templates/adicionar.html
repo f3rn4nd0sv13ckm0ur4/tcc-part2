@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adicionar</title>
+    <link rel="stylesheet" href="static/adicionar.css">
+    <script src="static/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+
+</head>
+<body>
+    <div class="topo">
+        <h1>Adicionar Itens</h1>
+        <img src="static/novalogo1.png"  class="logo">
+    </div>
+<br><br><br><br><br><br><br><br>
+
+    <div class="texto">
+       <h2>Nome do item:</h2>
+    </div>
+
+    <p style="text-align: center;"><input type="text" id="item" placeholder="Digite o nome do item"></p>
+
+<br><br>
+    <div class="texto2">
+       <h2>Quantidade:</h2>
+    </div>
+    <p class="caixa" style="text-align: center;"><input type="number" id="quantidade" placeholder="Digite a quantidade"></p>
+
+<br><br><br>
+
+<div style="display: flex;justify-content: center ;">
+   <button id="botao" onclick="alerta()" style=  "background-color: rgb(212, 205, 205);padding: 15px 40px;font-size: 20px;border-radius: 10px; "button class="btn btn-outline-primary">Adicionar</button>
+</div>
+
+<div href="estoque.html" style="position: absolute; left: 3%; top: 90%;">
+    <a href="estoque.html">
+        <button style=  "background-color: rgb(212, 205, 205);padding: 10px 20px;font-size: 20px;border-radius: 10px; "button class="btn btn-outline-primary">⬅</button>
+   </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(224, 233, 230);
+    background-image: url(fundo10.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.topo {
+    background-color: #043677;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 170px;
+    height: 90px;
+}
+
+#item, #quantidade {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.texto{
+    text-align: center;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.texto2{
+    text-align: center;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+

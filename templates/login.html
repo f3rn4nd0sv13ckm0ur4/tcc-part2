@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+
+    <img src="{{ url_for('static', filename='Sistema-Fiep-Azul.png') }}" class="logo-topo">
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='Adobe Express - file.png') }}" class="logo-central">
+
+        <h1>Login</h1>
+
+        <form id="loginForm">
+            <input type="text" id="usuario" placeholder="Digite seu Usuário" required>
+            <input type="password" id="senha" placeholder="Digite sua senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <img src="{{ url_for('static', filename='Sistema-Fiep-Azul.png') }}" class="logo-rodape">
+
+</body>
+</html>
