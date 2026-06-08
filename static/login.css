@@ -1,0 +1,13 @@
+body{
+    background-image: url(fundo2.png);
+    background-size: cover;
+}
+
+#usuario, #senha {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+

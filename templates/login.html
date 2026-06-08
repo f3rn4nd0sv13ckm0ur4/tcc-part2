@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="static/login.css">
+    <script src="static/login.js"></script>
+</head>
+
+<body>
+
+    <img src="static/Sistema-Fiep-Azul.png"
+         height="100"
+         width="190">
+
+    <br><br>
+
+    <p style="text-align:center;">
+        <img src="static/Adobe Express - file.png"
+             height="140"
+             width="140">
+    </p>
+
+    <h1 style="text-align:center;">
+        Login
+    </h1>
+
+    <br><br>
+
+    <form action="/verificar_login" method="POST">
+
+        <p style="text-align:center;">
+            <input
+                type="email"
+                name="email"
+                placeholder="Digite seu Email"
+                required
+                style="
+                    padding:10px;
+                    width:250px;
+                    border-radius:10px;
+                    font-size:16px;">
+        </p>
+
+        <br>
+
+        <p style="text-align:center;">
+            <input
+                type="password"
+                name="senha"
+                placeholder="Digite sua Senha"
+                required
+                style="
+                    padding:10px;
+                    width:250px;
+                    border-radius:10px;
+                    font-size:16px;">
+        </p>
+
+        <br>
+
+        <p style="text-align:center;">
+            <select
+                name="tipo"
+                id="tipoUsuario"
+                onchange="controlarCriarConta()"
+                required
+                style="
+                    padding:10px;
+                    width:250px;
+                    border-radius:10px;
+                    font-size:16px;">
+
+                <option value="">Selecione o tipo de acesso</option>
+                <option value="usuario">Usuário</option>
+                <option value="admin">Administrador</option>
+
+            </select>
+        </p>
+
+        <br><br>
+
+        <div style="display:flex; justify-content:center;">
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </div>
+
+    </form>
+
+    <br><br>
+
+    <div id="criarContaBox"
+         style="display:none; justify-content:center;">
+
+        <a href="/criar_conta.html">
+
+            <button>
+                type="button"
+    
+                Criar Conta
+
+            </button>
+
+        </a>
+
+    </div>
+
+    <img src="static/Sistema-Fiep-Azul.png"
+         style="
+            width:250px;
+            position:absolute;
+            right:1%;
+            top:87%;">
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Histórico de Retiradas</title>
+
+    <link rel="stylesheet" href="static/style.css">
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background-color: #ffffff; /* Fundo branco */
+            min-height: 100vh;
+        }
+
+        .topo{
+            width: 100%;
+            background: #0056b3;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .topo h1{
+            color: white;
+            font-size: 30px;
+        }
+
+        .logo{
+            width: 130px;
+        }
+
+        .container{
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto; /* reduzido para subir conteúdo */
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            border: 2px solid #003f82; /* destaque azul */
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        th{
+            background-color: #003f82;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        td{
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        tr:hover td{
+            background-color: #eef4ff;
+            transition: 0.2s;
+        }
+
+        .botoes{
+            display: flex;
+            justify-content: center;
+            margin-top: 15px; /* botão mais próximo da tabela */
+        }
+
+        button{
+            background-color: #003f82;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        button:hover{
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="topo">
+
+        <h1>Histórico de Retiradas</h1>
+
+        <img src="static/Sistema-Fiep-Azul.png" class="logo">
+
+    </div>
+
+    <div class="container">
+
+        <table>
+
+            <tr>
+                <th>ITEM</th>
+                <th>QUANTIDADE</th>
+                <th>PESSOA</th>
+                <th>HORÁRIO</th>
+            </tr>
+
+           {% for retirada in retiradas %}
+<tr>
+    <td>{{ retirada.nome }}</td>
+    <td>{{ retirada.quantidade }}</td>
+    <td>{{ retirada.responsavel }}</td>
+    <td>{{ retirada.data_hora }}</td>
+</tr>
+{% endfor %}
+
+        </table>
+
+        <div class="botoes">
+
+            <a href="estoque.html">
+
+                <button>
+                    VOLTAR
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+<script src="static/script.js"></script>
+
+</body>
+</html>

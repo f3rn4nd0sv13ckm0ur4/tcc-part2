@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="static/estoque.css">
+<title>Estoque</title>
+</head>
+
+<body>
+
+<div class="topo">
+    <h2>📦 Sistema de Estoque</h2>
+</div>
+
+<div class="container">
+
+    <!-- MENU DE OPÇÕES -->
+    <div class="menu">
+
+        <a href="adicionar.html" class="card-btn add">
+            ➕<br>ADICIONAR
+        </a>
+
+        <a href="retirar.html" class="card-btn remove">
+            ➖<br>RETIRAR
+        </a>
+
+        <a href="retirados.html" class="card-btn history">
+            📋<br>HISTÓRICO
+        </a>
+
+    </div>
+
+    <!-- TABELA -->
+    <table>
+        <tr>
+            <th>NOME</th>
+            <th>QTDE</th>
+            <th>DESCRIÇÃO</th>
+            <th>RESPONSAVEL</th>
+            <th>PREÇO</th>
+            <th>HORÁRIO</th>
+
+        </tr>
+
+        {% for item in itens %}
+<tr>
+    <td>{{ item.nome }}</td>
+    <td>{{ item.quantidade }}</td>
+    <td>{{ item.descricao }}</td>
+    <td>{{ item.responsavel }}</td>
+    <td>{{ item.preco }}</td>
+    <td>{{ item.horario }}</td>
+</tr>
+{% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+function showToast(msg){
+    const t=document.getElementById("toast");
+    t.textContent=msg;
+    t.classList.add("show");
+
+    setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+showToast("Sistema carregado com sucesso!");
+</script>
+
+</body>
+</html>
