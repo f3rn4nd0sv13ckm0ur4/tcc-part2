@@ -70,6 +70,16 @@ body {
     background: linear-gradient(135deg, #e67e22, #f39c12);
 }
 
+/* 🟢 CRIAR CONTA */
+.create-account {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+/* ⚫ SAIR */
+.logout {
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+}
+
 /* TABELA */
 /* O border-radius na tabela não funciona sozinho;
    o wrapper precisa de overflow:hidden para recortar as bordas */

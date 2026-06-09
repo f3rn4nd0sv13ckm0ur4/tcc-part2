@@ -18,6 +18,8 @@ def conectar():
 
 @app.route("/")
 def login():
+    if "tipo" in session:
+        return redirect("/estoque.html")
     return render_template("login.html")
 
 
@@ -73,25 +75,11 @@ def estoque():
 
 @app.route("/criar_conta")
 def criar_conta():
-
-    if "tipo" not in session:
-        return redirect("/")
-
-    if session["tipo"] != "admin":
-        return redirect("/estoque.html")
-
     return render_template("criar_conta.html")
 
 
 @app.route("/salvar_conta", methods=["POST"])
 def salvar_conta():
-
-    if "tipo" not in session:
-        return redirect("/")
-
-    if session["tipo"] != "admin":
-        return redirect("/estoque.html")
-
     email = request.form["email"]
     senha = request.form["senha"]
 
@@ -116,7 +104,7 @@ def salvar_conta():
     cursor.close()
     conexao.close()
 
-    return redirect("/")
+    return redirect("/estoque.html")
 
 
 @app.route("/retirados.html")
