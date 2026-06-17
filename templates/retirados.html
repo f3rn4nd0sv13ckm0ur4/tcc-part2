@@ -22,25 +22,47 @@
 
     <div class="container">
 
-        <table>
+        <!-- Caixa de Itens Retirados -->
+        <div class="caixa">
+            <h2>➖ Itens Retirados</h2>
+            <table>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QUANTIDADE</th>
+                    <th>PESSOA</th>
+                    <th>HORÁRIO</th>
+                </tr>
+                {% for retirada in retiradas %}
+                <tr>
+                    <td>{{ retirada.nome }}</td>
+                    <td>{{ retirada.quantidade }}</td>
+                    <td>{{ retirada.responsavel }}</td>
+                    <td>{{ retirada.data_hora }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
 
-            <tr>
-                <th>ITEM</th>
-                <th>QUANTIDADE</th>
-                <th>PESSOA</th>
-                <th>HORÁRIO</th>
-            </tr>
-
-           {% for retirada in retiradas %}
-<tr>
-    <td>{{ retirada.nome }}</td>
-    <td>{{ retirada.quantidade }}</td>
-    <td>{{ retirada.responsavel }}</td>
-    <td>{{ retirada.data_hora }}</td>
-</tr>
-{% endfor %}
-
-        </table>
+        <!-- Caixa de Itens Adicionados -->
+        <div class="caixa">
+            <h2>➕ Itens Adicionados</h2>
+            <table>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QUANTIDADE</th>
+                    <th>PESSOA</th>
+                    <th>HORÁRIO</th>
+                </tr>
+                {% for adicionado in adicionados %}
+                <tr>
+                    <td>{{ adicionado.nome }}</td>
+                    <td>{{ adicionado.quantidade }}</td>
+                    <td>{{ adicionado.responsavel }}</td>
+                    <td>{{ adicionado.data_hora }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
 
         <div class="botoes">
 

@@ -130,12 +130,27 @@ def retirados():
 
     retiradas = cursor.fetchall()
 
+    cursor.execute("""
+        SELECT itens.nome,
+               movimentacoes.quantidade,
+               movimentacoes.responsavel,
+               movimentacoes.data_hora
+        FROM movimentacoes
+        JOIN itens
+            ON movimentacoes.item_id = itens.id
+        WHERE movimentacoes.tipo = 'ADICIONAR'
+        ORDER BY movimentacoes.data_hora DESC
+    """)
+
+    adicionados = cursor.fetchall()
+
     cursor.close()
     conexao.close()
 
     return render_template(
         "retirados.html",
-        retiradas=retiradas
+        retiradas=retiradas,
+        adicionados=adicionados
     )
 
 
@@ -189,6 +204,7 @@ def salvar_item():
             hora,
             produto["id"]
         ))
+        item_id = produto["id"]
 
     else:
 
@@ -202,6 +218,17 @@ def salvar_item():
             pessoa,
             hora
         ))
+        item_id = cursor.lastrowid
+
+    cursor.execute("""
+        INSERT INTO movimentacoes
+        (item_id, tipo, quantidade, responsavel)
+        VALUES (%s, 'ADICIONAR', %s, %s)
+    """, (
+        item_id,
+        qtd,
+        pessoa
+    ))
 
     conexao.commit()
 

@@ -32,8 +32,10 @@ CREATE TABLE IF NOT EXISTS movimentacoes (
 INSERT INTO usuarios (email, senha, tipo)
 VALUES (
     'admin@gmail.com',
-    '$2b$12$yeD.5WhaPgj9Bhc/pETckejDw3hzxX0G1Stp.dW.TMrabCA3BO8s.',
+    '$2b$12$c2s6DR2K9bL6XaHha/GOKOhX2U321ADCXQWWSrpNzLJv5LssxByZ6',
     'admin'
 );
 
-pinto mole
+SELECT * FROM   usuarios;
+SELECT * FROM   itens;
+SELECT * FROM   movimentacoes
