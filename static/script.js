@@ -1,3 +1,22 @@
+function controlarCriarConta() {
+  const tipo = document.getElementById("tipoUsuario");
+  const box = document.getElementById("criarContaBox");
+
+  if (!tipo || !box) {
+    return;
+  }
+
+  if (tipo.value === "admin") {
+    box.style.display = "flex";
+  } else {
+    box.style.display = "none";
+  }
+}
+
+window.onload = function () {
+  controlarCriarConta();
+};
+
 function alerta() {
     Swal.fire({
   title: "Item Adicionado com Sucesso!",
@@ -41,4 +60,27 @@ function salvar(){
     document.getElementById("item").value="";
     document.getElementById("qtd").value="";
     document.getElementById("pessoa").value="";
+}
+
+function retirar(){
+
+    let item = document.getElementById("item").value;
+    let qtd = document.getElementById("qtd").value;
+    let pessoa = document.getElementById("pessoa").value;
+    let hora = document.getElementById("hora").value;
+    let obs = document.getElementById("obs").value;
+
+    if(!item || !qtd || !pessoa || !hora){
+        alert("Preencha todos os campos obrigatórios!");
+        return;
+    }
+
+    console.log({item,qtd,pessoa,hora,obs});
+
+    showToast("Retirada registrada com sucesso!");
+
+    document.getElementById("item").value="";
+    document.getElementById("qtd").value="";
+    document.getElementById("pessoa").value="";
+    document.getElementById("obs").value="";
 }
