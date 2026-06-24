@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="static/estoque.css">
+<script src="static/script.js"></script>
 <title>Estoque</title>
 </head>
 <body>
@@ -46,9 +47,7 @@
             <tr>
                 <th>NOME</th>
                 <th>QTDE</th>
-                <th>DESCRIÇÃO</th>
                 <th>RESPONSÁVEL</th>
-                <th>PREÇO</th>
                 <th>HORÁRIO</th>
             </tr>
         </thead>
@@ -58,9 +57,7 @@
             <tr>
                 <td>{{ item.nome }}</td>
                 <td>{{ item.quantidade }}</td>
-                <td>{{ item.descricao }}</td>
                 <td>{{ item.responsavel }}</td>
-                <td>{{ item.preco }}</td>
                 <td>{{ item.horario }}</td>
             </tr>
             {% endfor %}
@@ -79,12 +76,13 @@ function showToast(msg){
 }
 
 showToast("Sistema carregado com sucesso!");
+
+
 </script>
 
-<form action="/resetar_banco" method="POST">
-    <button type="submit" class="btn-reset">
-        Resetar Estoque
-    </button>
+<form action="/resetar_banco" method="POST"
+      onsubmit="return confirm('Tem certeza que deseja resetar o estoque?');">
+    <button onclick="resetar" class="btn-reset">Resetar Estoque</button>
 </form>
 </body>
 </html>

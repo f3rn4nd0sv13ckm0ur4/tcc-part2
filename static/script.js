@@ -84,3 +84,13 @@ function retirar(){
     document.getElementById("pessoa").value="";
     document.getElementById("obs").value="";
 }
+
+function reset(){
+let resposta = confirm
+("tem certeza que deseaja resetar o estoque");
+if (resposta){
+  alert ("dados resetados com sucesso");
+}
+else {alert ("operação cancelada");
+}
+}
