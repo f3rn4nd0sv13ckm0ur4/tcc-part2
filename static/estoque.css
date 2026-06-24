@@ -1,6 +1,10 @@
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #ffffff, #eaf2ff);
+       background-image: url('fundo12.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
 }
 
 .topo {
@@ -126,4 +130,24 @@ tr:hover td {
 .toast.show {
     opacity: 1;
     transform: translateX(0);
+}
+.btn-reset{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-reset:hover{
+    background-color: #f57c00;
+    transform: scale(1.05);
 }

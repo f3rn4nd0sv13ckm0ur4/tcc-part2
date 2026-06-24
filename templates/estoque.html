@@ -35,43 +35,39 @@
         </a>
 
         <a href="criar_conta" class="card-btn add">
-            🚪<br>CRIAR CONTA
+            👤<br>CRIAR CONTA
         </a>
 
     </div>
 
     <!-- TABELA -->
     <table>
-        <tr>
-            <th>NOME</th>
-            <th>QTDE</th>
-            <th>DESCRIÇÃO</th>
-            <th>RESPONSAVEL</th>
-            <th>PREÇO</th>
-            <th>HORÁRIO</th>
+        <thead>
+            <tr>
+                <th>NOME</th>
+                <th>QTDE</th>
+                <th>DESCRIÇÃO</th>
+                <th>RESPONSÁVEL</th>
+                <th>PREÇO</th>
+                <th>HORÁRIO</th>
+            </tr>
+        </thead>
 
-        </tr>
-
-        {% for item in itens %}
-<tr>
-    <td>{{ item.nome }}</td>
-    <td>{{ item.quantidade }}</td>
-    <td>{{ item.descricao }}</td>
-    <td>{{ item.responsavel }}</td>
-    <td>{{ item.preco }}</td>
-    <td>{{ item.horario }}</td>
-</tr>
-{% endfor %}
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.descricao }}</td>
+                <td>{{ item.responsavel }}</td>
+                <td>{{ item.preco }}</td>
+                <td>{{ item.horario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
 </div>
-
-<div id="toast" class="toast"></div>
 
 <script>
 function showToast(msg){
@@ -85,5 +81,10 @@ function showToast(msg){
 showToast("Sistema carregado com sucesso!");
 </script>
 
+<form action="/resetar_banco" method="POST">
+    <button type="submit" class="btn-reset">
+        Resetar Estoque
+    </button>
+</form>
 </body>
 </html>

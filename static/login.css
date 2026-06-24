@@ -53,22 +53,6 @@ body {
     background-color: #002f61;
 }
 
-/* Botão Criar Conta */
-.btn-criar_conta {
-    background-color:#ff8800;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-criar_conta:hover {
-    background-color: #218838;
-}
-
 .logo-rodape {
     width: 250px;
     position: absolute;

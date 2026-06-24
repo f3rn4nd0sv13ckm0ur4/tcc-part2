@@ -40,7 +40,7 @@ window.onload = () => {
         now.getHours().toString().padStart(2,'0') + ":" +
         now.getMinutes().toString().padStart(2,'0');
 }
-
+//pagina de registrar itens
 function salvar(){
 
     let item = document.getElementById("item").value;
@@ -61,7 +61,7 @@ function salvar(){
     document.getElementById("qtd").value="";
     document.getElementById("pessoa").value="";
 }
-
+//pagina de retirar itens
 function retirar(){
 
     let item = document.getElementById("item").value;

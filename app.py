@@ -107,6 +107,38 @@ def salvar_conta():
     return redirect("/estoque.html")
 
 
+@app.route("/resetar_banco", methods=["POST"])
+def resetar_banco():
+
+    # Verifica se está logado
+    if "email" not in session:
+        return redirect("/")
+
+    # Verifica se é administrador
+    if session.get("tipo") != "admin":
+        return "Acesso negado! Apenas administradores podem resetar o banco.", 403
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    # Remove movimentações
+    cursor.execute("DELETE FROM movimentacoes")
+
+    # Remove itens
+    cursor.execute("DELETE FROM itens")
+
+    # Reinicia os IDs
+    cursor.execute("ALTER TABLE movimentacoes AUTO_INCREMENT = 1")
+    cursor.execute("ALTER TABLE itens AUTO_INCREMENT = 1")
+
+    conexao.commit()
+
+    cursor.close()
+    conexao.close()
+
+    return redirect("/estoque.html")
+
+
 @app.route("/retirados.html")
 def retirados():
 
