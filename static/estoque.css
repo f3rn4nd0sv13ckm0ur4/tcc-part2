@@ -80,6 +80,11 @@ body {
     background: linear-gradient(135deg, #7f8c8d, #95a5a6);
 }
 
+/* 🟢 EXPORTAR CSV */
+.csv {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+}
+
 /* TABELA */
 /* O border-radius na tabela não funciona sozinho;
    o wrapper precisa de overflow:hidden para recortar as bordas */
