@@ -43,7 +43,7 @@ body {
 }
 
 .card-btn {
-    width: 160px;
+    width: 126px;
     padding: 20px;
     border-radius: 15px;
     text-align: center;
@@ -82,6 +82,11 @@ body {
 /* ⚫ SAIR */
 .logout {
     background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+}
+
+/* 🟢 EXPORTAR CSV */
+.csv {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
 }
 
 /* TABELA */

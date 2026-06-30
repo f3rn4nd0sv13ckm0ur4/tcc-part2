@@ -30,6 +30,10 @@
             📋<br>HISTÓRICO
         </a>
 
+        <a href="/exportar_estoque_csv" class="card-btn csv">
+            📥<br>EXPORTAR CSV
+        </a>
+
     
         <a href="/sair" class="card-btn logout">
             🚪<br>SAIR
@@ -65,20 +69,6 @@
     </table>
 
 </div>
-
-<script>
-function showToast(msg){
-    const t=document.getElementById("toast");
-    t.textContent=msg;
-    t.classList.add("show");
-
-    setTimeout(()=>t.classList.remove("show"),3000);
-}
-
-showToast("Sistema carregado com sucesso!");
-
-
-</script>
 
 <form action="/resetar_banco" method="POST"
       onsubmit="return confirm('Tem certeza que deseja resetar o estoque?');">

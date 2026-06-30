@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, make_response
 import mysql.connector
 import bcrypt
+import csv
+import io
+import os
+
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
@@ -14,6 +18,52 @@ configuracao = {
 
 def conectar():
     return mysql.connector.connect(**configuracao)
+
+
+def atualizar_csv_local():
+    try:
+        diretorio = os.path.dirname(os.path.abspath(__file__))
+        estoque_path = os.path.join(diretorio, "estoque.csv")
+        historico_path = os.path.join(diretorio, "historico_movimentacoes.csv")
+        
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        
+        # 1. Atualizar estoque.csv
+        cursor.execute("SELECT id, nome, quantidade, horario, responsavel FROM itens")
+        itens = cursor.fetchall()
+        with open(estoque_path, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "Nome", "Quantidade", "Horario", "Responsavel"])
+            for i in itens:
+                writer.writerow([
+                    i["id"], i["nome"], i["quantidade"],
+                    i["horario"], i["responsavel"]
+                ])
+                
+        # 2. Atualizar historico_movimentacoes.csv
+        cursor.execute("""
+            SELECT movimentacoes.id, itens.nome AS item_nome, movimentacoes.tipo, 
+                   movimentacoes.quantidade, movimentacoes.responsavel, movimentacoes.data_hora
+            FROM movimentacoes
+            JOIN itens ON movimentacoes.item_id = itens.id
+            ORDER BY movimentacoes.data_hora DESC
+        """)
+        movs = cursor.fetchall()
+        with open(historico_path, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "Item", "Tipo", "Quantidade", "Responsavel", "Data/Hora"])
+            for m in movs:
+                writer.writerow([
+                    m["id"], m["item_nome"], m["tipo"], m["quantidade"],
+                    m["responsavel"], m["data_hora"]
+                ])
+                
+        cursor.close()
+        conexao.close()
+    except Exception as e:
+        print(f"Erro ao atualizar CSVs locais: {e}")
+
 
 
 @app.route("/")
@@ -135,6 +185,8 @@ def resetar_banco():
 
     cursor.close()
     conexao.close()
+
+    atualizar_csv_local()
 
     return redirect("/estoque.html")
 
@@ -267,6 +319,8 @@ def salvar_item():
     cursor.close()
     conexao.close()
 
+    atualizar_csv_local()
+
     return redirect("/estoque.html")
 
 
@@ -313,6 +367,8 @@ def retirar_item():
     cursor.close()
     conexao.close()
 
+    atualizar_csv_local()
+
     return redirect("/estoque.html")
 
 
@@ -322,6 +378,78 @@ def sair():
     session.clear()
 
     return redirect("/")
+
+
+
+@app.route("/exportar_estoque_csv")
+def exportar_estoque_csv():
+    if "tipo" not in session:
+        return redirect("/")
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    cursor.execute("SELECT id, nome, quantidade, horario, responsavel FROM itens")
+    itens = cursor.fetchall()
+    cursor.close()
+    conexao.close()
+
+    si = io.StringIO()
+    cw = csv.writer(si)
+    # Escreve o BOM para compatibilidade com Excel em português
+    si.write('\ufeff')
+    cw.writerow(["ID", "Nome", "Quantidade", "Horário", "Responsável"])
+    for item in itens:
+        cw.writerow([
+            item['id'],
+            item['nome'],
+            item['quantidade'],
+            item['horario'],
+            item['responsavel']
+        ])
+
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=estoque.csv"
+    output.headers["Content-type"] = "text/csv; charset=utf-8"
+    return output
+
+
+@app.route("/exportar_movimentacoes_csv")
+def exportar_movimentacoes_csv():
+    if "tipo" not in session:
+        return redirect("/")
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT movimentacoes.id, itens.nome AS item_nome, movimentacoes.tipo, 
+               movimentacoes.quantidade, movimentacoes.responsavel, movimentacoes.data_hora
+        FROM movimentacoes
+        JOIN itens ON movimentacoes.item_id = itens.id
+        ORDER BY movimentacoes.data_hora DESC
+    """)
+    movs = cursor.fetchall()
+    cursor.close()
+    conexao.close()
+
+    si = io.StringIO()
+    cw = csv.writer(si)
+    # Escreve o BOM para compatibilidade com Excel em português
+    si.write('\ufeff')
+    cw.writerow(["ID", "Item", "Tipo", "Quantidade", "Responsável", "Data/Hora"])
+    for m in movs:
+        cw.writerow([
+            m['id'],
+            m['item_nome'],
+            m['tipo'],
+            m['quantidade'],
+            m['responsavel'],
+            m['data_hora']
+        ])
+
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=historico_movimentacoes.csv"
+    output.headers["Content-type"] = "text/csv; charset=utf-8"
+    return output
 
 
 if __name__ == "__main__":
