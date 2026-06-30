@@ -12,9 +12,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 CREATE TABLE IF NOT EXISTS itens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    descricao TEXT,
     quantidade INT NOT NULL DEFAULT 0,
-    preco DECIMAL(10,2),
     horario TIME,
     responsavel VARCHAR(100)
 );
@@ -22,7 +20,7 @@ CREATE TABLE IF NOT EXISTS itens (
 CREATE TABLE IF NOT EXISTS movimentacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     item_id INT NOT NULL,
-    tipo ENUM('ADICIONAR','RETIRAR','DEVOLVER') NOT NULL,
+    tipo ENUM('ADICIONAR','RETIRAR') NOT NULL,
     quantidade INT NOT NULL,
     responsavel VARCHAR(100),
     data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,

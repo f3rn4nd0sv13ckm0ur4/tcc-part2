@@ -1,121 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retirar do Estoque</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
-}
-
-body{
-    min-height:100vh;
-    background:#003f82; /* AZUL PADRÃO */
-}
-
-/* topo */
-.topo{
-    background:#0056b3;
-    color:white;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* container branco */
-.container{
-    width:90%;
-    max-width:500px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.25);
-    animation:fadeIn .5s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(15px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
-label{
-    font-weight:bold;
-    display:block;
-    margin-top:12px;
-    margin-bottom:6px;
-}
-
-input, textarea{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #ccc;
-    outline:none;
-}
-
-input:focus, textarea:focus{
-    border-color:#b30000;
-    box-shadow:0 0 5px rgba(179,0,0,0.3);
-}
-
-/* botões */
-button{
-    width:100%;
-    margin-top:15px;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
-}
-
-/* confirmar retirada */
-.btn-retirar{
-    background:linear-gradient(135deg,#b30000,#ff4d4d);
-}
-
-.btn-retirar:hover{
-    transform:translateY(-3px);
-}
-
-/* voltar */
-.btn-voltar{
-    background:linear-gradient(135deg,#003f82,#0056b3);
-}
-
-.btn-voltar:hover{
-    transform:translateY(-3px);
-}
-
-/* toast */
-.toast{
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:#e67e22;
-    color:white;
-    padding:14px 18px;
-    border-radius:10px;
-    opacity:0;
-    transform:translateX(100px);
-    transition:.4s;
-}
-
-.toast.show{
-    opacity:1;
-    transform:translateX(0);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirar do Estoque</title>
+    <link rel="stylesheet" href="static/retirar.css">
+    <script src="static/script.js"></script>
 </head>
 
 <body>
@@ -148,49 +38,5 @@ button{
 </form>
 
 <div id="toast" class="toast"></div>
-
-<script>
-
-function showToast(msg){
-    const t=document.getElementById("toast");
-    t.textContent=msg;
-    t.classList.add("show");
-
-    setTimeout(()=>t.classList.remove("show"),3000);
-}
-
-// horário automático
-window.onload = () => {
-    const now = new Date();
-    document.getElementById("hora").value =
-        now.getHours().toString().padStart(2,'0') + ":" +
-        now.getMinutes().toString().padStart(2,'0');
-}
-
-function retirar(){
-
-    let item = document.getElementById("item").value;
-    let qtd = document.getElementById("qtd").value;
-    let pessoa = document.getElementById("pessoa").value;
-    let hora = document.getElementById("hora").value;
-    let obs = document.getElementById("obs").value;
-
-    if(!item || !qtd || !pessoa || !hora){
-        alert("Preencha todos os campos obrigatórios!");
-        return;
-    }
-
-    console.log({item,qtd,pessoa,hora,obs});
-
-    showToast("Retirada registrada com sucesso!");
-
-    document.getElementById("item").value="";
-    document.getElementById("qtd").value="";
-    document.getElementById("pessoa").value="";
-    document.getElementById("obs").value="";
-}
-
-</script>
-
 </body>
 </html>

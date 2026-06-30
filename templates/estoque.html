@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="static/estoque.css">
+<script src="static/script.js"></script>
 <title>Estoque</title>
 </head>
-
 <body>
 
 <div class="topo">
@@ -39,52 +39,40 @@
             🚪<br>SAIR
         </a>
 
+        <a href="criar_conta" class="card-btn add">
+            👤<br>CRIAR CONTA
+        </a>
+
     </div>
 
     <!-- TABELA -->
     <table>
-        <tr>
-            <th>NOME</th>
-            <th>QTDE</th>
-            <th>DESCRIÇÃO</th>
-            <th>RESPONSAVEL</th>
-            <th>PREÇO</th>
-            <th>HORÁRIO</th>
+        <thead>
+            <tr>
+                <th>NOME</th>
+                <th>QTDE</th>
+                <th>RESPONSÁVEL</th>
+                <th>HORÁRIO</th>
+            </tr>
+        </thead>
 
-        </tr>
-
-        {% for item in itens %}
-<tr>
-    <td>{{ item.nome }}</td>
-    <td>{{ item.quantidade }}</td>
-    <td>{{ item.descricao }}</td>
-    <td>{{ item.responsavel }}</td>
-    <td>{{ item.preco }}</td>
-    <td>{{ item.horario }}</td>
-</tr>
-{% endfor %}
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.responsavel }}</td>
+                <td>{{ item.horario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
 </div>
 
-<div id="toast" class="toast"></div>
-
-<script>
-function showToast(msg){
-    const t=document.getElementById("toast");
-    t.textContent=msg;
-    t.classList.add("show");
-
-    setTimeout(()=>t.classList.remove("show"),3000);
-}
-
-showToast("Sistema carregado com sucesso!");
-</script>
-
+<form action="/resetar_banco" method="POST"
+      onsubmit="return confirm('Tem certeza que deseja resetar o estoque?');">
+    <button onclick="resetar" class="btn-reset">Resetar Estoque</button>
+</form>
 </body>
 </html>

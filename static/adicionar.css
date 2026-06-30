@@ -1,7 +1,11 @@
 body{
     min-height:100vh;
     background: linear-gradient(135deg,#ffffff,#eaf2ff);
-    background:#003f82; 
+    background:#003f82;
+    background-image: url('fundo11.png');
+     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .topo{
@@ -74,7 +78,7 @@ button{
 
 /* voltar */
 .btn-voltar{
-    background:#777;
+    background:#ff8800;
     color:white;
 }
 

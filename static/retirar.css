@@ -1,42 +1,102 @@
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(224, 233, 230);
-    background-image: url(fundo11.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
+body{
+    min-height:100vh;
+    background:#003f82; /* AZUL PADRÃO */
 }
 
-.topo {
-    background-color: #043677;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* topo */
+.topo{
+    background:#0056b3;
+    color:white;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-.logo {
-    width: 170px;
-    height: 90px;
+/* container branco */
+.container{
+    width:90%;
+    max-width:500px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    animation:fadeIn .5s ease;
 }
 
-#item, #quantidade {
-    width: 300px;
-    height: 40px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 8px;
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(15px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
-.texto{
-    text-align: center;
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:12px;
+    margin-bottom:6px;
 }
 
-.texto2{
-    text-align: center;
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
+input, textarea{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    outline:none;
 }
 
+input:focus, textarea:focus{
+    border-color:#b30000;
+    box-shadow:0 0 5px rgba(179,0,0,0.3);
+}
+
+/* botões */
+button{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+/* confirmar retirada */
+.btn-retirar{
+   background:linear-gradient(135deg,#003f82,#0056b3);
+    color:white;
+}
+
+.btn-retirar:hover{
+    transform:translateY(-3px);
+}
+
+/* voltar */
+.btn-voltar{
+  background:#ff8800;
+    color:white;
+}
+
+.btn-voltar:hover{
+    transform:translateY(-3px);
+}
+
+/* toast */
+.toast{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#e67e22;
+    color:white;
+    padding:14px 18px;
+    border-radius:10px;
+    opacity:0;
+    transform:translateX(100px);
+    transition:.4s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(0);
+}

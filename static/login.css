@@ -1,13 +1,61 @@
-body{
-    background-image: url(fundo2.png);
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-image: url("fundo11.png");
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
-#usuario, #senha {
-    width: 300px;
-    height: 40px;
+.centralizado {
+    text-align: center;
+}
+
+.logo-topo {
+    width: 190px;
+    height: 100px;
+}
+
+.icone-login {
+    width: 140px;
+    height: 140px;
+}
+
+.campo-form {
     padding: 10px;
+    width: 250px;
+    border-radius: 10px;
     font-size: 16px;
-    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
+.container-botao {
+    display: flex;
+    justify-content: center;
+}
+
+/* Botão Entrar */
+.btn-entrar {
+    background-color: #003f82;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-entrar:hover {
+    background-color: #002f61;
+}
+
+.logo-rodape {
+    width: 250px;
+    position: absolute;
+    right: 1%;
+    top: 87%;
+}
