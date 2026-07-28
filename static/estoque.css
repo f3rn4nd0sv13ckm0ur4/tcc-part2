@@ -122,8 +122,9 @@ body {
 
 /* TABELA COM SCROLL */
 .tabela-container {
-    max-height: 400px;
-    overflow-y: auto;
+    max-height: 260px; /* Reduzido para ativar a rolagem com menos itens */
+    overflow-y: scroll; /* Força a exibição da barra de rolagem vertical */
+    overflow-x: auto;   /* Rolagem horizontal se a tela for pequena */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

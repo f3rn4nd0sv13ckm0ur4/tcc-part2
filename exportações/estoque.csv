@@ -1,9 +1,1001 @@
 ﻿ID,Nome,Quantidade,Horario,Responsavel
-1,Teclado,3730,8:36:07,Daniela
-2,Mouse,3262,8:37:07,Eduardo
-3,Monitor,2585,8:39:07,Gabriel
-4,Fone,2965,8:43:07,Fernanda
-5,Luminária,3099,8:44:07,Eduardo
-6,Cadeira,3310,8:50:07,Carlos
-7,Notebook,3069,8:58:07,Carlos
-8,Webcam,3155,9:07:07,Carlos
+1,Mangueira Acrílico,4779,13:49:00,Rodrigo
+2,Polia Latão,990,14:57:00,Adriana
+3,Filtro Polipropileno,9118,7:14:00,Cristiane
+4,Junta Borracha natural,7143,18:56:00,Cristiane
+5,Eixo Aço zincado,2827,9:16:00,Priscila
+6,Terminal Níquel,8910,13:03:00,Tatiane
+7,Junta Aço zincado,8960,13:34:00,Priscila
+8,Conector Borracha nitrílica,452,15:22:00,Henrique
+9,Arruela Cerâmica técnica,1685,8:13:00,Douglas
+10,Suporte Aço SAE 1045,453,7:13:00,Renata
+11,Filtro Cobre,8190,18:57:00,Larissa
+12,Junta Aço galvanizado,3757,15:39:00,Tatiane
+13,Conector PEEK,9411,7:14:00,Isabela
+14,Arruela Aço galvanizado,3320,9:59:00,Adriana
+15,Pino Titânio,9442,15:12:00,Fábio
+16,Mola Borracha nitrílica,3111,9:47:00,Simone
+17,Porca Zamak,9724,15:19:00,Larissa
+18,Polia Aço galvanizado,5854,15:07:00,Leandro
+19,Porca Borracha silicone,428,19:00:00,Leandro
+20,Mangueira Cromo,0,13:45:00,Fernanda
+21,Parafuso PEEK,664,13:10:00,Fábio
+22,Engrenagem Magnésio,9749,18:12:00,Gustavo
+23,Retentor Fibra de carbono,9129,8:57:00,Evandro
+24,Retentor Aço galvanizado,5359,8:33:00,Evandro
+25,Parafuso Vulcanite,4949,7:55:00,Fábio
+26,Suporte Latão,3225,10:04:00,Leandro
+27,Anel Latão,4987,16:00:00,Douglas
+28,Filtro Aço carbono,4257,13:09:00,Renata
+29,Pino Polipropileno,9597,18:12:00,Tatiane
+30,Arruela PEEK,0,16:08:00,Cristiane
+31,Parafuso Borracha EPDM,9810,18:55:00,Leandro
+32,Mangueira Aço temperado,753,10:33:00,Thiago
+33,Mola Poliamida,9671,18:14:00,Vanessa
+34,Terminal Aço inox 316,6145,8:41:00,Simone
+35,Arruela Aço zincado,5186,8:09:00,Gustavo
+36,Porca Borracha nitrílica,6920,17:08:00,Thiago
+37,Engrenagem Policarbonato,8740,12:25:00,Priscila
+38,Pino Aço inox 304,5572,8:49:00,Vanessa
+39,Arruela Aço D2,3617,14:49:00,Thiago
+40,Porca Polietileno,3286,8:57:00,Fernanda
+41,Arruela Molibdênio,5234,7:37:00,Simone
+42,Mola Polipropileno,7135,17:13:00,Adriana
+43,Mola Cromo,1127,13:05:00,Leandro
+44,Rolamento Alumínio,5469,13:28:00,Fernanda
+45,Pino Magnésio,2228,12:53:00,Douglas
+46,Polia Aço temperado,2226,16:52:00,Vanessa
+47,Mangueira Nylon,8866,10:49:00,Thiago
+48,Anel Bronze,7032,17:20:00,Vanessa
+49,Terminal Aço D2,9388,8:12:00,Rodrigo
+50,Conector Zamak,9558,8:47:00,Fábio
+51,Conector Nylon,4019,15:25:00,Thiago
+52,Mangueira Teflon,7156,9:11:00,Renata
+53,Parafuso Magnésio,1361,17:58:00,Priscila
+54,Abraçadeira Aço inox 316,8931,10:38:00,Adriana
+55,Parafuso Aço galvanizado,6296,10:34:00,Evandro
+56,Suporte Grafite,3055,13:59:00,Douglas
+57,Junta Borracha EPDM,1468,18:06:00,Thiago
+58,Suporte Aço carbono,7261,12:40:00,Tatiane
+59,Porca Ferro fundido cinzento,8065,10:14:00,Leandro
+60,Porca Policarbonato,226,15:05:00,Simone
+61,Pino Zinco,4201,14:51:00,Larissa
+62,Rolamento Cobalto,8911,15:54:00,Douglas
+63,Filtro Cobalto,8474,11:05:00,Larissa
+64,Rolamento Aço inox 304,9920,14:43:00,Priscila
+65,Eixo Alumínio,6339,15:31:00,Leandro
+66,Parafuso Tungstênio,3609,16:41:00,Vanessa
+67,Mola Latão,8475,15:36:00,Renata
+68,Correia Vulcanite,6563,10:29:00,Tatiane
+69,Engrenagem Aço H13,1592,14:58:00,Adriana
+70,Conector Aço inox 304,2360,12:52:00,Vinícius
+71,Abraçadeira Grafite,4315,10:46:00,Fernanda
+72,Polia ABS,1858,7:36:00,Cristiane
+73,Conector Bronze,4037,13:55:00,Thiago
+74,Correia Aço D2,2632,7:49:00,Marcelo
+75,Abraçadeira Acrílico,8636,12:41:00,Renata
+76,Suporte Cobre,3036,7:53:00,Henrique
+77,Mola Cobalto,1875,18:04:00,Renata
+78,Engrenagem Cerâmica técnica,1651,9:36:00,Vinícius
+79,Porca Cobre,51,15:20:00,Vanessa
+80,Parafuso Aço inox 304,6652,9:54:00,Fábio
+81,Abraçadeira Tungstênio,1373,8:09:00,Adriana
+82,Correia Aço H13,3066,10:44:00,Renata
+83,Abraçadeira Aço D2,714,16:17:00,Evandro
+84,Anel Acrílico,3927,7:15:00,Adriana
+85,Retentor Borracha neoprene,2294,18:46:00,Evandro
+86,Anel PTFE,7917,17:39:00,Simone
+87,Bucha Aço inox 316,6569,8:46:00,Gustavo
+88,Filtro ABS,5882,14:41:00,Priscila
+89,Pino Cortiça,5568,14:09:00,Cristiane
+90,Retentor Alumínio anodizado,480,11:25:00,Leandro
+91,Correia Aço zincado,1301,17:12:00,Gustavo
+92,Polia Fibra de carbono,4395,14:56:00,Priscila
+93,Polia Vulcanite,8600,11:58:00,Thiago
+94,Engrenagem Poliamida,5872,13:54:00,Gustavo
+95,Polia Poliamida,8926,18:42:00,Adriana
+96,Anel Aço D2,9058,10:59:00,Renata
+97,Pino ABS,8044,10:25:00,Cristiane
+98,Conector Aço H13,8082,14:41:00,Simone
+99,Polia Delrin,7470,12:03:00,Adriana
+100,Suporte Borracha silicone,703,12:37:00,Larissa
+101,Filtro Aço temperado,3727,13:22:00,Henrique
+102,Pino Cromo,6935,17:09:00,Vanessa
+103,Correia ABS,5405,15:38:00,Thiago
+104,Bucha Borracha silicone,2933,9:19:00,Douglas
+105,Mola Cobre,5432,9:51:00,Rodrigo
+106,Abraçadeira Aço inox 304,255,17:17:00,Fernanda
+107,Porca Aço carbono,9788,15:46:00,Fábio
+108,Junta Nylon,3087,18:27:00,Leandro
+109,Correia Ferro fundido nodular,2501,8:13:00,Evandro
+110,Polia Ferro fundido cinzento,2849,14:27:00,Simone
+111,Mola Vulcanite,2785,10:31:00,Henrique
+112,Correia Bronze,1263,12:39:00,Larissa
+113,Terminal Magnésio,1040,18:32:00,Rodrigo
+114,Arruela Nylon,1381,7:18:00,Adriana
+115,Bucha Ferro fundido nodular,5943,17:26:00,Vinícius
+116,Rolamento Grafite,9408,11:11:00,Fábio
+117,Bucha Borracha neoprene,5269,14:07:00,Larissa
+118,Filtro PTFE,5776,17:01:00,Cristiane
+119,Correia Teflon,4280,8:55:00,Vanessa
+120,Anel Aço inox 316,1665,13:17:00,Adriana
+121,Pino Borracha silicone,5463,11:40:00,Fábio
+122,Mangueira Policarbonato,1847,8:25:00,Gustavo
+123,Parafuso Aço SAE 1045,4978,17:52:00,Cristiane
+124,Suporte Tungstênio,2936,7:16:00,Vinícius
+125,Filtro Cerâmica técnica,5963,11:00:00,Tatiane
+126,Terminal Aço H13,6220,11:29:00,Douglas
+127,Parafuso Aço temperado,426,14:52:00,Douglas
+128,Eixo Ferro fundido cinzento,1406,8:38:00,Douglas
+129,Arruela Poliamida,8309,8:03:00,Fernanda
+130,Junta Zamak,1274,14:42:00,Vinícius
+131,Engrenagem Ferro fundido cinzento,1393,13:26:00,Evandro
+132,Rolamento Fibra de carbono,83,8:02:00,Adriana
+133,Porca Alumínio,8921,11:24:00,Tatiane
+134,Conector Cromo,246,14:13:00,Priscila
+135,Suporte Titânio,4577,9:48:00,Rodrigo
+136,Engrenagem Níquel,4315,8:55:00,Priscila
+137,Rolamento Aço D2,9066,10:09:00,Evandro
+138,Eixo Aço SAE 1020,9837,17:20:00,Simone
+139,Eixo ABS,9600,11:00:00,Evandro
+140,Arruela Borracha silicone,4837,7:14:00,Tatiane
+141,Conector Fibra de vidro,6158,13:44:00,Simone
+142,Junta Aço H13,9742,16:53:00,Priscila
+143,Arruela Ferro fundido nodular,1271,15:50:00,Thiago
+144,Filtro Poliamida,4266,12:38:00,Henrique
+145,Bucha Vulcanite,5354,9:27:00,Adriana
+146,Suporte Nylon,385,7:19:00,Simone
+147,Suporte Polietileno,7183,10:50:00,Fernanda
+148,Pino Manganês,4846,11:39:00,Vinícius
+149,Anel Cobalto,904,17:23:00,Cristiane
+150,Bucha Bronze,5473,7:38:00,Rodrigo
+151,Bucha Polipropileno,2471,15:35:00,Vinícius
+152,Conector Alumínio,232,14:58:00,Fernanda
+153,Mola Aço galvanizado,6706,9:16:00,Rodrigo
+154,Anel Cobre,801,17:39:00,Adriana
+155,Filtro PVC rígido,7693,8:08:00,Vinícius
+156,Mangueira Tungstênio,9165,11:26:00,Leandro
+157,Parafuso Polietileno,4408,9:55:00,Fábio
+158,Porca Bronze,7488,12:47:00,Cristiane
+159,Eixo Borracha EPDM,6124,7:13:00,Leandro
+160,Filtro Teflon,6522,8:38:00,Renata
+161,Correia Titânio,5096,17:40:00,Larissa
+162,Bucha Aço inox 304,7627,14:40:00,Renata
+163,Terminal Aço temperado,244,15:12:00,Thiago
+164,Abraçadeira Ferro fundido cinzento,6887,16:35:00,Adriana
+165,Filtro Aço inox 304,7789,18:01:00,Renata
+166,Rolamento Bronze,7673,12:04:00,Isabela
+167,Correia Aço carbono,2708,7:00:00,Henrique
+168,Polia Aço SAE 1020,6766,12:57:00,Rodrigo
+169,Porca Vulcanite,3405,7:11:00,Gustavo
+170,Arruela Borracha neoprene,1807,11:08:00,Rodrigo
+171,Rolamento Ferro fundido cinzento,2100,13:13:00,Fábio
+172,Pino Aço temperado,4893,13:23:00,Thiago
+173,Rolamento Borracha neoprene,6223,7:25:00,Priscila
+174,Eixo Aço inox 316,1458,17:50:00,Tatiane
+175,Junta Tungstênio,15,17:24:00,Thiago
+176,Anel Alumínio,2109,12:09:00,Thiago
+177,Junta Aço carbono,7183,15:00:00,Priscila
+178,Retentor Ferro fundido nodular,2469,13:08:00,Renata
+179,Conector Aço D2,7563,19:00:00,Vinícius
+180,Terminal Aço inox 304,365,9:36:00,Adriana
+181,Suporte PVC rígido,8098,12:29:00,Vinícius
+182,Polia Teflon,6111,15:12:00,Evandro
+183,Conector Vulcanite,822,16:04:00,Gustavo
+184,Anel Policarbonato,5954,12:20:00,Tatiane
+185,Mangueira Alumínio,8145,10:05:00,Tatiane
+186,Polia Molibdênio,8291,11:57:00,Marcelo
+187,Arruela Níquel,7339,15:48:00,Vinícius
+188,Porca PTFE,6632,11:21:00,Larissa
+189,Mola Grafite,9424,16:30:00,Vanessa
+190,Anel Aço carbono,5007,11:01:00,Rodrigo
+191,Engrenagem Aço SAE 1020,852,11:18:00,Fernanda
+192,Mangueira Aço H13,6989,16:10:00,Vinícius
+193,Anel Aço inox 304,4125,16:45:00,Gustavo
+194,Mangueira Aço carbono,4951,11:48:00,Gustavo
+195,Pino Cobre,2168,14:01:00,Thiago
+196,Mangueira Aço inox 316,6857,7:33:00,Evandro
+197,Mola Níquel,8661,13:33:00,Cristiane
+198,Terminal Cobre,3101,15:03:00,Rodrigo
+199,Parafuso Alumínio,4210,7:20:00,Tatiane
+200,Retentor ABS,2659,10:57:00,Adriana
+201,Retentor Cobre,9480,17:31:00,Priscila
+202,Suporte ABS,1836,8:39:00,Douglas
+203,Mola Borracha silicone,4033,10:17:00,Tatiane
+204,Bucha Cobre,4621,8:07:00,Marcelo
+205,Abraçadeira Aço galvanizado,5392,12:20:00,Isabela
+206,Junta Ferro fundido nodular,6189,9:41:00,Renata
+207,Bucha PEEK,7563,16:14:00,Simone
+208,Terminal Aço carbono,4361,17:15:00,Fábio
+209,Retentor Polipropileno,3239,16:11:00,Cristiane
+210,Mola Acrílico,4207,11:44:00,Leandro
+211,Rolamento Polietileno,1837,8:53:00,Gustavo
+212,Mola ABS,9001,13:40:00,Henrique
+213,Arruela Delrin,2385,15:49:00,Gustavo
+214,Mola PVC rígido,6431,17:57:00,Vinícius
+215,Anel Fibra de carbono,8420,7:35:00,Cristiane
+216,Filtro Cortiça,907,14:55:00,Cristiane
+217,Correia Aço galvanizado,3897,18:54:00,Renata
+218,Correia Tungstênio,8561,16:52:00,Cristiane
+219,Arruela Magnésio,8544,13:01:00,Fernanda
+220,Correia Aço SAE 1020,2322,17:05:00,Cristiane
+221,Junta Polipropileno,1715,16:42:00,Douglas
+222,Mola Policarbonato,3930,17:51:00,Evandro
+223,Anel Tungstênio,2960,15:43:00,Thiago
+224,Abraçadeira Aço H13,6635,18:11:00,Douglas
+225,Bucha Latão,3906,10:32:00,Priscila
+226,Arruela Aço inox 304,6436,10:29:00,Marcelo
+227,Anel Borracha nitrílica,3683,10:29:00,Rodrigo
+228,Suporte Aço galvanizado,2266,11:25:00,Fábio
+229,Retentor PVC rígido,5601,14:22:00,Vinícius
+230,Mola Fibra de vidro,2225,8:58:00,Marcelo
+231,Retentor Aço H13,3712,12:47:00,Rodrigo
+232,Conector PVC rígido,578,18:53:00,Fernanda
+233,Arruela Borracha EPDM,8414,16:22:00,Adriana
+234,Mangueira Aço zincado,3348,17:30:00,Douglas
+235,Parafuso Zamak,2332,9:19:00,Leandro
+236,Pino Alumínio,2309,16:27:00,Leandro
+237,Suporte Magnésio,1172,9:37:00,Larissa
+238,Filtro Cromo,8365,17:26:00,Thiago
+239,Junta ABS,5537,18:05:00,Fernanda
+240,Anel Aço SAE 1020,5893,13:49:00,Simone
+241,Eixo Ferro fundido nodular,6873,9:46:00,Thiago
+242,Arruela Bronze,7179,15:39:00,Renata
+243,Polia Borracha silicone,4797,13:22:00,Douglas
+244,Junta Cortiça,6064,16:22:00,Fábio
+245,Correia Alumínio,8133,14:51:00,Tatiane
+246,Porca Teflon,8784,11:00:00,Gustavo
+247,Pino Aço D2,7804,18:59:00,Marcelo
+248,Retentor Zamak,7183,18:45:00,Thiago
+249,Retentor Cromo,8091,7:09:00,Evandro
+250,Porca Magnésio,2277,15:52:00,Fábio
+251,Bucha Aço zincado,7452,11:04:00,Vinícius
+252,Correia Polipropileno,8945,18:10:00,Simone
+253,Engrenagem Borracha nitrílica,9045,17:45:00,Rodrigo
+254,Eixo Molibdênio,8114,13:13:00,Thiago
+255,Mola Bronze,6098,16:12:00,Henrique
+256,Parafuso Aço zincado,9708,10:47:00,Priscila
+257,Bucha Fibra de carbono,7324,7:16:00,Priscila
+258,Engrenagem Aço inox 304,6428,17:48:00,Simone
+259,Arruela Zinco,4236,16:23:00,Douglas
+260,Bucha Tungstênio,6575,14:09:00,Larissa
+261,Porca Molibdênio,5363,11:41:00,Evandro
+262,Anel Grafite,7891,10:33:00,Tatiane
+263,Bucha Teflon,145,17:47:00,Larissa
+264,Mola Zamak,1233,18:22:00,Fábio
+265,Eixo Grafite,8278,7:26:00,Isabela
+266,Junta Titânio,6889,11:07:00,Isabela
+267,Arruela Teflon,2086,8:28:00,Simone
+268,Correia Policarbonato,4790,12:24:00,Tatiane
+269,Bucha Borracha nitrílica,4935,8:01:00,Leandro
+270,Anel Nylon,188,10:58:00,Adriana
+271,Engrenagem Zamak,8187,15:36:00,Douglas
+272,Terminal Alumínio,7472,17:21:00,Vanessa
+273,Correia Grafite,1742,16:34:00,Larissa
+274,Pino Aço carbono,7126,13:28:00,Gustavo
+275,Correia Aço SAE 1045,4282,16:24:00,Evandro
+276,Parafuso Poliamida,4990,13:33:00,Gustavo
+277,Filtro Fibra de carbono,4050,14:47:00,Marcelo
+278,Abraçadeira Alumínio,6673,12:21:00,Cristiane
+279,Abraçadeira PEEK,504,13:29:00,Simone
+280,Junta Aço temperado,385,11:08:00,Gustavo
+281,Eixo Manganês,8221,7:45:00,Evandro
+282,Eixo Polipropileno,6458,15:20:00,Priscila
+283,Engrenagem Borracha neoprene,1853,8:39:00,Cristiane
+284,Abraçadeira Cobre,3956,7:50:00,Douglas
+285,Terminal Cromo,8998,15:05:00,Fábio
+286,Eixo PVC rígido,544,16:50:00,Fernanda
+287,Porca Fibra de vidro,9590,11:19:00,Fernanda
+288,Mola Aço inox 316,5733,11:05:00,Isabela
+289,Pino Policarbonato,2466,17:04:00,Isabela
+290,Bucha Acrílico,549,15:30:00,Tatiane
+291,Terminal Borracha nitrílica,9264,14:11:00,Isabela
+292,Suporte Cerâmica técnica,3627,16:44:00,Henrique
+293,Anel Ferro fundido cinzento,5754,15:38:00,Adriana
+294,Engrenagem Aço D2,7298,13:56:00,Gustavo
+295,Pino Zamak,8955,10:28:00,Isabela
+296,Filtro Alumínio,735,8:41:00,Evandro
+297,Pino Fibra de vidro,6444,18:55:00,Vanessa
+298,Pino Grafite,8740,15:53:00,Cristiane
+299,Porca Borracha neoprene,7816,17:12:00,Renata
+300,Filtro Latão,3496,9:38:00,Vinícius
+301,Porca Aço zincado,4912,15:36:00,Vanessa
+302,Porca Acrílico,5929,11:16:00,Douglas
+303,Rolamento Poliamida,9291,7:21:00,Priscila
+304,Engrenagem PVC rígido,5317,10:32:00,Adriana
+305,Parafuso Fibra de carbono,5878,18:25:00,Renata
+306,Pino Tungstênio,7366,15:49:00,Cristiane
+307,Bucha Zamak,4573,14:00:00,Leandro
+308,Retentor Teflon,8703,10:19:00,Renata
+309,Retentor Borracha silicone,472,8:19:00,Douglas
+310,Correia Nylon,7511,15:48:00,Vanessa
+311,Polia Cerâmica técnica,4360,11:58:00,Vanessa
+312,Porca Polipropileno,4780,7:25:00,Marcelo
+313,Rolamento Cerâmica técnica,3947,7:53:00,Leandro
+314,Polia Cortiça,1618,18:40:00,Gustavo
+315,Junta Policarbonato,942,9:33:00,Gustavo
+316,Engrenagem Borracha EPDM,1010,10:25:00,Tatiane
+317,Filtro Borracha EPDM,1375,17:20:00,Adriana
+318,Polia Tungstênio,5364,15:54:00,Henrique
+319,Polia Zamak,2082,16:45:00,Tatiane
+320,Abraçadeira Polipropileno,3276,11:21:00,Larissa
+321,Parafuso Cromo,6656,11:22:00,Isabela
+322,Porca Borracha natural,7832,9:45:00,Isabela
+323,Suporte PTFE,3077,7:03:00,Cristiane
+324,Mangueira Manganês,1419,8:25:00,Priscila
+325,Mola Fibra de carbono,2071,13:20:00,Priscila
+326,Polia Aço inox 304,4505,8:25:00,Tatiane
+327,Abraçadeira Zinco,8944,15:02:00,Isabela
+328,Eixo Aço SAE 1045,6708,8:57:00,Renata
+329,Terminal Tungstênio,4046,17:30:00,Isabela
+330,Correia Aço inox 316,7141,10:54:00,Priscila
+331,Correia Alumínio anodizado,6996,15:37:00,Fernanda
+332,Parafuso Nylon,1840,13:00:00,Fábio
+333,Rolamento PEEK,1639,13:14:00,Adriana
+334,Conector Alumínio anodizado,3785,11:10:00,Adriana
+335,Bucha PVC rígido,4072,8:36:00,Isabela
+336,Correia Delrin,8276,17:18:00,Larissa
+337,Mola Tungstênio,1073,17:57:00,Larissa
+338,Porca Titânio,4729,15:09:00,Fernanda
+339,Arruela Vulcanite,8820,12:05:00,Fernanda
+340,Porca Cerâmica técnica,7213,18:33:00,Simone
+341,Suporte Zinco,8542,7:09:00,Fábio
+342,Engrenagem Zinco,4946,9:44:00,Renata
+343,Parafuso Titânio,5337,9:41:00,Larissa
+344,Retentor Aço inox 316,419,14:08:00,Thiago
+345,Conector Aço SAE 1020,6398,10:42:00,Fernanda
+346,Correia Molibdênio,8142,18:19:00,Adriana
+347,Abraçadeira PTFE,5515,8:52:00,Fábio
+348,Conector Zinco,5099,15:51:00,Cristiane
+349,Filtro Zamak,3448,14:24:00,Tatiane
+350,Eixo Magnésio,7226,7:47:00,Douglas
+351,Retentor Borracha nitrílica,7950,18:16:00,Marcelo
+352,Arruela Fibra de carbono,1175,16:22:00,Cristiane
+353,Rolamento Borracha EPDM,447,16:25:00,Leandro
+354,Conector Molibdênio,1428,17:51:00,Douglas
+355,Correia Zamak,2153,18:06:00,Cristiane
+356,Suporte Fibra de vidro,3314,16:58:00,Marcelo
+357,Abraçadeira Bronze,5279,8:54:00,Evandro
+358,Parafuso Alumínio anodizado,7113,13:09:00,Henrique
+359,Mangueira Vulcanite,8915,14:55:00,Simone
+360,Mangueira Delrin,7011,9:38:00,Vanessa
+361,Pino Borracha natural,1167,15:47:00,Fábio
+362,Rolamento Borracha natural,8183,8:05:00,Douglas
+363,Abraçadeira Nylon,8505,13:57:00,Fábio
+364,Terminal Polipropileno,3519,11:11:00,Henrique
+365,Bucha Aço SAE 1020,8570,12:34:00,Tatiane
+366,Arruela PTFE,1773,17:02:00,Adriana
+367,Parafuso Polipropileno,1859,16:11:00,Gustavo
+368,Bucha Magnésio,4625,16:39:00,Vinícius
+369,Arruela Polietileno,2313,12:07:00,Tatiane
+370,Engrenagem PTFE,9916,15:14:00,Marcelo
+371,Pino Polietileno,3889,9:26:00,Fábio
+372,Mangueira Fibra de vidro,4922,9:59:00,Tatiane
+373,Abraçadeira Polietileno,9163,12:03:00,Douglas
+374,Terminal Molibdênio,9623,8:06:00,Adriana
+375,Junta Polietileno,1403,17:37:00,Thiago
+376,Rolamento ABS,6587,14:49:00,Adriana
+377,Pino Ferro fundido nodular,3028,16:41:00,Simone
+378,Correia Manganês,218,13:16:00,Vinícius
+379,Junta Borracha silicone,8557,8:21:00,Larissa
+380,Anel Aço zincado,1426,9:56:00,Vinícius
+381,Junta Bronze,7028,9:03:00,Larissa
+382,Porca Poliamida,1075,13:51:00,Renata
+383,Mola Aço zincado,8545,8:02:00,Renata
+384,Polia Aço zincado,9069,17:32:00,Gustavo
+385,Junta Magnésio,8918,8:06:00,Fábio
+386,Filtro Bronze,2359,7:45:00,Thiago
+387,Engrenagem Cobalto,607,16:09:00,Cristiane
+388,Engrenagem Cobre,594,17:52:00,Rodrigo
+389,Suporte Bronze,4112,15:10:00,Tatiane
+390,Parafuso Policarbonato,9831,14:54:00,Vanessa
+391,Rolamento Zamak,2722,8:04:00,Henrique
+392,Bucha Polietileno,4363,12:10:00,Tatiane
+393,Rolamento Aço SAE 1045,130,18:32:00,Rodrigo
+394,Mola Aço temperado,2685,7:53:00,Fábio
+395,Correia Zinco,1,16:53:00,Rodrigo
+396,Porca Ferro fundido nodular,9485,18:21:00,Priscila
+397,Junta PTFE,6894,11:25:00,Isabela
+398,Parafuso Bronze,8009,8:47:00,Fernanda
+399,Terminal Borracha silicone,332,15:15:00,Douglas
+400,Mola Aço D2,5573,13:20:00,Tatiane
+401,Terminal Fibra de carbono,9161,7:36:00,Fábio
+402,Conector Titânio,4847,11:46:00,Larissa
+403,Conector Latão,1544,15:13:00,Adriana
+404,Anel Borracha natural,2092,13:05:00,Simone
+405,Suporte Aço temperado,3960,13:45:00,Thiago
+406,Engrenagem Borracha natural,2367,11:28:00,Fernanda
+407,Filtro Tungstênio,962,15:16:00,Larissa
+408,Filtro Borracha nitrílica,2664,7:06:00,Adriana
+409,Retentor Manganês,3269,14:30:00,Marcelo
+410,Porca Aço galvanizado,5126,11:21:00,Rodrigo
+411,Terminal Ferro fundido cinzento,3867,16:30:00,Henrique
+412,Retentor Delrin,9949,10:50:00,Rodrigo
+413,Engrenagem Aço carbono,4797,7:29:00,Renata
+414,Mola Ferro fundido nodular,1683,13:19:00,Cristiane
+415,Rolamento Polipropileno,9307,16:41:00,Isabela
+416,Suporte Acrílico,1093,17:04:00,Cristiane
+417,Anel Zamak,9135,14:04:00,Isabela
+418,Mangueira Cortiça,6518,7:59:00,Tatiane
+419,Conector Aço galvanizado,7117,12:10:00,Fernanda
+420,Pino Borracha nitrílica,1685,12:03:00,Leandro
+421,Pino Latão,573,15:06:00,Henrique
+422,Parafuso Borracha silicone,320,8:40:00,Tatiane
+423,Suporte Manganês,6899,14:52:00,Isabela
+424,Eixo Zinco,130,10:56:00,Fábio
+425,Junta Aço SAE 1020,1790,15:37:00,Fábio
+426,Retentor Cobalto,1860,12:48:00,Simone
+427,Bucha Aço temperado,6924,11:01:00,Vanessa
+428,Parafuso Ferro fundido nodular,4629,10:44:00,Isabela
+429,Polia Polipropileno,6602,12:17:00,Leandro
+430,Correia Cromo,9698,13:45:00,Fábio
+431,Correia PTFE,8650,11:45:00,Marcelo
+432,Terminal Grafite,6425,15:51:00,Larissa
+433,Parafuso Aço SAE 1020,9988,14:07:00,Cristiane
+434,Pino PEEK,5352,7:23:00,Evandro
+435,Eixo Aço H13,7818,16:53:00,Priscila
+436,Mangueira Polipropileno,5263,8:04:00,Fábio
+437,Engrenagem Fibra de vidro,710,13:18:00,Vanessa
+438,Abraçadeira Latão,5141,7:29:00,Fernanda
+439,Mangueira Magnésio,7903,10:04:00,Leandro
+440,Pino PTFE,9978,12:19:00,Renata
+441,Eixo Polietileno,9000,15:42:00,Leandro
+442,Arruela ABS,92,7:41:00,Gustavo
+443,Filtro Titânio,7206,8:53:00,Larissa
+444,Engrenagem Ferro fundido nodular,5064,13:59:00,Simone
+445,Arruela Acrílico,5578,11:06:00,Fábio
+446,Suporte Aço H13,4548,13:31:00,Douglas
+447,Bucha ABS,9100,16:04:00,Simone
+448,Correia Latão,6232,16:25:00,Priscila
+449,Mola Polietileno,2710,15:40:00,Priscila
+450,Conector Teflon,9240,18:17:00,Priscila
+451,Engrenagem Aço galvanizado,1882,8:11:00,Leandro
+452,Polia Polietileno,8663,8:59:00,Vanessa
+453,Conector Níquel,4395,17:06:00,Thiago
+454,Engrenagem Grafite,2240,13:25:00,Isabela
+455,Porca Zinco,9869,11:35:00,Henrique
+456,Mangueira ABS,4909,9:27:00,Simone
+457,Engrenagem Bronze,7145,10:47:00,Fábio
+458,Engrenagem Molibdênio,8099,13:51:00,Larissa
+459,Suporte Borracha neoprene,2253,17:54:00,Thiago
+460,Abraçadeira Cromo,1546,10:05:00,Douglas
+461,Suporte Borracha EPDM,3590,15:13:00,Henrique
+462,Engrenagem Alumínio,2961,10:20:00,Douglas
+463,Pino Aço SAE 1020,3836,12:21:00,Evandro
+464,Abraçadeira Aço carbono,3721,18:49:00,Larissa
+465,Conector Aço carbono,6445,15:20:00,Marcelo
+466,Suporte Fibra de carbono,8191,15:01:00,Vinícius
+467,Abraçadeira Magnésio,8713,14:46:00,Cristiane
+468,Junta Alumínio anodizado,4554,7:36:00,Evandro
+469,Engrenagem Acrílico,451,10:36:00,Simone
+470,Conector Fibra de carbono,6937,7:50:00,Douglas
+471,Rolamento Delrin,873,13:16:00,Thiago
+472,Pino Borracha neoprene,808,12:23:00,Larissa
+473,Terminal PTFE,1146,11:19:00,Renata
+474,Conector Acrílico,3488,17:02:00,Priscila
+475,Mangueira Borracha neoprene,5010,17:24:00,Gustavo
+476,Correia Cobalto,6918,11:40:00,Renata
+477,Conector Tungstênio,9328,17:20:00,Evandro
+478,Pino Fibra de carbono,44,18:00:00,Larissa
+479,Bucha Ferro fundido cinzento,4675,11:07:00,Priscila
+480,Correia Borracha nitrílica,1265,8:48:00,Fábio
+481,Conector Aço temperado,6971,18:04:00,Fernanda
+482,Terminal Alumínio anodizado,7917,9:42:00,Thiago
+483,Mangueira Ferro fundido nodular,1207,18:02:00,Thiago
+484,Anel Borracha EPDM,8905,14:14:00,Isabela
+485,Retentor Acrílico,2054,16:30:00,Simone
+486,Anel Magnésio,5702,7:25:00,Renata
+487,Filtro Borracha natural,8134,7:34:00,Cristiane
+488,Polia Alumínio,2415,12:21:00,Adriana
+489,Mangueira Aço D2,6887,15:11:00,Simone
+490,Abraçadeira Zamak,5213,8:18:00,Isabela
+491,Junta Delrin,9405,15:08:00,Douglas
+492,Mangueira Aço SAE 1045,9401,14:43:00,Vanessa
+493,Mola Zinco,1397,11:06:00,Marcelo
+494,Engrenagem Aço temperado,7438,17:41:00,Larissa
+495,Polia Alumínio anodizado,8247,14:19:00,Thiago
+496,Porca Cromo,748,17:13:00,Priscila
+497,Rolamento Alumínio anodizado,9110,11:17:00,Rodrigo
+498,Parafuso Aço inox 316,8283,9:10:00,Vinícius
+499,Arruela Fibra de vidro,2995,8:13:00,Henrique
+500,Retentor Ferro fundido cinzento,1500,8:10:00,Fernanda
+501,Conector Aço inox 316,7728,18:24:00,Marcelo
+502,Eixo Aço inox 304,1709,15:48:00,Vanessa
+503,Terminal Cerâmica técnica,9858,15:40:00,Priscila
+504,Retentor Aço inox 304,4705,12:56:00,Thiago
+505,Mangueira Aço inox 304,2075,7:19:00,Larissa
+506,Abraçadeira Titânio,3919,16:21:00,Leandro
+507,Suporte PEEK,3586,8:05:00,Douglas
+508,Arruela Borracha nitrílica,8963,18:26:00,Isabela
+509,Correia Cortiça,3481,10:47:00,Rodrigo
+510,Mola Nylon,1624,14:04:00,Henrique
+511,Porca Aço SAE 1020,1918,10:51:00,Simone
+512,Pino Acrílico,5401,14:58:00,Rodrigo
+513,Filtro Aço SAE 1020,7042,16:32:00,Cristiane
+514,Retentor Aço zincado,8378,7:11:00,Vanessa
+515,Abraçadeira PVC rígido,6421,13:47:00,Vanessa
+516,Bucha Borracha natural,1338,8:59:00,Priscila
+517,Arruela Manganês,2273,15:38:00,Vinícius
+518,Filtro Nylon,9581,17:19:00,Douglas
+519,Junta Acrílico,4626,9:59:00,Marcelo
+520,Porca Grafite,4072,8:17:00,Larissa
+521,Anel PVC rígido,1890,10:01:00,Rodrigo
+522,Conector Aço zincado,8489,10:00:00,Thiago
+523,Filtro Zinco,1251,7:43:00,Renata
+524,Parafuso Zinco,2040,11:49:00,Isabela
+525,Arruela Latão,6311,11:00:00,Vanessa
+526,Pino Aço galvanizado,6084,17:41:00,Rodrigo
+527,Conector Polipropileno,1225,17:52:00,Gustavo
+528,Mangueira Poliamida,6108,15:12:00,Tatiane
+529,Suporte Ferro fundido nodular,3246,17:20:00,Vanessa
+530,Parafuso Acrílico,8545,7:40:00,Vinícius
+531,Polia Acrílico,221,13:45:00,Adriana
+532,Abraçadeira Fibra de vidro,9269,18:34:00,Tatiane
+533,Abraçadeira Borracha neoprene,5819,10:46:00,Tatiane
+534,Filtro Níquel,4957,9:48:00,Fernanda
+535,Anel Delrin,8402,14:42:00,Isabela
+536,Engrenagem Aço SAE 1045,4751,14:31:00,Evandro
+537,Porca Aço inox 304,20,8:46:00,Vanessa
+538,Suporte Polipropileno,6898,16:52:00,Adriana
+539,Rolamento Nylon,3703,11:20:00,Tatiane
+540,Junta Latão,3646,17:50:00,Cristiane
+541,Filtro Ferro fundido cinzento,3979,8:42:00,Adriana
+542,Terminal Manganês,7923,13:27:00,Isabela
+543,Bucha PTFE,9211,10:23:00,Douglas
+544,Retentor Nylon,8886,16:04:00,Leandro
+545,Polia Borracha neoprene,9209,12:48:00,Larissa
+546,Mangueira Latão,5572,13:32:00,Douglas
+547,Parafuso Cortiça,2360,7:54:00,Leandro
+548,Polia Zinco,6945,13:04:00,Cristiane
+549,Eixo Fibra de carbono,6594,16:04:00,Gustavo
+550,Conector Borracha neoprene,6175,8:15:00,Simone
+551,Retentor PTFE,1013,9:34:00,Rodrigo
+552,Terminal Aço galvanizado,6478,13:34:00,Tatiane
+553,Mola Delrin,9703,13:11:00,Cristiane
+554,Terminal Aço SAE 1020,6132,11:25:00,Gustavo
+555,Arruela Aço carbono,2584,7:44:00,Tatiane
+556,Bucha Alumínio anodizado,9450,15:03:00,Isabela
+557,Mangueira Aço galvanizado,3879,8:07:00,Douglas
+558,Bucha Policarbonato,8452,18:51:00,Vanessa
+559,Conector Polietileno,3819,10:45:00,Simone
+560,Suporte Zamak,9157,17:00:00,Priscila
+561,Conector Magnésio,6003,9:57:00,Cristiane
+562,Porca Manganês,6388,18:01:00,Simone
+563,Eixo Policarbonato,6968,13:21:00,Rodrigo
+564,Arruela Aço H13,5027,16:24:00,Fernanda
+565,Junta Aço D2,2253,11:19:00,Evandro
+566,Mangueira Zamak,9589,18:09:00,Larissa
+567,Parafuso Cobalto,6444,8:58:00,Fábio
+568,Junta Fibra de vidro,2925,18:27:00,Renata
+569,Suporte Poliamida,7796,18:23:00,Cristiane
+570,Engrenagem Borracha silicone,427,15:58:00,Vanessa
+571,Porca Aço D2,6473,9:02:00,Tatiane
+572,Mangueira Borracha natural,3166,12:15:00,Priscila
+573,Suporte Borracha nitrílica,6014,15:29:00,Simone
+574,Correia Poliamida,1123,16:27:00,Thiago
+575,Eixo Latão,5013,10:02:00,Isabela
+576,Terminal Vulcanite,2168,14:14:00,Marcelo
+577,Abraçadeira Borracha nitrílica,9036,10:22:00,Marcelo
+578,Abraçadeira Fibra de carbono,5753,18:00:00,Leandro
+579,Bucha Manganês,5652,16:31:00,Henrique
+580,Mangueira Borracha silicone,3131,12:24:00,Adriana
+581,Anel Fibra de vidro,5925,10:18:00,Vanessa
+582,Engrenagem Fibra de carbono,1670,8:08:00,Rodrigo
+583,Rolamento Aço SAE 1020,7145,8:17:00,Simone
+584,Pino Aço SAE 1045,3490,7:38:00,Marcelo
+585,Correia Níquel,7441,16:09:00,Fábio
+586,Abraçadeira ABS,129,17:58:00,Renata
+587,Junta Grafite,8459,14:32:00,Douglas
+588,Rolamento Cobre,2604,13:26:00,Marcelo
+589,Eixo Cerâmica técnica,3729,18:39:00,Tatiane
+590,Bucha Nylon,9911,8:36:00,Rodrigo
+591,Rolamento PVC rígido,9127,7:45:00,Gustavo
+592,Suporte Aço inox 304,451,15:23:00,Simone
+593,Eixo Borracha silicone,3343,16:43:00,Fernanda
+594,Arruela Ferro fundido cinzento,5095,8:44:00,Douglas
+595,Pino Vulcanite,2070,14:09:00,Simone
+596,Filtro Ferro fundido nodular,9370,7:35:00,Adriana
+597,Terminal Acrílico,6225,16:07:00,Marcelo
+598,Correia Borracha EPDM,7574,12:53:00,Evandro
+599,Junta PEEK,627,10:15:00,Leandro
+600,Mola Borracha natural,5082,8:07:00,Douglas
+601,Junta Ferro fundido cinzento,5858,16:13:00,Vanessa
+602,Filtro Magnésio,7490,14:14:00,Evandro
+603,Mangueira Cobalto,3994,14:54:00,Gustavo
+604,Bucha Poliamida,5751,15:30:00,Larissa
+605,Abraçadeira Aço SAE 1045,206,16:36:00,Cristiane
+606,Retentor Cortiça,2474,16:50:00,Gustavo
+607,Correia Borracha neoprene,2758,16:55:00,Evandro
+608,Polia Grafite,7429,10:46:00,Fernanda
+609,Terminal Delrin,5018,11:10:00,Vanessa
+610,Correia Cobre,6472,11:31:00,Adriana
+611,Retentor Borracha EPDM,3569,13:22:00,Adriana
+612,Anel Manganês,8565,14:22:00,Renata
+613,Porca Tungstênio,640,14:29:00,Vinícius
+614,Polia Ferro fundido nodular,3058,13:12:00,Rodrigo
+615,Polia Aço H13,7642,16:40:00,Vanessa
+616,Mola Aço H13,3470,13:49:00,Renata
+617,Eixo Vulcanite,907,7:26:00,Evandro
+618,Mola Borracha neoprene,5775,11:17:00,Evandro
+619,Eixo Titânio,2078,13:56:00,Simone
+620,Bucha Aço SAE 1045,4033,14:59:00,Marcelo
+621,Terminal Borracha natural,5152,11:02:00,Larissa
+622,Abraçadeira Molibdênio,5416,11:28:00,Larissa
+623,Conector Borracha natural,6830,16:57:00,Douglas
+624,Parafuso Cobre,7432,9:54:00,Henrique
+625,Junta Cromo,159,12:03:00,Marcelo
+626,Arruela Cortiça,1335,8:06:00,Douglas
+627,Eixo PEEK,9938,9:55:00,Leandro
+628,Correia Aço temperado,8535,7:55:00,Tatiane
+629,Conector Manganês,8446,11:34:00,Tatiane
+630,Anel Teflon,1144,15:49:00,Isabela
+631,Mangueira Zinco,4950,12:18:00,Fábio
+632,Porca PEEK,7317,12:36:00,Douglas
+633,Abraçadeira Manganês,6784,14:34:00,Tatiane
+634,Rolamento Policarbonato,5925,18:30:00,Cristiane
+635,Rolamento Níquel,8564,12:28:00,Vanessa
+636,Suporte Alumínio anodizado,4374,12:04:00,Fábio
+637,Retentor Vulcanite,3722,11:08:00,Vinícius
+638,Retentor Aço SAE 1045,8934,13:12:00,Fábio
+639,Terminal ABS,2803,9:21:00,Evandro
+640,Pino Alumínio anodizado,2596,7:05:00,Tatiane
+641,Abraçadeira Policarbonato,9654,18:42:00,Henrique
+642,Pino PVC rígido,9313,13:49:00,Renata
+643,Mangueira Fibra de carbono,9741,12:55:00,Douglas
+644,Bucha Zinco,2720,18:37:00,Isabela
+645,Conector Ferro fundido nodular,2932,12:39:00,Gustavo
+646,Abraçadeira Aço temperado,3230,15:15:00,Vinícius
+647,Junta PVC rígido,3582,18:32:00,Tatiane
+648,Rolamento Latão,3729,9:55:00,Thiago
+649,Arruela Cromo,3214,13:30:00,Henrique
+650,Anel Poliamida,4228,17:02:00,Cristiane
+651,Porca ABS,2160,7:52:00,Fábio
+652,Terminal Aço SAE 1045,9278,16:48:00,Renata
+653,Eixo Aço temperado,4424,13:01:00,Marcelo
+654,Porca PVC rígido,8724,13:41:00,Evandro
+655,Filtro Aço zincado,3947,14:00:00,Priscila
+656,Mola Titânio,6578,8:00:00,Tatiane
+657,Anel Alumínio anodizado,7795,12:29:00,Larissa
+658,Conector ABS,2548,8:40:00,Renata
+659,Pino Delrin,6683,7:23:00,Larissa
+660,Rolamento Aço carbono,8304,18:06:00,Larissa
+661,Conector Borracha EPDM,9175,10:20:00,Renata
+662,Correia Cerâmica técnica,6128,11:10:00,Larissa
+663,Correia Acrílico,8946,14:27:00,Priscila
+664,Rolamento Zinco,4261,13:16:00,Isabela
+665,Rolamento Acrílico,1894,17:49:00,Rodrigo
+666,Mangueira Grafite,6158,16:08:00,Cristiane
+667,Porca Aço inox 316,257,10:06:00,Tatiane
+668,Junta Manganês,1969,13:30:00,Evandro
+669,Mola Teflon,9032,10:48:00,Renata
+670,Conector Policarbonato,9652,18:26:00,Gustavo
+671,Parafuso ABS,108,18:49:00,Leandro
+672,Abraçadeira Alumínio anodizado,4423,15:07:00,Evandro
+673,Suporte Teflon,4318,14:16:00,Isabela
+674,Terminal Polietileno,3091,16:54:00,Adriana
+675,Conector Delrin,3880,10:29:00,Marcelo
+676,Anel Zinco,3016,7:48:00,Simone
+677,Conector Cortiça,9832,12:07:00,Adriana
+678,Eixo Alumínio anodizado,5659,12:56:00,Adriana
+679,Anel Aço H13,7341,7:47:00,Rodrigo
+680,Polia Nylon,359,13:37:00,Vanessa
+681,Eixo PTFE,5484,16:06:00,Adriana
+682,Parafuso Ferro fundido cinzento,9906,12:01:00,Simone
+683,Parafuso Teflon,352,9:34:00,Marcelo
+684,Bucha Cromo,7138,7:53:00,Leandro
+685,Pino Cerâmica técnica,3174,17:21:00,Douglas
+686,Parafuso Borracha natural,8122,17:02:00,Marcelo
+687,Mola Magnésio,7574,17:51:00,Cristiane
+688,Junta Aço SAE 1045,4810,12:53:00,Priscila
+689,Correia Ferro fundido cinzento,5437,11:39:00,Fábio
+690,Junta Aço inox 316,3581,16:46:00,Vanessa
+691,Engrenagem Manganês,2726,9:53:00,Rodrigo
+692,Eixo Nylon,673,12:26:00,Henrique
+693,Anel Níquel,737,16:12:00,Henrique
+694,Parafuso Aço carbono,4448,12:16:00,Isabela
+695,Rolamento Molibdênio,2363,7:54:00,Evandro
+696,Suporte Aço zincado,4367,18:30:00,Douglas
+697,Anel PEEK,5584,15:03:00,Isabela
+698,Rolamento Manganês,9647,7:28:00,Isabela
+699,Anel Polietileno,80,17:45:00,Isabela
+700,Conector Borracha silicone,2931,13:42:00,Vinícius
+701,Arruela Alumínio,3493,11:39:00,Evandro
+702,Arruela Aço SAE 1045,3204,17:12:00,Isabela
+703,Polia Borracha nitrílica,4092,13:41:00,Simone
+704,Bucha Alumínio,1242,16:27:00,Thiago
+705,Junta Fibra de carbono,8487,7:51:00,Rodrigo
+706,Retentor Cerâmica técnica,7498,15:01:00,Gustavo
+707,Anel Polipropileno,5488,15:17:00,Priscila
+708,Mangueira Cerâmica técnica,9522,13:00:00,Henrique
+709,Terminal Fibra de vidro,599,16:45:00,Fábio
+710,Anel Aço temperado,5250,11:57:00,Evandro
+711,Filtro Polietileno,3460,18:55:00,Rodrigo
+712,Engrenagem Alumínio anodizado,7757,11:21:00,Henrique
+713,Engrenagem Aço zincado,5961,7:03:00,Cristiane
+714,Mangueira Molibdênio,2587,16:14:00,Rodrigo
+715,Bucha Titânio,5232,16:00:00,Evandro
+716,Pino Bronze,7621,14:23:00,Fábio
+717,Pino Ferro fundido cinzento,9292,7:04:00,Douglas
+718,Porca Cortiça,8032,13:46:00,Isabela
+719,Engrenagem Tungstênio,1762,16:33:00,Isabela
+720,Polia Níquel,5567,10:25:00,Simone
+721,Eixo Níquel,1431,12:48:00,Marcelo
+722,Bucha Cerâmica técnica,3665,15:56:00,Larissa
+723,Eixo Borracha nitrílica,857,11:37:00,Leandro
+724,Engrenagem PEEK,9380,10:31:00,Vanessa
+725,Junta Níquel,7142,15:55:00,Tatiane
+726,Eixo Cobalto,287,14:49:00,Rodrigo
+727,Suporte Cobalto,900,13:13:00,Thiago
+728,Engrenagem Nylon,3929,7:57:00,Henrique
+729,Abraçadeira Cortiça,639,15:57:00,Fernanda
+730,Anel Aço galvanizado,725,17:42:00,Fernanda
+731,Porca Nylon,6113,17:27:00,Fábio
+732,Retentor Grafite,5895,15:59:00,Vanessa
+733,Mangueira Polietileno,766,9:17:00,Evandro
+734,Parafuso PVC rígido,2759,12:11:00,Renata
+735,Polia PEEK,4658,7:10:00,Vanessa
+736,Polia Cobalto,8941,13:02:00,Cristiane
+737,Arruela Polipropileno,9173,15:03:00,Thiago
+738,Retentor Níquel,4175,10:23:00,Fábio
+739,Pino Nylon,8868,11:50:00,Priscila
+740,Rolamento Borracha nitrílica,7251,15:27:00,Douglas
+741,Polia Fibra de vidro,8576,9:04:00,Larissa
+742,Eixo Teflon,173,11:31:00,Evandro
+743,Parafuso Fibra de vidro,3278,11:42:00,Henrique
+744,Junta Zinco,5574,8:41:00,Gustavo
+745,Retentor Magnésio,4122,15:20:00,Vinícius
+746,Junta Borracha neoprene,7484,16:57:00,Leandro
+747,Engrenagem Latão,2851,18:30:00,Isabela
+748,Engrenagem Polipropileno,3672,8:50:00,Fernanda
+749,Eixo Poliamida,5632,9:29:00,Priscila
+750,Anel Cerâmica técnica,8538,7:46:00,Simone
+751,Suporte Molibdênio,7015,10:22:00,Cristiane
+752,Mola Borracha EPDM,8923,13:03:00,Tatiane
+753,Bucha Molibdênio,4546,8:12:00,Gustavo
+754,Mangueira Aço SAE 1020,1222,15:59:00,Douglas
+755,Mola Manganês,7126,8:18:00,Tatiane
+756,Terminal Latão,1915,11:08:00,Douglas
+757,Correia Fibra de carbono,2550,15:24:00,Vinícius
+758,Arruela Zamak,2925,14:05:00,Gustavo
+759,Rolamento Borracha silicone,4246,15:11:00,Douglas
+760,Terminal Poliamida,8815,11:02:00,Rodrigo
+761,Terminal PVC rígido,2325,16:02:00,Fernanda
+762,Arruela Policarbonato,7814,12:44:00,Henrique
+763,Junta Teflon,2037,9:31:00,Priscila
+764,Pino Aço inox 316,1678,13:28:00,Henrique
+765,Mangueira Titânio,2121,11:22:00,Thiago
+766,Rolamento Cortiça,6238,16:36:00,Cristiane
+767,Rolamento Tungstênio,2413,11:16:00,Gustavo
+768,Retentor Alumínio,3245,9:11:00,Renata
+769,Mangueira PTFE,5823,12:07:00,Cristiane
+770,Mola Cortiça,8209,17:47:00,Priscila
+771,Abraçadeira Vulcanite,7530,15:51:00,Evandro
+772,Retentor Poliamida,8544,12:01:00,Priscila
+773,Mangueira PEEK,9855,13:45:00,Rodrigo
+774,Mangueira Cobre,3969,7:06:00,Douglas
+775,Rolamento Titânio,3572,7:58:00,Vinícius
+776,Abraçadeira Níquel,6931,10:47:00,Simone
+777,Conector Poliamida,3182,7:04:00,Adriana
+778,Arruela Aço SAE 1020,4403,7:20:00,Henrique
+779,Arruela Cobre,9881,8:25:00,Larissa
+780,Mola Aço SAE 1020,6311,10:41:00,Henrique
+781,Mola Aço carbono,5541,16:04:00,Adriana
+782,Polia Aço inox 316,7799,18:01:00,Larissa
+783,Engrenagem Vulcanite,9570,9:56:00,Tatiane
+784,Eixo Cortiça,2555,12:02:00,Vanessa
+785,Rolamento Vulcanite,7886,17:30:00,Simone
+786,Pino Poliamida,3471,17:51:00,Vanessa
+787,Abraçadeira Delrin,5058,13:16:00,Adriana
+788,Terminal Ferro fundido nodular,6025,12:22:00,Vinícius
+789,Engrenagem Teflon,1269,16:42:00,Simone
+790,Anel Aço SAE 1045,7202,14:34:00,Douglas
+791,Porca Alumínio anodizado,8460,16:42:00,Gustavo
+792,Terminal Cortiça,2606,14:55:00,Fábio
+793,Parafuso Grafite,3429,8:27:00,Leandro
+794,Retentor Borracha natural,6388,16:07:00,Vinícius
+795,Junta Poliamida,920,17:13:00,Tatiane
+796,Polia Manganês,7167,18:55:00,Vinícius
+797,Filtro Vulcanite,2503,18:35:00,Cristiane
+798,Bucha Aço H13,6430,17:13:00,Marcelo
+799,Filtro Manganês,8127,18:11:00,Vanessa
+800,Arruela Alumínio anodizado,3853,11:08:00,Isabela
+801,Retentor Aço carbono,3350,10:37:00,Thiago
+802,Anel Cortiça,3832,10:33:00,Vanessa
+803,Retentor Latão,512,12:32:00,Adriana
+804,Mangueira Níquel,5382,17:10:00,Henrique
+805,Mola Cerâmica técnica,1738,18:58:00,Henrique
+806,Rolamento Aço inox 316,9295,11:06:00,Simone
+807,Conector Ferro fundido cinzento,3163,14:28:00,Cristiane
+808,Eixo Zamak,3499,12:59:00,Simone
+809,Anel Borracha neoprene,8985,11:48:00,Vanessa
+810,Mola Molibdênio,6032,8:43:00,Adriana
+811,Anel Molibdênio,9113,19:00:00,Larissa
+812,Polia PVC rígido,882,13:15:00,Simone
+813,Suporte Ferro fundido cinzento,1156,18:49:00,Marcelo
+814,Filtro Aço SAE 1045,7265,8:11:00,Tatiane
+815,Abraçadeira Cobalto,9565,15:01:00,Fábio
+816,Mangueira Borracha EPDM,7249,17:15:00,Rodrigo
+817,Parafuso Cerâmica técnica,1021,11:17:00,Fábio
+818,Abraçadeira Poliamida,1539,17:27:00,Cristiane
+819,Filtro Aço inox 316,1531,8:55:00,Vinícius
+820,Correia Polietileno,1684,7:18:00,Henrique
+821,Retentor Aço D2,2715,12:06:00,Evandro
+822,Arruela Aço inox 316,8985,9:50:00,Isabela
+823,Bucha Aço galvanizado,2040,16:50:00,Vinícius
+824,Polia Aço carbono,6750,15:27:00,Leandro
+825,Bucha Aço D2,5718,15:29:00,Rodrigo
+826,Suporte Aço SAE 1020,5493,15:55:00,Simone
+827,Terminal Teflon,7841,8:03:00,Rodrigo
+828,Polia Policarbonato,2517,15:55:00,Simone
+829,Parafuso Delrin,4593,13:10:00,Fábio
+830,Filtro Policarbonato,9700,12:06:00,Simone
+831,Rolamento Aço H13,8959,12:21:00,Renata
+832,Rolamento Aço zincado,9547,8:08:00,Gustavo
+833,Conector Grafite,5221,18:25:00,Leandro
+834,Parafuso PTFE,9625,12:15:00,Tatiane
+835,Porca Delrin,8834,9:43:00,Fábio
+836,Suporte Delrin,6399,7:39:00,Evandro
+837,Arruela Aço temperado,4659,18:46:00,Thiago
+838,Arruela Tungstênio,5663,16:57:00,Cristiane
+839,Porca Latão,6931,10:48:00,Priscila
+840,Junta Borracha nitrílica,6476,8:52:00,Vanessa
+841,Rolamento Cromo,9549,11:16:00,Larissa
+842,Conector Cobalto,930,18:16:00,Fernanda
+843,Suporte Policarbonato,8221,17:45:00,Larissa
+844,Pino Teflon,4970,12:17:00,Priscila
+845,Parafuso Manganês,8653,17:33:00,Marcelo
+846,Eixo Cobre,515,15:32:00,Douglas
+847,Rolamento PTFE,3897,15:19:00,Larissa
+848,Arruela PVC rígido,4760,11:56:00,Adriana
+849,Suporte Cromo,7060,9:33:00,Rodrigo
+850,Suporte Alumínio,5888,16:50:00,Larissa
+851,Rolamento Aço galvanizado,9333,8:56:00,Priscila
+852,Terminal Zamak,2970,16:27:00,Renata
+853,Eixo Tungstênio,1699,16:50:00,Marcelo
+854,Correia Fibra de vidro,6136,7:36:00,Marcelo
+855,Mangueira Ferro fundido cinzento,6755,15:53:00,Vanessa
+856,Pino Aço H13,1200,13:23:00,Evandro
+857,Rolamento Fibra de vidro,8078,17:27:00,Evandro
+858,Terminal Zinco,1952,13:21:00,Marcelo
+859,Terminal Nylon,5205,7:06:00,Douglas
+860,Bucha Cobalto,1180,13:45:00,Priscila
+861,Eixo Bronze,2197,7:16:00,Douglas
+862,Mangueira Bronze,439,14:09:00,Gustavo
+863,Anel ABS,8551,7:40:00,Tatiane
+864,Mola Alumínio anodizado,5752,10:19:00,Fábio
+865,Conector Cobre,3357,7:08:00,Vanessa
+866,Junta Cobalto,601,12:04:00,Leandro
+867,Eixo Aço carbono,4553,8:30:00,Fernanda
+868,Mola PEEK,8891,15:53:00,Fábio
+869,Mola Ferro fundido cinzento,4573,16:56:00,Douglas
+870,Porca Aço H13,3847,13:23:00,Rodrigo
+871,Retentor Polietileno,9156,17:06:00,Vanessa
+872,Pino Cobalto,9974,17:40:00,Marcelo
+873,Filtro Acrílico,8105,13:10:00,Tatiane
+874,Conector Aço SAE 1045,1548,7:07:00,Adriana
+875,Filtro Aço galvanizado,8432,7:02:00,Adriana
+876,Retentor Fibra de vidro,6312,12:40:00,Adriana
+877,Engrenagem Cortiça,3624,8:38:00,Douglas
+878,Correia PVC rígido,5328,9:21:00,Cristiane
+879,Porca Aço SAE 1045,605,14:23:00,Gustavo
+880,Parafuso Aço D2,3959,9:21:00,Simone
+881,Eixo Cromo,7524,14:28:00,Cristiane
+882,Anel Vulcanite,9221,8:48:00,Leandro
+883,Terminal Borracha EPDM,395,13:28:00,Rodrigo
+884,Rolamento Ferro fundido nodular,6191,12:58:00,Gustavo
+885,Polia Titânio,9302,18:46:00,Fábio
+886,Suporte Níquel,4136,7:11:00,Adriana
+887,Anel Ferro fundido nodular,9653,16:10:00,Douglas
+888,Engrenagem Polietileno,6889,14:01:00,Simone
+889,Engrenagem Cromo,536,9:46:00,Leandro
+890,Suporte Aço inox 316,2919,16:59:00,Leandro
+891,Filtro Fibra de vidro,4328,10:35:00,Thiago
+892,Eixo Acrílico,6838,7:30:00,Evandro
+893,Suporte Cortiça,5466,7:53:00,Fábio
+894,Arruela Cobalto,5646,17:42:00,Thiago
+895,Terminal Policarbonato,1250,18:41:00,Simone
+896,Engrenagem ABS,774,9:56:00,Gustavo
+897,Anel Cromo,2288,15:49:00,Marcelo
+898,Filtro Grafite,5534,8:34:00,Larissa
+899,Filtro Borracha silicone,5428,10:01:00,Fábio
+900,Junta Aço inox 304,3590,7:49:00,Marcelo
+901,Retentor PEEK,7968,14:35:00,Leandro
+902,Rolamento Magnésio,4589,13:06:00,Thiago
+903,Suporte Vulcanite,1482,11:46:00,Fernanda
+904,Eixo Aço D2,2552,14:14:00,Marcelo
+905,Suporte Aço D2,5225,11:05:00,Fernanda
+906,Pino Aço zincado,9500,11:33:00,Isabela
+907,Pino Molibdênio,3833,10:00:00,Gustavo
+908,Polia Borracha EPDM,2573,16:44:00,Adriana
+909,Filtro Alumínio anodizado,2679,14:28:00,Thiago
+910,Arruela Borracha natural,533,10:53:00,Priscila
+911,Engrenagem Titânio,6131,17:33:00,Cristiane
+912,Pino Níquel,5605,10:31:00,Gustavo
+913,Abraçadeira Borracha silicone,5360,9:01:00,Adriana
+914,Terminal Titânio,4102,9:30:00,Rodrigo
+915,Mangueira PVC rígido,1362,14:07:00,Evandro
+916,Mola PTFE,5305,12:57:00,Simone
+917,Polia Borracha natural,1779,15:09:00,Renata
+918,Correia Borracha silicone,2745,17:16:00,Tatiane
+919,Retentor Aço SAE 1020,3799,11:41:00,Henrique
+920,Mangueira Alumínio anodizado,6797,9:16:00,Fábio
+921,Filtro Aço H13,4007,16:16:00,Henrique
+922,Eixo Fibra de vidro,8911,8:59:00,Douglas
+923,Parafuso Molibdênio,8212,7:43:00,Evandro
+924,Mola Aço SAE 1045,2821,15:52:00,Vanessa
+925,Eixo Borracha neoprene,4396,8:47:00,Vanessa
+926,Filtro Molibdênio,6759,15:19:00,Rodrigo
+927,Polia Aço D2,3529,17:46:00,Rodrigo
+928,Polia Cobre,6268,9:32:00,Larissa
+929,Porca Níquel,4215,9:51:00,Leandro
+930,Filtro Borracha neoprene,787,12:42:00,Tatiane
+931,Parafuso Borracha nitrílica,1510,7:26:00,Henrique
+932,Abraçadeira Aço zincado,174,17:19:00,Fábio
+933,Suporte Borracha natural,7994,12:58:00,Tatiane
+934,Eixo Aço galvanizado,244,13:29:00,Gustavo
+935,Polia Cromo,4679,12:23:00,Simone
+936,Parafuso Níquel,2486,8:49:00,Renata
+937,Retentor Molibdênio,2555,16:22:00,Vanessa
+938,Eixo Delrin,1495,17:40:00,Larissa
+939,Conector Cerâmica técnica,4064,8:27:00,Leandro
+940,Abraçadeira Aço SAE 1020,4030,12:33:00,Marcelo
+941,Abraçadeira Teflon,2567,15:50:00,Marcelo
+942,Porca Fibra de carbono,9183,9:07:00,Tatiane
+943,Bucha Níquel,609,11:03:00,Simone
+944,Junta Molibdênio,6144,7:58:00,Rodrigo
+945,Bucha Borracha EPDM,9140,17:42:00,Evandro
+946,Engrenagem Delrin,8435,7:17:00,Priscila
+947,Arruela Grafite,7091,13:37:00,Isabela
+948,Retentor Policarbonato,5909,16:21:00,Thiago
+949,Polia Magnésio,1967,12:09:00,Tatiane
+950,Eixo Borracha natural,9406,13:52:00,Vanessa
+951,Junta Alumínio,968,13:46:00,Leandro
+952,Terminal PEEK,8177,10:37:00,Priscila
+953,Terminal Cobalto,3372,15:11:00,Fernanda
+954,Junta Cobre,2378,15:56:00,Fábio
+955,Junta Vulcanite,3505,16:43:00,Gustavo
+956,Terminal Aço zincado,6336,12:29:00,Cristiane
+957,Bucha Grafite,78,18:00:00,Fernanda
+958,Porca Aço temperado,5084,14:43:00,Thiago
+959,Porca Borracha EPDM,7936,9:48:00,Evandro
+960,Mola Aço inox 304,3401,10:22:00,Isabela
+961,Retentor Aço temperado,7177,9:50:00,Isabela
+962,Parafuso Borracha neoprene,2081,13:59:00,Renata
+963,Parafuso Aço H13,6709,8:25:00,Henrique
+964,Junta Cerâmica técnica,1333,16:52:00,Cristiane
+965,Filtro PEEK,2415,16:00:00,Larissa
+966,Terminal Borracha neoprene,278,16:39:00,Isabela
+967,Retentor Zinco,1832,10:44:00,Simone
+968,Correia PEEK,9335,18:26:00,Rodrigo
+969,Retentor Tungstênio,2953,14:09:00,Vanessa
+970,Polia Bronze,6655,17:05:00,Henrique
+971,Retentor Titânio,6576,15:31:00,Larissa
+972,Bucha Fibra de vidro,5426,11:00:00,Leandro
+973,Abraçadeira Cerâmica técnica,9574,12:30:00,Vinícius
+974,Bucha Delrin,9893,8:34:00,Thiago
+975,Filtro Aço D2,3560,16:36:00,Fábio
+976,Bucha Aço carbono,859,17:37:00,Priscila
+977,Mola Alumínio,4564,16:15:00,Thiago
+978,Conector PTFE,431,8:04:00,Gustavo
+979,Engrenagem Aço inox 316,3158,15:31:00,Priscila
+980,Rolamento Aço temperado,9848,11:04:00,Henrique
+981,Abraçadeira Borracha EPDM,4989,8:58:00,Priscila
+982,Pino Borracha EPDM,3186,10:23:00,Evandro
+983,Mangueira Borracha nitrílica,6950,12:27:00,Vinícius
+984,Filtro Delrin,6570,11:40:00,Priscila
+985,Anel Titânio,7484,9:58:00,Cristiane
+986,Bucha Cortiça,461,13:04:00,Larissa
+987,Terminal Bronze,4673,18:40:00,Henrique
+988,Correia Aço inox 304,1109,14:58:00,Priscila
+989,Anel Borracha silicone,1160,8:28:00,Leandro
+990,Rolamento Teflon,336,14:23:00,Fábio
+991,Retentor Bronze,6486,13:40:00,Fernanda
+992,Abraçadeira Ferro fundido nodular,6583,18:28:00,Evandro
+993,Porca Cobalto,5724,15:52:00,Renata
+994,Correia Magnésio,575,9:01:00,Fábio
+995,Polia Aço SAE 1045,1461,14:18:00,Fábio
+996,Arruela Titânio,5865,16:43:00,Henrique
+997,Abraçadeira Borracha natural,667,13:20:00,Thiago
+998,Correia Borracha natural,1543,15:59:00,Henrique
+999,Polia PTFE,5826,11:05:00,Marcelo
+1000,Parafuso Latão,2404,12:46:00,Thiago

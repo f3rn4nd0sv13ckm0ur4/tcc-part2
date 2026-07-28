@@ -279,7 +279,6 @@ def salvar_item():
     produto = cursor.fetchone()
 
     if produto:
-
         cursor.execute("""
             UPDATE itens
             SET quantidade = quantidade + %s,
@@ -295,7 +294,6 @@ def salvar_item():
         item_id = produto["id"]
 
     else:
-
         cursor.execute("""
             INSERT INTO itens
             (nome, quantidade, responsavel, horario)
@@ -426,55 +424,111 @@ def importar_estoque_csv():
         return redirect("/estoque.html")
 
     try:
-        stream = io.StringIO(file.stream.read().decode("utf-8-sig"), newline=None)
-        csv_reader = csv.reader(stream)
-        header = next(csv_reader, None)  # Pula o cabeçalho
+        raw_bytes = file.stream.read()
+        if not raw_bytes.strip():
+            return redirect("/estoque.html")
+
+        # Tenta decodificar primeiro com UTF-8-SIG, depois com Latin-1 (padrão Excel Windows)
+        try:
+            conteudo = raw_bytes.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            try:
+                conteudo = raw_bytes.decode("latin-1")
+            except Exception:
+                conteudo = raw_bytes.decode("utf-8", errors="replace")
+
+        linhas_texto = [l for l in conteudo.splitlines() if l.strip()]
+        if not linhas_texto:
+            return redirect("/estoque.html")
+
+        # Detecta o delimitador (, ou ; ou tabulação \t)
+        primeira = linhas_texto[0]
+        if "\t" in primeira:
+            delimitador = "\t"
+        elif ";" in primeira:
+            delimitador = ";"
+        else:
+            delimitador = ","
+
+        stream = io.StringIO(conteudo, newline=None)
+        csv_reader = csv.reader(stream, delimiter=delimitador)
+        
+        primeira_linha = next(csv_reader, None)
+        if not primeira_linha:
+            return redirect("/estoque.html")
+
+        # Verifica se a primeira linha é cabeçalho ou dado real
+        header_test = "".join(primeira_linha).lower()
+        if not ("id" in header_test or "nome" in header_test or "item" in header_test or "quantidade" in header_test):
+            stream.seek(0)
+            csv_reader = csv.reader(stream, delimiter=delimitador)
 
         conexao = conectar()
         cursor = conexao.cursor(dictionary=True)
 
-        for linha in csv_reader:
-            if not linha or len(linha) < 2:
+        import re
+        itens_processados = 0
+
+        for num_linha, linha in enumerate(csv_reader, start=1):
+            if not linha:
                 continue
 
-            if len(linha) >= 5:
-                nome = linha[1].strip()
-                qtd = int(linha[2].strip())
-                horario = linha[3].strip() if linha[3].strip() else None
-                responsavel = linha[4].strip() if linha[4].strip() else "Sistema"
-            elif len(linha) >= 3:
-                nome = linha[0].strip()
-                qtd = int(linha[1].strip())
-                responsavel = linha[2].strip() if linha[2].strip() else "Sistema"
-                horario = linha[3].strip() if len(linha) > 3 and linha[3].strip() else None
-            else:
-                nome = linha[0].strip()
-                qtd = int(linha[1].strip())
-                responsavel = "Sistema"
-                horario = None
+            try:
+                linha_limpa = [c.strip() for c in linha if c is not None]
+                if not linha_limpa or all(len(c) == 0 for c in linha_limpa):
+                    continue
 
-            cursor.execute("SELECT id FROM itens WHERE nome = %s", (nome,))
-            item_existente = cursor.fetchone()
+                # Inteligência de colunas:
+                # Se a 1ª coluna for um número (ID), assume formato [ID, Nome, Qtd, Horario, Responsavel]
+                if linha_limpa[0].isdigit() and len(linha_limpa) >= 3:
+                    nome = linha_limpa[1]
+                    qtd_str = linha_limpa[2]
+                    horario = linha_limpa[3] if len(linha_limpa) >= 4 and linha_limpa[3] else None
+                    responsavel = linha_limpa[4] if len(linha_limpa) >= 5 and linha_limpa[4] else "Sistema"
+                # Se a 1ª coluna for texto (Nome), assume formato [Nome, Qtd, Responsavel...]
+                else:
+                    nome = linha_limpa[0]
+                    qtd_str = linha_limpa[1] if len(linha_limpa) >= 2 else "1"
+                    responsavel = linha_limpa[2] if len(linha_limpa) >= 3 and linha_limpa[2] else "Sistema"
+                    horario = linha_limpa[3] if len(linha_limpa) >= 4 and linha_limpa[3] else None
 
-            if item_existente:
-                cursor.execute("""
-                    UPDATE itens 
-                    SET quantidade = quantidade + %s, responsavel = %s
-                    WHERE id = %s
-                """, (qtd, responsavel, item_existente["id"]))
-            else:
-                cursor.execute("""
-                    INSERT INTO itens (nome, quantidade, responsavel, horario) 
-                    VALUES (%s, %s, %s, %s)
-                """, (nome, qtd, responsavel, horario))
+                if not nome or nome.lower() in ["id", "nome", "item", "quantidade"]:
+                    continue
+
+                # Extrai apenas os números da quantidade (ex: "10un" vira 10)
+                numeros = re.findall(r'\d+', qtd_str)
+                qtd = int(numeros[0]) if numeros else 1
+
+                cursor.execute("SELECT id FROM itens WHERE nome = %s", (nome,))
+                item_existente = cursor.fetchone()
+
+                if item_existente:
+                    cursor.execute("""
+                        UPDATE itens 
+                        SET quantidade = quantidade + %s, responsavel = %s
+                        WHERE id = %s
+                    """, (qtd, responsavel, item_existente["id"]))
+                else:
+                    cursor.execute("""
+                        INSERT INTO itens (nome, quantidade, responsavel, horario) 
+                        VALUES (%s, %s, %s, %s)
+                    """, (nome, qtd, responsavel, horario))
+
+                itens_processados += 1
+
+            except Exception as err_linha:
+                print(f"Aviso linha {num_linha}: {err_linha}")
+                continue
 
         conexao.commit()
         cursor.close()
         conexao.close()
 
+        print(f"Sucesso! {itens_processados} itens importados do CSV.")
         atualizar_csv_local()
+
     except Exception as e:
-        print(f"Erro ao importar CSV: {e}")
+        print(f"Erro geral ao importar CSV: {e}")
 
     return redirect("/estoque.html")
 
