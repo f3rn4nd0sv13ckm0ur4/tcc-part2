@@ -31,11 +31,6 @@
             📋<br>HISTÓRICO
         </a>
 
-        <a href="/exportar_estoque_csv" class="card-btn csv">
-            📥<br>EXPORTAR CSV
-        </a>
-
-    
         <a href="/sair" class="card-btn logout">
             🚪<br>SAIR
         </a>
@@ -48,7 +43,7 @@
 
     </div>
 <div class="brr-pesquisa">
-    <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder=" Pesquisar item no estoque...">
+    <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder="🔍 Pesquisar item no estoque...">
 </div>
     <!-- TABELA -->
     <table>
@@ -75,8 +70,22 @@
 
 </div>
 
-<form id="formReset" action="/resetar_banco" method="POST">
-    <button type="button" onclick="confirmarResetEstoque()" class="btn-reset">Resetar Estoque</button>
-</form>
+<!-- BARRA DE AÇÕES INFERIOR (RESETAR, EXPORTAR E IMPORTAR CSV NA MESMA LINHA) -->
+<div class="rodape-acoes">
+    <form id="formReset" action="/resetar_banco" method="POST" style="display: inline-block;">
+        <button type="button" onclick="confirmarResetEstoque()" class="btn-reset"> Resetar Estoque</button>
+    </form>
+
+    <a href="/exportar_estoque_csv" class="btn-csv-rodape csv">
+        Exportar CSV
+    </a>
+
+    <form action="/importar_estoque_csv" method="POST" enctype="multipart/form-data" style="display: inline-block; margin: 0;">
+        <label class="btn-csv-rodape import" style="cursor: pointer; margin: 0;">
+             Importar CSV
+            <input type="file" name="arquivo_csv" accept=".csv" onchange="this.form.submit()" style="display: none;">
+        </label>
+    </form>
+</div>
 </body>
 </html>

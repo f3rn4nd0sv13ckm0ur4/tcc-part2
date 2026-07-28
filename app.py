@@ -416,6 +416,69 @@ def exportar_estoque_csv():
     return output
 
 
+@app.route("/importar_estoque_csv", methods=["POST"])
+def importar_estoque_csv():
+    if "tipo" not in session:
+        return redirect("/")
+
+    file = request.files.get("arquivo_csv")
+    if not file or not file.filename.endswith(".csv"):
+        return redirect("/estoque.html")
+
+    try:
+        stream = io.StringIO(file.stream.read().decode("utf-8-sig"), newline=None)
+        csv_reader = csv.reader(stream)
+        header = next(csv_reader, None)  # Pula o cabeçalho
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        for linha in csv_reader:
+            if not linha or len(linha) < 2:
+                continue
+
+            if len(linha) >= 5:
+                nome = linha[1].strip()
+                qtd = int(linha[2].strip())
+                horario = linha[3].strip() if linha[3].strip() else None
+                responsavel = linha[4].strip() if linha[4].strip() else "Sistema"
+            elif len(linha) >= 3:
+                nome = linha[0].strip()
+                qtd = int(linha[1].strip())
+                responsavel = linha[2].strip() if linha[2].strip() else "Sistema"
+                horario = linha[3].strip() if len(linha) > 3 and linha[3].strip() else None
+            else:
+                nome = linha[0].strip()
+                qtd = int(linha[1].strip())
+                responsavel = "Sistema"
+                horario = None
+
+            cursor.execute("SELECT id FROM itens WHERE nome = %s", (nome,))
+            item_existente = cursor.fetchone()
+
+            if item_existente:
+                cursor.execute("""
+                    UPDATE itens 
+                    SET quantidade = quantidade + %s, responsavel = %s
+                    WHERE id = %s
+                """, (qtd, responsavel, item_existente["id"]))
+            else:
+                cursor.execute("""
+                    INSERT INTO itens (nome, quantidade, responsavel, horario) 
+                    VALUES (%s, %s, %s, %s)
+                """, (nome, qtd, responsavel, horario))
+
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+    except Exception as e:
+        print(f"Erro ao importar CSV: {e}")
+
+    return redirect("/estoque.html")
+
+
 @app.route("/exportar_movimentacoes_csv")
 def exportar_movimentacoes_csv():
     if "tipo" not in session:

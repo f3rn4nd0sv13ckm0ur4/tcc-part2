@@ -89,9 +89,16 @@ body {
     background: linear-gradient(135deg, #1abc9c, #16a085);
 }
 
+/* 🟣 IMPORTAR CSV */
+.import {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
 .brr-pesquisa {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Separação discreta */
     display: flex;
     justify-content: center;
 }
@@ -160,23 +167,60 @@ tr:hover td {
     opacity: 1;
     transform: translateX(0);
 }
-.btn-reset{
+
+/* BARRA INFERIOR DE AÇÕES (ESQUERDA, MEIO, DIREITA) */
+.rodape-acoes {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: none;
+}
 
+.rodape-acoes > * {
+    pointer-events: auto;
+}
+
+.btn-reset {
     background-color: #ff9800;
     color: white;
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-.btn-reset:hover{
+.btn-reset:hover {
     background-color: #f57c00;
-    transform: scale(1.05);
+    transform: translateY(-2px);
+}
+
+.btn-csv-rodape {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-csv-rodape:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
 }
