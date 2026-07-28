@@ -127,6 +127,8 @@ def estoque():
 
 @app.route("/criar_conta")
 def criar_conta():
+    if session.get(tipo) !="admin":
+     return render_template("/estoque.html")   
     return render_template("criar_conta.html")
 
 

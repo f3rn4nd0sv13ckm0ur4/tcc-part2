@@ -89,6 +89,30 @@ body {
     background: linear-gradient(135deg, #1abc9c, #16a085);
 }
 
+.brr-pesquisa {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.brr-pesquisa input {
+        width: 100%;
+        box-sizing: border-box; /* Impede que o padding estoure a largura total */
+        padding: 12px 20px;
+        font-size: 16px;
+        text-align: center; /* Centraliza o texto digitado e o placeholder */
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .brr-pesquisa input:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 86, 179, 0.4);
+    }
+
 /* TABELA */
 /* O border-radius na tabela não funciona sozinho;
    o wrapper precisa de overflow:hidden para recortar as bordas */

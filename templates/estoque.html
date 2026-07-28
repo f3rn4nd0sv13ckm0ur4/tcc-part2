@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="static/estoque.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="static/script.js"></script>
 <title>Estoque</title>
 </head>
@@ -39,12 +40,16 @@
             🚪<br>SAIR
         </a>
 
+        {%if session.tipo == 'admin' %}
         <a href="criar_conta" class="card-btn add">
             👤<br>CRIAR CONTA
         </a>
+        {% endif %}
 
     </div>
-
+<div class="brr-pesquisa">
+    <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder=" Pesquisar item no estoque...">
+</div>
     <!-- TABELA -->
     <table>
         <thead>
@@ -70,9 +75,8 @@
 
 </div>
 
-<form action="/resetar_banco" method="POST"
-      onsubmit="return confirm('Tem certeza que deseja resetar o estoque?');">
-    <button onclick="resetar" class="btn-reset">Resetar Estoque</button>
+<form id="formReset" action="/resetar_banco" method="POST">
+    <button type="button" onclick="confirmarResetEstoque()" class="btn-reset">Resetar Estoque</button>
 </form>
 </body>
 </html>
