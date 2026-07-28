@@ -46,27 +46,29 @@
     <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder="🔍 Pesquisar item no estoque...">
 </div>
     <!-- TABELA -->
-    <table>
-        <thead>
-            <tr>
-                <th>NOME</th>
-                <th>QTDE</th>
-                <th>RESPONSÁVEL</th>
-                <th>HORÁRIO</th>
-            </tr>
-        </thead>
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>NOME</th>
+                    <th>QTDE</th>
+                    <th>RESPONSÁVEL</th>
+                    <th>HORÁRIO</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            {% for item in itens %}
-            <tr>
-                <td>{{ item.nome }}</td>
-                <td>{{ item.quantidade }}</td>
-                <td>{{ item.responsavel }}</td>
-                <td>{{ item.horario }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.responsavel }}</td>
+                    <td>{{ item.horario }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
