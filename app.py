@@ -127,7 +127,7 @@ def estoque():
 
 @app.route("/criar_conta")
 def criar_conta():
-    if session.get(tipo) !="admin":
+    if session.get("tipo") !="admin":
      return render_template("/estoque.html")   
     return render_template("criar_conta.html")
 
@@ -195,7 +195,7 @@ def resetar_banco():
     return redirect("/estoque.html")
 
 
-@app.route("/retirados.html")
+@app.route("/historico.html")
 def retirados():
 
     if "tipo" not in session:
@@ -236,7 +236,7 @@ def retirados():
     conexao.close()
 
     return render_template(
-        "retirados.html",
+        "historico.html",
         retiradas=retiradas,
         adicionados=adicionados
     )
