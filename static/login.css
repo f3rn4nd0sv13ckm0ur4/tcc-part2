@@ -25,7 +25,8 @@ body {
 
 .campo-form {
     padding: 10px;
-    width: 250px;
+    width: 90%;
+    max-width: 350px;
     border-radius: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -54,8 +55,39 @@ body {
 }
 
 .logo-rodape {
-    width: 250px;
-    position: absolute;
-    right: 1%;
-    top: 87%;
+    width: 180px;
+    display: block;
+    margin: 30px auto 10px;
+    position: static;
+}
+
+/* ── RESPONSIVIDADE ── */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .logo-topo {
+        width: 130px;
+        height: auto;
+    }
+
+    .icone-login {
+        width: 90px;
+        height: 90px;
+    }
+
+    .campo-form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .btn-entrar {
+        width: 90%;
+        font-size: 15px;
+    }
+
+    .logo-rodape {
+        width: 130px;
+    }
 }

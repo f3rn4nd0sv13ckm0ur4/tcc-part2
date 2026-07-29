@@ -100,3 +100,17 @@ button{
     opacity:1;
     transform:translateX(0);
 }
+
+/* ── RESPONSIVIDADE ── */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 20px 16px;
+        margin: 20px auto;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 12px;
+    }
+}

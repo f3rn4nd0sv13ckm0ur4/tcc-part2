@@ -109,3 +109,52 @@ button:hover{
     background-color: #0056b3;
     transform: translateY(-2px);
 }
+
+/* ── RESPONSIVIDADE ── */
+.caixa {
+    overflow-x: auto; /* scroll horizontal nas tabelas largas */
+}
+
+@media (max-width: 768px) {
+    .topo {
+        padding: 14px 20px;
+    }
+
+    .topo h1 {
+        font-size: 22px;
+    }
+
+    .logo {
+        width: 90px;
+    }
+
+    .container {
+        width: 96%;
+        margin: 15px auto;
+    }
+
+    th, td {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .topo h1 {
+        font-size: 18px;
+    }
+
+    .botoes {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .botoes a {
+        margin-left: 0 !important;
+    }
+
+    button {
+        width: 100%;
+    }
+}
