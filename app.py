@@ -23,9 +23,13 @@ def conectar():
 def atualizar_csv_local():
     try:
         diretorio = os.path.dirname(os.path.abspath(__file__))
-        pasta_exportacao = os.path.join(diretorio, "exportações")
+        
+        # CORREÇÃO AQUI: Mudado de "exportações" para "exportacoes"
+        pasta_exportacao = os.path.join(diretorio, "exportacoes")
+        
         if not os.path.exists(pasta_exportacao):
             os.makedirs(pasta_exportacao)
+            
         estoque_path = os.path.join(pasta_exportacao, "estoque.csv")
         historico_path = os.path.join(pasta_exportacao, "historico_movimentacoes.csv")
         
@@ -65,7 +69,8 @@ def atualizar_csv_local():
         cursor.close()
         conexao.close()
     except Exception as e:
-        print(f"Erro ao atualizar CSVs locais: {e}")
+        print(f"Erro ao atualizar CSVs locais: {repr(e)}") # Adicionado repr para evitar travar o terminal se houver outro erro
+
 
 
 @app.route("/")
@@ -528,7 +533,9 @@ def importar_estoque_csv():
         atualizar_csv_local()
 
     except Exception as e:
-        print(f"Erro geral ao importar CSV: {e}")
+        print(f"Erro geral ao importar CSV: {str(e).encode('utf-8', errors='ignore').decode('utf-8')}")
+
+
 
     return redirect("/estoque.html")
 
