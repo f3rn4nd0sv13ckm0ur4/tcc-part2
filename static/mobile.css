@@ -1,0 +1,406 @@
+/* 📱 SISTEMA DE ESTILO PREMIUM MOBILE-FIRST - FIEP/SENAI */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+/* Reset e Tipografia Premium */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+body {
+    background: linear-gradient(135deg, #0a1f44 0%, #003f82 100%) !important;
+    background-image: url('fundo12.webp') !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+    padding: 16px !important;
+    color: #f3f5f9 !important;
+}
+
+/* Glassmorphism Containers */
+.container {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+    padding: 24px 16px !important;
+    margin: 16px 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Topbar Design */
+.topo {
+    background: rgba(0, 86, 179, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 18px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: center !important;
+}
+
+.topo h2, .topo h1 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Logo Fiep/Senai */
+.logo {
+    max-height: 50px !important;
+    width: auto !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
+}
+
+/* Grid de Menu em 2 Colunas */
+.menu {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
+}
+
+/* Cards Premium do Menu */
+.card-btn {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    text-decoration: none !important;
+}
+
+.card-btn:active {
+    transform: scale(0.95) !important;
+    filter: brightness(0.9) !important;
+}
+
+.add { background: linear-gradient(135deg, #0056b3, #007bff) !important; }
+.remove { background: linear-gradient(135deg, #c0392b, #e74c3c) !important; }
+.history { background: linear-gradient(135deg, #d35400, #e67e22) !important; }
+.logout { background: linear-gradient(135deg, #7f8c8d, #95a5a6) !important; }
+
+/* Barra de pesquisa */
+.brr-pesquisa {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+.brr-pesquisa input {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    font-weight: 500 !important;
+}
+
+.brr-pesquisa input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Formulários Premium Touch-Friendly */
+input, select, textarea {
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+    margin-bottom: 16px !important;
+    height: 52px !important;
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1a2530 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+    outline: none !important;
+    transition: all 0.2s ease !important;
+}
+
+input:focus, select:focus {
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25) !important;
+    background: #ffffff !important;
+}
+
+label {
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-top: 8px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Tabelas Premium */
+.tabela-container, .caixa {
+    max-height: 350px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    background: rgba(10, 31, 68, 0.6) !important;
+}
+
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 13px !important;
+}
+
+th {
+    background: #003f82 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+    padding: 14px 10px !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+td {
+    padding: 12px 10px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    text-align: center !important;
+}
+
+tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Botões */
+button, .btn-csv-rodape, .btn-salvar, .btn-voltar, .btn-retirar {
+    width: 100% !important;
+    height: 52px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 12px !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+button:active, .btn-csv-rodape:active {
+    transform: scale(0.98) !important;
+}
+
+.btn-salvar, .btn-retirar {
+    background: linear-gradient(135deg, #0056b3, #007bff) !important;
+    color: #ffffff !important;
+}
+
+.btn-voltar, .voltar {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    margin-top: 12px !important;
+}
+
+/* Rodapé de Ações do Estoque */
+.rodape-acoes {
+    position: static !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 24px !important;
+    width: 100% !important;
+}
+
+.btn-reset {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    color: #ffffff !important;
+}
+
+.btn-csv-rodape.csv {
+    background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+    color: #ffffff !important;
+}
+
+.btn-csv-rodape.import {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6) !important;
+    color: #ffffff !important;
+}
+
+/* Histórico Layout */
+.caixa h2 {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    margin: 16px 10px 10px !important;
+    color: #ffffff !important;
+}
+
+.botoes {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+}
+
+.botoes a {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* ── ESTILOS DO MENU LATERAL HAMBURGUER (EXCLUSIVO MOBILE) ── */
+.topo {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 15px !important;
+    position: relative !important;
+}
+
+.btn-menu-lateral {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-size: 28px !important;
+    cursor: pointer !important;
+    width: 44px !important;
+    height: 44px !important;
+    box-shadow: none !important;
+}
+
+.menu-lateral {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 280px !important;
+    height: 100vh !important;
+    background: rgba(10, 31, 68, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    z-index: 9999 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.menu-lateral.open {
+    transform: translateX(0) !important;
+}
+
+.menu-lateral-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 20px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.menu-lateral-header h3 {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+}
+
+.btn-fechar-menu {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 32px !important;
+    width: 40px !important;
+    height: 40px !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.menu-lateral-itens {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 20px 10px !important;
+    gap: 8px !important;
+}
+
+.menu-item-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 14px 18px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.menu-item-link:active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.logout-link {
+    margin-top: 20px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-top: 20px !important;
+    color: #e74c3c !important;
+}
+
+/* Overlay de fundo */
+.overlay-menu {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    z-index: 9998 !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+.overlay-menu.open {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.menu-desktop-original {
+    display: none !important;
+}

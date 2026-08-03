@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, make_response
+from flask import Flask, render_template, request, redirect, session, make_response, send_from_directory
 import mysql.connector
 import bcrypt
 import csv
@@ -385,6 +385,13 @@ def sair():
     session.clear()
 
     return redirect("/")
+
+
+@app.route("/sw.js")
+def service_worker():
+    response = make_response(send_from_directory(app.static_folder, "sw.js"))
+    response.headers["Content-Type"] = "application/javascript"
+    return response
 
 
 @app.route("/exportar_estoque_csv")

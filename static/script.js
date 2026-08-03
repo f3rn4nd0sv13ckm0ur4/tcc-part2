@@ -23,6 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
             now.getHours().toString().padStart(2, '0') + ":" +
             now.getMinutes().toString().padStart(2, '0');
     }
+
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registrado!', reg))
+            .catch(err => console.log('Erro ao registrar Service Worker:', err));
+    }
 });
 
 function alerta() {
@@ -139,4 +146,13 @@ function filtrarTabela() {
             linha.style.display = "none";
         }
     });
+}
+
+function toggleMenu() {
+    const menu = document.getElementById("menu-lateral");
+    const overlay = document.getElementById("overlay-menu");
+    if (menu && overlay) {
+        menu.classList.toggle("open");
+        overlay.classList.toggle("open");
+    }
 }

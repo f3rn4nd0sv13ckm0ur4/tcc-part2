@@ -1,7 +1,7 @@
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #ffffff, #eaf2ff);
-       background-image: url('fundo12.png');
+       background-image: url('fundo12.webp');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -303,4 +303,12 @@ tr:hover td {
     .tabela-container {
         max-height: 220px;
     }
+}
+
+/* ── ELEMENTOS DO MENU LATERAL (DESKTOP) ── */
+.btn-menu-lateral, .menu-lateral, .overlay-menu {
+    display: none;
+}
+.menu-desktop-original {
+    display: block;
 }

@@ -3,48 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#0056b3">
 <link rel="stylesheet" href="static/estoque.css">
+<link rel="stylesheet" href="static/mobile.css" media="only screen and (max-width: 768px)">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="static/script.js"></script>
 <title>Estoque</title>
 </head>
 <body>
 
+<!-- MENU LATERAL (SIDEBAR) -->
+<div id="menu-lateral" class="menu-lateral">
+    <div class="menu-lateral-header">
+        <h3>Menu de Opções</h3>
+        <button class="btn-fechar-menu" onclick="toggleMenu()">×</button>
+    </div>
+    <div class="menu-lateral-itens">
+        <a href="/adicionar.html" class="menu-item-link">➕ Adicionar Item</a>
+        <a href="/retirar.html" class="menu-item-link">➖ Retirar Item</a>
+        <a href="/historico.html" class="menu-item-link">📋 Histórico</a>
+        {%if session.tipo == 'admin' %}
+        <a href="/criar_conta" class="menu-item-link">👤 Criar Conta</a>
+        {% endif %}
+        <a href="/sair" class="menu-item-link logout-link">🚪 Sair</a>
+    </div>
+</div>
+<!-- OVERLAY PARA FECHAR O MENU -->
+<div id="overlay-menu" class="overlay-menu" onclick="toggleMenu()"></div>
+
 <div class="topo">
+    <button class="btn-menu-lateral" onclick="toggleMenu()">☰</button>
     <h2>📦 Sistema de Estoque</h2>
 </div>
 
 <div class="container">
 
-    <!-- MENU DE OPÇÕES -->
-    <div class="menu">
+    <!-- MENU DE OPÇÕES (Desktop/Original) -->
+    <div class="menu-desktop-original">
+        <div class="menu">
 
-        <a href="adicionar.html" class="card-btn add">
-            ➕<br>ADICIONAR
-        </a>
+            <a href="/adicionar.html" class="card-btn add">
+                ➕<br>ADICIONAR
+            </a>
 
-        <a href="retirar.html" class="card-btn remove">
-            ➖<br>RETIRAR
-        </a>
+            <a href="/retirar.html" class="card-btn remove">
+                ➖<br>RETIRAR
+            </a>
 
-        <a href="/historico.html" class="card-btn history">
-            📋<br>HISTÓRICO
-        </a>
+            <a href="/historico.html" class="card-btn history">
+                📋<br>HISTÓRICO
+            </a>
 
-        <a href="/sair" class="card-btn logout">
-            🚪<br>SAIR
-        </a>
+            <a href="/sair" class="card-btn logout">
+                🚪<br>SAIR
+            </a>
 
-        {%if session.tipo == 'admin' %}
-        <a href="criar_conta" class="card-btn add">
-            👤<br>CRIAR CONTA
-        </a>
-        {% endif %}
+            {%if session.tipo == 'admin' %}
+            <a href="/criar_conta" class="card-btn add">
+                👤<br>CRIAR CONTA
+            </a>
+            {% endif %}
 
+        </div>
     </div>
-<div class="brr-pesquisa">
-    <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder="🔍 Pesquisar item no estoque...">
-</div>
+
+    <!-- PESQUISA E TABELA -->
+    <div class="brr-pesquisa">
+        <input type="text" id="campo-de-pesquisa" onkeyup="filtrarTabela()" placeholder="🔍 Pesquisar item no estoque...">
+    </div>
     <!-- TABELA -->
     <div class="tabela-container">
         <table>
