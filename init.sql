@@ -2,14 +2,14 @@ CREATE DATABASE IF NOT EXISTS almox;
 
 USE almox;
 
-CREATE TABLE IF NOT EXISTS usuarios (
+CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     tipo ENUM('admin','usuario') NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS itens (
+CREATE TABLE itens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     quantidade INT NOT NULL DEFAULT 0,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS itens (
     responsavel VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS movimentacoes (
+CREATE TABLE movimentacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     item_id INT NOT NULL,
     tipo ENUM('ADICIONAR','RETIRAR') NOT NULL,

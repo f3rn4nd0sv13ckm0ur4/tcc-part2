@@ -10,9 +10,9 @@ app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
 configuracao = {
-    "host": "localhost",
+    "host": "db_almox",
     "user": "root",
-    "password": "",
+    "password": "root",
     "database": "almox"
 }
 
