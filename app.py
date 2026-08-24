@@ -19,60 +19,6 @@ configuracao = {
 def conectar():
     return mysql.connector.connect(**configuracao)
 
-
-def atualizar_csv_local():
-    try:
-        diretorio = os.path.dirname(os.path.abspath(__file__))
-        
-        # CORREÇÃO AQUI: Mudado de "exportações" para "exportacoes"
-        pasta_exportacao = os.path.join(diretorio, "exportacoes")
-        
-        if not os.path.exists(pasta_exportacao):
-            os.makedirs(pasta_exportacao)
-            
-        estoque_path = os.path.join(pasta_exportacao, "estoque.csv")
-        historico_path = os.path.join(pasta_exportacao, "historico_movimentacoes.csv")
-        
-        conexao = conectar()
-        cursor = conexao.cursor(dictionary=True)
-        
-        # 1. Atualizar estoque.csv
-        cursor.execute("SELECT id, nome, quantidade, horario, responsavel FROM itens")
-        itens = cursor.fetchall()
-        with open(estoque_path, "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.writer(f)
-            writer.writerow(["ID", "Nome", "Quantidade", "Horario", "Responsavel"])
-            for i in itens:
-                writer.writerow([
-                    i["id"], i["nome"], i["quantidade"],
-                    i["horario"], i["responsavel"]
-                ])
-                
-        # 2. Atualizar historico_movimentacoes.csv
-        cursor.execute("""
-            SELECT movimentacoes.id, itens.nome AS item_nome, movimentacoes.tipo, 
-                   movimentacoes.quantidade, movimentacoes.responsavel, movimentacoes.data_hora
-            FROM movimentacoes
-            JOIN itens ON movimentacoes.item_id = itens.id
-            ORDER BY movimentacoes.data_hora DESC
-        """)
-        movs = cursor.fetchall()
-        with open(historico_path, "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.writer(f)
-            writer.writerow(["ID", "Item", "Tipo", "Quantidade", "Responsavel", "Data/Hora"])
-            for m in movs:
-                writer.writerow([
-                    m["id"], m["item_nome"], m["tipo"], m["quantidade"],
-                    m["responsavel"], m["data_hora"]
-                ])
-                
-        cursor.close()
-        conexao.close()
-    except Exception as e:
-        print(f"Erro ao atualizar CSVs locais: {repr(e)}") # Adicionado repr para evitar travar o terminal se houver outro erro
-
-
-
 @app.route("/")
 def login():
     if "tipo" in session:
@@ -198,201 +144,6 @@ def resetar_banco():
     atualizar_csv_local()
 
     return redirect("/estoque.html")
-
-
-@app.route("/historico.html")
-def retirados():
-
-    if "tipo" not in session:
-        return redirect("/")
-
-    conexao = conectar()
-    cursor = conexao.cursor(dictionary=True)
-
-    cursor.execute("""
-        SELECT itens.nome,
-               movimentacoes.quantidade,
-               movimentacoes.responsavel,
-               movimentacoes.data_hora
-        FROM movimentacoes
-        JOIN itens
-            ON movimentacoes.item_id = itens.id
-        WHERE movimentacoes.tipo = 'RETIRAR'
-        ORDER BY movimentacoes.data_hora DESC
-    """)
-
-    retiradas = cursor.fetchall()
-
-    cursor.execute("""
-        SELECT itens.nome,
-               movimentacoes.quantidade,
-               movimentacoes.responsavel,
-               movimentacoes.data_hora
-        FROM movimentacoes
-        JOIN itens
-            ON movimentacoes.item_id = itens.id
-        WHERE movimentacoes.tipo = 'ADICIONAR'
-        ORDER BY movimentacoes.data_hora DESC
-    """)
-
-    adicionados = cursor.fetchall()
-
-    cursor.close()
-    conexao.close()
-
-    return render_template(
-        "historico.html",
-        retiradas=retiradas,
-        adicionados=adicionados
-    )
-
-
-@app.route("/adicionar.html")
-def adicionar():
-
-    if "tipo" not in session:
-        return redirect("/")
-
-    return render_template("adicionar.html")
-
-
-@app.route("/retirar.html")
-def retirar():
-
-    if "tipo" not in session:
-        return redirect("/")
-
-    return render_template("retirar.html")
-
-
-@app.route("/salvar_item", methods=["POST"])
-def salvar_item():
-
-    item = request.form["item"]
-    qtd = int(request.form["qtd"])
-    pessoa = request.form["pessoa"]
-    hora = request.form["hora"]
-
-    conexao = conectar()
-    cursor = conexao.cursor(dictionary=True)
-
-    cursor.execute(
-        "SELECT * FROM itens WHERE nome = %s",
-        (item,)
-    )
-
-    produto = cursor.fetchone()
-
-    if produto:
-        cursor.execute("""
-            UPDATE itens
-            SET quantidade = quantidade + %s,
-                responsavel = %s,
-                horario = %s
-            WHERE id = %s
-        """, (
-            qtd,
-            pessoa,
-            hora,
-            produto["id"]
-        ))
-        item_id = produto["id"]
-
-    else:
-        cursor.execute("""
-            INSERT INTO itens
-            (nome, quantidade, responsavel, horario)
-            VALUES (%s, %s, %s, %s)
-        """, (
-            item,
-            qtd,
-            pessoa,
-            hora
-        ))
-        item_id = cursor.lastrowid
-
-    cursor.execute("""
-        INSERT INTO movimentacoes
-        (item_id, tipo, quantidade, responsavel)
-        VALUES (%s, 'ADICIONAR', %s, %s)
-    """, (
-        item_id,
-        qtd,
-        pessoa
-    ))
-
-    conexao.commit()
-
-    cursor.close()
-    conexao.close()
-
-    atualizar_csv_local()
-
-    return redirect("/estoque.html")
-
-
-@app.route("/retirar_item", methods=["POST"])
-def retirar_item():
-
-    item = request.form["item"]
-    qtd = int(request.form["qtd"])
-    pessoa = request.form["pessoa"]
-
-    conexao = conectar()
-    cursor = conexao.cursor(dictionary=True)
-
-    cursor.execute(
-        "SELECT * FROM itens WHERE nome = %s AND quantidade > 0",
-        (item,)
-    )
-
-    produto = cursor.fetchone()
-
-    if produto and produto["quantidade"] >= qtd:
-
-        cursor.execute("""
-            UPDATE itens
-            SET quantidade = quantidade - %s
-            WHERE id = %s
-        """, (
-            qtd,
-            produto["id"]
-        ))
-
-        cursor.execute("""
-            INSERT INTO movimentacoes
-            (item_id, tipo, quantidade, responsavel)
-            VALUES (%s, 'RETIRAR', %s, %s)
-        """, (
-            produto["id"],
-            qtd,
-            pessoa
-        ))
-
-        conexao.commit()
-
-    cursor.close()
-    conexao.close()
-
-    atualizar_csv_local()
-
-    return redirect("/estoque.html")
-
-
-@app.route("/sair")
-def sair():
-
-    session.clear()
-
-    return redirect("/")
-
-
-@app.route("/sw.js")
-def service_worker():
-    response = make_response(send_from_directory(app.static_folder, "sw.js"))
-    response.headers["Content-Type"] = "application/javascript"
-    return response
-
 
 @app.route("/exportar_estoque_csv")
 def exportar_estoque_csv():
@@ -547,6 +298,52 @@ def importar_estoque_csv():
     return redirect("/estoque.html")
 
 
+@app.route("/historico.html")
+def retirados():
+
+    if "tipo" not in session:
+        return redirect("/")
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT itens.nome,
+               movimentacoes.quantidade,
+               movimentacoes.responsavel,
+               movimentacoes.data_hora
+        FROM movimentacoes
+        JOIN itens
+            ON movimentacoes.item_id = itens.id
+        WHERE movimentacoes.tipo = 'RETIRAR'
+        ORDER BY movimentacoes.data_hora DESC
+    """)
+
+    retiradas = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT itens.nome,
+               movimentacoes.quantidade,
+               movimentacoes.responsavel,
+               movimentacoes.data_hora
+        FROM movimentacoes
+        JOIN itens
+            ON movimentacoes.item_id = itens.id
+        WHERE movimentacoes.tipo = 'ADICIONAR'
+        ORDER BY movimentacoes.data_hora DESC
+    """)
+
+    adicionados = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
+
+    return render_template(
+        "historico.html",
+        retiradas=retiradas,
+        adicionados=adicionados
+    )
+
 @app.route("/exportar_movimentacoes_csv")
 def exportar_movimentacoes_csv():
     if "tipo" not in session:
@@ -585,6 +382,202 @@ def exportar_movimentacoes_csv():
     output.headers["Content-type"] = "text/csv; charset=utf-8"
     return output
 
+def atualizar_csv_local():
+    try:
+        diretorio = os.path.dirname(os.path.abspath(__file__))
+        
+        # CORREÇÃO AQUI: Mudado de "exportações" para "exportacoes"
+        pasta_exportacao = os.path.join(diretorio, "exportacoes")
+        
+        if not os.path.exists(pasta_exportacao):
+            os.makedirs(pasta_exportacao)
+            
+        estoque_path = os.path.join(pasta_exportacao, "estoque.csv")
+        historico_path = os.path.join(pasta_exportacao, "historico_movimentacoes.csv")
+        
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        
+        # 1. Atualizar estoque.csv
+        cursor.execute("SELECT id, nome, quantidade, horario, responsavel FROM itens")
+        itens = cursor.fetchall()
+        with open(estoque_path, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "Nome", "Quantidade", "Horario", "Responsavel"])
+            for i in itens:
+                writer.writerow([
+                    i["id"], i["nome"], i["quantidade"],
+                    i["horario"], i["responsavel"]
+                ])
+                
+        # 2. Atualizar historico_movimentacoes.csv
+        cursor.execute("""
+            SELECT movimentacoes.id, itens.nome AS item_nome, movimentacoes.tipo, 
+                   movimentacoes.quantidade, movimentacoes.responsavel, movimentacoes.data_hora
+            FROM movimentacoes
+            JOIN itens ON movimentacoes.item_id = itens.id
+            ORDER BY movimentacoes.data_hora DESC
+        """)
+        movs = cursor.fetchall()
+        with open(historico_path, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "Item", "Tipo", "Quantidade", "Responsavel", "Data/Hora"])
+            for m in movs:
+                writer.writerow([
+                    m["id"], m["item_nome"], m["tipo"], m["quantidade"],
+                    m["responsavel"], m["data_hora"]
+                ])
+                
+        cursor.close()
+        conexao.close()
+    except Exception as e:
+        print(f"Erro ao atualizar CSVs locais: {repr(e)}") # Adicionado repr para evitar travar o terminal se houver outro erro
+
+@app.route("/adicionar.html")
+def adicionar():
+
+    if "tipo" not in session:
+        return redirect("/")
+
+    return render_template("adicionar.html")
+
+
+@app.route("/retirar.html")
+def retirar():
+
+    if "tipo" not in session:
+        return redirect("/")
+
+    return render_template("retirar.html")
+
+
+@app.route("/salvar_item", methods=["POST"])
+def salvar_item():
+
+    item = request.form["item"]
+    qtd = int(request.form["qtd"])
+    pessoa = request.form["pessoa"]
+    hora = request.form["hora"]
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM itens WHERE nome = %s",
+        (item,)
+    )
+
+    produto = cursor.fetchone()
+
+    if produto:
+        cursor.execute("""
+            UPDATE itens
+            SET quantidade = quantidade + %s,
+                responsavel = %s,
+                horario = %s
+            WHERE id = %s
+        """, (
+            qtd,
+            pessoa,
+            hora,
+            produto["id"]
+        ))
+        item_id = produto["id"]
+
+    else:
+        cursor.execute("""
+            INSERT INTO itens
+            (nome, quantidade, responsavel, horario)
+            VALUES (%s, %s, %s, %s)
+        """, (
+            item,
+            qtd,
+            pessoa,
+            hora
+        ))
+        item_id = cursor.lastrowid
+
+    cursor.execute("""
+        INSERT INTO movimentacoes
+        (item_id, tipo, quantidade, responsavel)
+        VALUES (%s, 'ADICIONAR', %s, %s)
+    """, (
+        item_id,
+        qtd,
+        pessoa
+    ))
+
+    conexao.commit()
+
+    cursor.close()
+    conexao.close()
+
+    atualizar_csv_local()
+
+    return redirect("/estoque.html")
+
+
+@app.route("/retirar_item", methods=["POST"])
+def retirar_item():
+
+    item = request.form["item"]
+    qtd = int(request.form["qtd"])
+    pessoa = request.form["pessoa"]
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM itens WHERE nome = %s AND quantidade > 0",
+        (item,)
+    )
+
+    produto = cursor.fetchone()
+
+    if produto and produto["quantidade"] >= qtd:
+
+        cursor.execute("""
+            UPDATE itens
+            SET quantidade = quantidade - %s
+            WHERE id = %s
+        """, (
+            qtd,
+            produto["id"]
+        ))
+
+        cursor.execute("""
+            INSERT INTO movimentacoes
+            (item_id, tipo, quantidade, responsavel)
+            VALUES (%s, 'RETIRAR', %s, %s)
+        """, (
+            produto["id"],
+            qtd,
+            pessoa
+        ))
+
+        conexao.commit()
+
+    cursor.close()
+    conexao.close()
+
+    atualizar_csv_local()
+
+    return redirect("/estoque.html")
+
+
+@app.route("/sair")
+def sair():
+
+    session.clear()
+
+    return redirect("/")
+
+
+@app.route("/sw.js")
+def service_worker():
+    response = make_response(send_from_directory(app.static_folder, "sw.js"))
+    response.headers["Content-Type"] = "application/javascript"
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
