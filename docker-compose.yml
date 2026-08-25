@@ -10,6 +10,7 @@ services:
 
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./bkp_almox.sql:/docker-entrypoint-initdb.d/backup.sql
       - mysql_data:/var/lib/mysql
 
     
