@@ -92,41 +92,72 @@ function retirar(){
 }
 
 function confirmarResetEstoque() {
+
+    const tipoUsuario = "{{ session.get('tipo') }}";
+
+    // Verifica se o usuário é administrador
+    if (tipoUsuario !== "admin") {
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Acesso negado!',
+            text: 'Você não tem acesso a essa função.',
+            confirmButtonText: 'OK'
+        });
+
+        return;
+    }
+
+    // Se for admin, continua normalmente
     if (typeof Swal !== "undefined") {
+
         Swal.fire({
             title: 'Tem certeza?',
             text: 'Esta ação irá apagar todos os itens do estoque!',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
+            confirmButtonColor: '#ff8800',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Sim, resetar!',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
+
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Resetado!',
-                    'O estoque foi resetado com sucesso.',
-                    'success'
-                ).then(() => {
-                    const form = document.getElementById("formReset");
-                    if (form) form.submit();
-                });
+
+                // Envia o formulário
+                const form = document.getElementById("formReset");
+
+                if (form) {
+                    form.submit();
+                }
+
             } else if (result.dismiss === Swal.DismissReason.cancel) {
+
                 Swal.fire(
                     'Cancelado',
                     'A operação foi cancelada. Seu estoque não foi alterado.',
                     'info'
                 );
             }
+
         });
+
     } else {
-        const aceitou = confirm("⚠️ Tem certeza que deseja resetar todo o estoque?");
+
+        const aceitou = confirm(
+            "⚠️ Tem certeza que deseja resetar todo o estoque?"
+        );
+
         if (aceitou) {
-            alert("✅ Estoque resetado!");
+
             const form = document.getElementById("formReset");
-            if (form) form.submit();
+
+            if (form) {
+                form.submit();
+            }
+
         } else {
+
             alert("❌ Operação cancelada!");
         }
     }
