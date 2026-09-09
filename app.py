@@ -3,6 +3,7 @@ import mysql.connector
 import bcrypt
 import csv
 import io
+import datetime
 import os
 
 
@@ -10,9 +11,9 @@ app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
 configuracao = {
-    "host": "db_almox",
+    "host": "localhost",
     "user": "root",
-    "password": "root",
+    "password": "",
     "database": "almox"
 }
 
@@ -578,6 +579,27 @@ def service_worker():
     response = make_response(send_from_directory(app.static_folder, "sw.js"))
     response.headers["Content-Type"] = "application/javascript"
     return response
+
+#API'S EXTERNAS
+@app.route("/api/estoque" , methods=["GET"])
+def listar_estoque():
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM itens")
+        itens = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+
+        # Converte timedelta, datetime, time e data para string
+        for item in itens:
+            for chave, valor in item.items():
+                if isinstance(valor, (datetime.timedelta, datetime.date, datetime.time, datetime.datetime)):
+                    item[chave] = str(valor)  # <--- Correção aqui (item no singular)
+                    
+        return jsonify(itens), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
