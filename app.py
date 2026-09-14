@@ -580,6 +580,7 @@ def service_worker():
     response.headers["Content-Type"] = "application/javascript"
     return response
 
+
 #API'S EXTERNAS
 @app.route("/api/estoque" , methods=["GET"])
 def listar_estoque():
@@ -600,6 +601,398 @@ def listar_estoque():
         return jsonify(itens), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+    
+
+@app.route("/api/estoque/<int:id>", methods=["GET"])
+def api_buscar_item(id):
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT id, nome, quantidade, horario, responsavel
+            FROM itens
+            WHERE id = %s
+        """, (id,))
+
+        item = cursor.fetchone()
+
+        cursor.close()
+        conexao.close()
+
+        if not item:
+            return jsonify({
+                "erro": "Item não encontrado"
+            }), 404
+
+        for chave, valor in item.items():
+            if isinstance(valor, (
+                datetime.timedelta,
+                datetime.date,
+                datetime.time,
+                datetime.datetime
+            )):
+                item[chave] = str(valor)
+
+        return jsonify(item), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+@app.route("/api/estoque", methods=["POST"])
+def api_adicionar_item():
+    try:
+        dados = request.get_json()
+
+        nome = dados.get("nome")
+        quantidade = dados.get("quantidade")
+        responsavel = dados.get("responsavel", "API")
+        horario = dados.get("horario")
+
+        if not nome or quantidade is None:
+            return jsonify({
+                "erro": "Nome e quantidade são obrigatórios"
+            }), 400
+
+        quantidade = int(quantidade)
+
+        if quantidade <= 0:
+            return jsonify({
+                "erro": "A quantidade deve ser maior que zero"
+            }), 400
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        # Verifica se o item já existe
+        cursor.execute(
+            "SELECT * FROM itens WHERE nome = %s",
+            (nome,)
+        )
+
+        item = cursor.fetchone()
+
+        if item:
+
+            cursor.execute("""
+                UPDATE itens
+                SET quantidade = quantidade + %s,
+                    responsavel = %s,
+                    horario = %s
+                WHERE id = %s
+            """, (
+                quantidade,
+                responsavel,
+                horario,
+                item["id"]
+            ))
+
+            item_id = item["id"]
+
+        else:
+
+            cursor.execute("""
+                INSERT INTO itens
+                (nome, quantidade, responsavel, horario)
+                VALUES (%s, %s, %s, %s)
+            """, (
+                nome,
+                quantidade,
+                responsavel,
+                horario
+            ))
+
+            item_id = cursor.lastrowid
+
+        # Registra movimentação
+        cursor.execute("""
+            INSERT INTO movimentacoes
+            (item_id, tipo, quantidade, responsavel)
+            VALUES (%s, 'ADICIONAR', %s, %s)
+        """, (
+            item_id,
+            quantidade,
+            responsavel
+        ))
+
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "Item adicionado com sucesso",
+            "id": item_id
+        }), 201
+
+    except ValueError:
+        return jsonify({
+            "erro": "Quantidade inválida"
+        }), 400
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+@app.route("/api/estoque/<int:id>", methods=["PUT"])
+def api_atualizar_item(id):
+    try:
+        dados = request.get_json()
+
+        nome = dados.get("nome")
+        quantidade = dados.get("quantidade")
+        responsavel = dados.get("responsavel")
+        horario = dados.get("horario")
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT * FROM itens WHERE id = %s",
+            (id,)
+        )
+
+        item = cursor.fetchone()
+
+        if not item:
+            cursor.close()
+            conexao.close()
+
+            return jsonify({
+                "erro": "Item não encontrado"
+            }), 404
+
+        # Mantém os valores antigos quando não forem enviados
+        nome = nome if nome is not None else item["nome"]
+        quantidade = quantidade if quantidade is not None else item["quantidade"]
+        responsavel = responsavel if responsavel is not None else item["responsavel"]
+        horario = horario if horario is not None else item["horario"]
+
+        cursor.execute("""
+            UPDATE itens
+            SET nome = %s,
+                quantidade = %s,
+                responsavel = %s,
+                horario = %s
+            WHERE id = %s
+        """, (
+            nome,
+            quantidade,
+            responsavel,
+            horario,
+            id
+        ))
+
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "Item atualizado com sucesso",
+            "id": id
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+@app.route("/api/estoque/<int:id>", methods=["DELETE"])
+def api_excluir_item(id):
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT id FROM itens WHERE id = %s",
+            (id,)
+        )
+
+        item = cursor.fetchone()
+
+        if not item:
+            cursor.close()
+            conexao.close()
+
+            return jsonify({
+                "erro": "Item não encontrado"
+            }), 404
+
+        # Primeiro remove as movimentações
+        cursor.execute(
+            "DELETE FROM movimentacoes WHERE item_id = %s",
+            (id,)
+        )
+
+        # Depois remove o item
+        cursor.execute(
+            "DELETE FROM itens WHERE id = %s",
+            (id,)
+        )
+
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "Item excluído com sucesso"
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+# API - RETIRADA
+@app.route("/api/estoque/<int:id>/retirar", methods=["POST"])
+def api_retirar_item(id):
+    try:
+        dados = request.get_json()
+
+        quantidade = dados.get("quantidade")
+        responsavel = dados.get("responsavel", "API")
+
+        if quantidade is None:
+            return jsonify({
+                "erro": "Quantidade é obrigatória"
+            }), 400
+
+        quantidade = int(quantidade)
+
+        if quantidade <= 0:
+            return jsonify({
+                "erro": "A quantidade deve ser maior que zero"
+            }), 400
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT * FROM itens WHERE id = %s",
+            (id,)
+        )
+
+        item = cursor.fetchone()
+
+        if not item:
+            cursor.close()
+            conexao.close()
+
+            return jsonify({
+                "erro": "Item não encontrado"
+            }), 404
+
+        if item["quantidade"] < quantidade:
+            cursor.close()
+            conexao.close()
+
+            return jsonify({
+                "erro": "Estoque insuficiente",
+                "estoque_atual": item["quantidade"]
+            }), 400
+
+        cursor.execute("""
+            UPDATE itens
+            SET quantidade = quantidade - %s
+            WHERE id = %s
+        """, (
+            quantidade,
+            id
+        ))
+
+        cursor.execute("""
+            INSERT INTO movimentacoes
+            (item_id, tipo, quantidade, responsavel)
+            VALUES (%s, 'RETIRAR', %s, %s)
+        """, (
+            id,
+            quantidade,
+            responsavel
+        ))
+
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "Retirada realizada com sucesso",
+            "item_id": id,
+            "quantidade_retirada": quantidade
+        }), 200
+
+    except ValueError:
+        return jsonify({
+            "erro": "Quantidade inválida"
+        }), 400
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+# API - MOVIMENTAÇÕES
+@app.route("/api/movimentacoes", methods=["GET"])
+def api_movimentacoes():
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT
+                movimentacoes.id,
+                movimentacoes.item_id,
+                itens.nome AS item,
+                movimentacoes.tipo,
+                movimentacoes.quantidade,
+                movimentacoes.responsavel,
+                movimentacoes.data_hora
+            FROM movimentacoes
+            JOIN itens
+                ON movimentacoes.item_id = itens.id
+            ORDER BY movimentacoes.data_hora DESC
+        """)
+
+        movimentacoes = cursor.fetchall()
+
+        cursor.close()
+        conexao.close()
+
+        for movimentacao in movimentacoes:
+            for chave, valor in movimentacao.items():
+                if isinstance(valor, (
+                    datetime.timedelta,
+                    datetime.date,
+                    datetime.time,
+                    datetime.datetime
+                )):
+                    movimentacao[chave] = str(valor)
+
+        return jsonify(movimentacoes), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
