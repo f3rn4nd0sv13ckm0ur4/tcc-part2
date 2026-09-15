@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adicionar ao Estoque</title>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#0056b3">
+<link rel="stylesheet" href="static/adicionar.css">
+<link rel="stylesheet" href="static/mobile.css" media="only screen and (max-width: 768px)">
+<script src="static/script.js"></script>
+</head>
+<body>
+
+<div class="topo">
+    <h2>➕ Adicionar ao Estoque</h2>
+</div>
+
+<form class="container" action="/salvar_item" method="POST">
+
+    <label>Nome do Item</label>
+    <input name="item" type="text" required>
+
+    <label>Quantidade</label>
+    <input name="qtd" type="number" required>
+
+    <label>Pessoa responsável</label>
+    <input name="pessoa" type="text" required>
+
+    <label>Horário</label>
+    <input name="hora" id="hora" type="time" required>
+
+    <button class="btn-salvar" type="submit">Salvar</button>
+
+    <a href="/estoque.html">
+    <button class="btn-voltar" type="button">⬅ Voltar ao Estoque</button>
+    </a>
+    </form>
+
+<div id="toast" class="toast"></div>
+</body>
+</html>

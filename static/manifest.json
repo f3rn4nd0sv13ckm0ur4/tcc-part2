@@ -1,0 +1,22 @@
+{
+  "name": "Sistema de Almoxarifado FIEP",
+  "short_name": "Almox FIEP",
+  "description": "Sistema de controle e gerenciamento de estoque e almoxarifado",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003f82",
+  "theme_color": "#0056b3",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/Adobe Express - file.png",
+      "sizes": "140x140",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/novalogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

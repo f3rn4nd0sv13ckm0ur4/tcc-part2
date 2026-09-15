@@ -1,0 +1,314 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffffff, #eaf2ff);
+       background-image: url('fundo12.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+}
+
+.topo {
+    background: #0056b3;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    background: #003f82;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    animation: fadeIn .5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* MENU DE OPÇÕES */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.card-btn {
+    width: 126px;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: .3s;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-btn:hover {
+    transform: translateY(-5px);
+}
+
+/* 🔵 ADICIONAR — azul */
+.add {
+    background: linear-gradient(135deg, #003f82, #0056b3);
+}
+
+/* 🔴 RETIRAR — vermelho, para diferenciar visualmente */
+.remove {
+    background: linear-gradient(135deg, #b30000, #e03131);
+}
+
+/* 🟠 HISTÓRICO */
+.history {
+    background: linear-gradient(135deg, #e67e22, #f39c12);
+}
+
+/* 🟢 CRIAR CONTA */
+.create-account {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+/* ⚫ SAIR */
+.logout {
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+}
+
+/* 🟢 EXPORTAR CSV */
+.csv {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+}
+
+/* 🟣 IMPORTAR CSV */
+.import {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.brr-pesquisa {
+    width: 100%;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Separação discreta */
+    display: flex;
+    justify-content: center;
+}
+
+.brr-pesquisa input {
+        width: 100%;
+        box-sizing: border-box; /* Impede que o padding estoure a largura total */
+        padding: 12px 20px;
+        font-size: 16px;
+        text-align: center; /* Centraliza o texto digitado e o placeholder */
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .brr-pesquisa input:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 86, 179, 0.4);
+    }
+
+/* TABELA COM SCROLL */
+.tabela-container {
+    max-height: 260px; /* Reduzido para ativar a rolagem com menos itens */
+    overflow-y: scroll; /* Força a exibição da barra de rolagem vertical */
+    overflow-x: auto;   /* Rolagem horizontal se a tela for pequena */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tabela-container th {
+    position: sticky;
+    top: 0;
+    background: #003f82;
+    z-index: 10;
+}
+
+/* Custom Scrollbar para a Tabela */
+.tabela-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tabela-container::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+.tabela-container::-webkit-scrollbar-thumb {
+    background: #0056b3;
+    border-radius: 10px;
+}
+
+.tabela-container::-webkit-scrollbar-thumb:hover {
+    background: #003f82;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #003f82;
+    color: white;
+    padding: 14px;
+}
+
+td {
+    text-align: center;
+    padding: 12px;
+    background: #f8f8f8;
+}
+
+tr:hover td {
+    background: #eef4ff;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #003f82;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: .4s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* BARRA INFERIOR DE AÇÕES (ESQUERDA, MEIO, DIREITA) */
+.rodape-acoes {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.rodape-acoes > * {
+    pointer-events: auto;
+}
+
+.btn-reset {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-reset:hover {
+    background-color: #f57c00;
+    transform: translateY(-2px);
+}
+
+.btn-csv-rodape {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-csv-rodape:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* ── RESPONSIVIDADE ── */
+@media (max-width: 768px) {
+    .topo {
+        padding: 14px 20px;
+    }
+
+    .container {
+        width: 95%;
+        padding: 18px;
+        margin: 15px auto;
+    }
+
+    .card-btn {
+        width: calc(50% - 16px);
+        padding: 16px 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    .topo h2 {
+        font-size: 18px;
+    }
+
+    .card-btn {
+        width: calc(50% - 12px);
+        padding: 14px 8px;
+        font-size: 13px;
+    }
+
+    .rodape-acoes {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .btn-reset,
+    .btn-csv-rodape {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .tabela-container {
+        max-height: 220px;
+    }
+}
+
+/* ── ELEMENTOS DO MENU LATERAL (DESKTOP) ── */
+.btn-menu-lateral, .menu-lateral, .overlay-menu {
+    display: none;
+}
+.menu-desktop-original {
+    display: block;
+}

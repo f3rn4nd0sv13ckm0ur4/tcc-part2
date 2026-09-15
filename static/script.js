@@ -1,0 +1,157 @@
+function controlarCriarConta() {
+  const tipo = document.getElementById("tipoUsuario");
+  const box = document.getElementById("criarContaBox");
+
+  if (!tipo || !box) {
+    return;
+  }
+
+  if (tipo.value === "admin") {
+    box.style.display = "flex";
+  } else {
+    box.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    controlarCriarConta();
+
+    const horaEl = document.getElementById("hora");
+    if (horaEl) {
+        const now = new Date();
+        horaEl.value =
+            now.getHours().toString().padStart(2, '0') + ":" +
+            now.getMinutes().toString().padStart(2, '0');
+    }
+
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registrado!', reg))
+            .catch(err => console.log('Erro ao registrar Service Worker:', err));
+    }
+});
+
+function alerta() {
+    Swal.fire({
+        title: "Item Adicionado com Sucesso!",
+        icon: "success",
+        draggable: true
+    });
+}
+
+function showToast(msg){
+    const t = document.getElementById("toast");
+    if (t) {
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 3000);
+    }
+}
+
+// pagina de registrar itens
+function salvar(){
+    let item = document.getElementById("item").value;
+    let qtd = document.getElementById("qtd").value;
+    let pessoa = document.getElementById("pessoa").value;
+    let hora = document.getElementById("hora").value;
+
+    if(!item || !qtd || !pessoa || !hora){
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    console.log({item,qtd,pessoa,hora});
+    showToast("Item registrado com sucesso!");
+
+    document.getElementById("item").value="";
+    document.getElementById("qtd").value="";
+    document.getElementById("pessoa").value="";
+}
+
+// pagina de retirar itens
+function retirar(){
+    let item = document.getElementById("item").value;
+    let qtd = document.getElementById("qtd").value;
+    let pessoa = document.getElementById("pessoa").value;
+    let hora = document.getElementById("hora").value;
+    let obs = document.getElementById("obs").value;
+
+    if(!item || !qtd || !pessoa || !hora){
+        alert("Preencha todos os campos obrigatórios!");
+        return;
+    }
+
+    console.log({item,qtd,pessoa,hora,obs});
+    showToast("Retirada registrada com sucesso!");
+
+    document.getElementById("item").value="";
+    document.getElementById("qtd").value="";
+    document.getElementById("pessoa").value="";
+    document.getElementById("obs").value="";
+}
+
+function confirmarResetEstoque() {
+    if (typeof Swal !== "undefined") {
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Esta ação irá zerar as quantidades de todos os itens do estoque (as movimentações serão preservadas)!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff8800',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, resetar estoque!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById("formReset");
+                if (form) {
+                    form.submit();
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelado',
+                    'A operação foi cancelada. Seu estoque não foi alterado.',
+                    'info'
+                );
+            }
+        });
+    } else {
+        const aceitou = confirm(
+            "⚠️ Tem certeza que deseja zerar a quantidade de todos os itens do estoque?"
+        );
+        if (aceitou) {
+            const form = document.getElementById("formReset");
+            if (form) {
+                form.submit();
+            }
+        } else {
+            alert("❌ Operação cancelada!");
+        }
+    }
+}
+
+function filtrarTabela() {
+    const input = document.getElementById("campo-de-pesquisa") || document.getElementById("campoPesquisa");
+    if (!input) return;
+    const termo = input.value.toLowerCase().trim();
+    const linhas = document.querySelectorAll("tbody tr");
+
+    linhas.forEach(linha => {
+        const textoLinha = linha.textContent.toLowerCase();
+        if (textoLinha.includes(termo)) {
+            linha.style.display = "";
+        } else {
+            linha.style.display = "none";
+        }
+    });
+}
+
+function toggleMenu() {
+    const menu = document.getElementById("menu-lateral");
+    const overlay = document.getElementById("overlay-menu");
+    if (menu && overlay) {
+        menu.classList.toggle("open");
+        overlay.classList.toggle("open");
+    }
+}

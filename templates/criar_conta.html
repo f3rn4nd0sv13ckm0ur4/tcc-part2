@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <link rel="stylesheet" href="static/criar_conta.css">
+    <link rel="stylesheet" href="static/mobile.css" media="only screen and (max-width: 768px)">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <img src="static/Adobe Express - file.png"
+             alt="Logo"
+             class="logo">
+
+        <h1>Criar Conta</h1>
+
+        <form action="/salvar_conta" method="POST">
+
+           <input
+             type="email"
+             name="email"
+             placeholder="Email"
+             required>
+
+            <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                required>
+
+            <input type="hidden" name="tipo" value="usuario">
+
+            <button type="submit">
+                Criar Conta
+            </button>
+
+        </form>
+
+        <a href="/">
+            <button class="voltar">
+                Voltar
+            </button>
+        </a>
+
+    </div>
+
+</body>
+</html>
