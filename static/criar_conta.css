@@ -1,6 +1,6 @@
 body{
     margin:0;
-    padding:0;
+    padding:20px 0;
     background-image: url("fundo11.webp");
     background-size: cover;
     background-position: center;
@@ -11,28 +11,30 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    box-sizing: border-box;
 }
 
 .container{
     background:white;
     width: 90%;
-    max-width: 420px;
-    padding:40px;
+    max-width: 500px;
+    padding:35px 30px;
     border-radius:15px;
     text-align:center;
     box-shadow:0px 0px 15px rgba(0,0,0,0.3);
-    opacity: 0.9;
+    opacity: 0.95;
+    box-sizing: border-box;
 }
 
 .logo{
     width:120px;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 h1{
     color:#0a1f44;
-    margin-bottom:25px;
+    margin-bottom:20px;
+    font-size: 24px;
 }
 
 form{
@@ -46,7 +48,9 @@ select{
     margin-bottom:15px;
     border:1px solid #ccc;
     border-radius:8px;
-    font-size:16px;
+    font-size:15px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 button{
@@ -57,6 +61,9 @@ button{
     border-radius:8px;
     font-size:16px;
     cursor:pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.2s;
 }
 
 button:hover{
@@ -72,10 +79,99 @@ button:hover{
     background-color:#e07700;
 }
 
+/* ── SEÇÃO DE USUÁRIOS CADASTRADOS ── */
+.secao-usuarios {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: left;
+}
+
+.secao-usuarios h3 {
+    color: #0a1f44;
+    font-size: 18px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.tabela-usuarios-container {
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.tabela-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.tabela-usuarios th {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 8px 10px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    font-weight: bold;
+}
+
+.tabela-usuarios td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #333;
+}
+
+.email-col {
+    word-break: break-all;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.badge-admin {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.badge-user {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.btn-excluir {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 4px 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    transition: 0.2s;
+    display: inline-block;
+}
+
+.btn-excluir:hover {
+    background-color: #fca5a5;
+    color: #991b1b;
+}
+
+.texto-voce {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+}
+
 /* ── RESPONSIVIDADE ── */
 @media (max-width: 480px) {
     body {
-        padding: 20px;
+        padding: 15px 10px;
         align-items: flex-start;
         height: auto;
         min-height: 100vh;
@@ -83,8 +179,8 @@ button:hover{
 
     .container {
         width: 100%;
-        padding: 25px 16px;
-        margin: 20px 0;
+        padding: 20px 15px;
+        margin: 10px 0;
     }
 
     .logo {
@@ -92,7 +188,7 @@ button:hover{
     }
 
     input, select, button {
-        font-size: 15px;
+        font-size: 14px;
         padding: 10px;
     }
 }

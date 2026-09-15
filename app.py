@@ -79,13 +79,60 @@ def estoque():
 
 @app.route("/criar_conta")
 def criar_conta():
-    if session.get("tipo") !="admin":
-     return render_template("/estoque.html")   
-    return render_template("criar_conta.html")
+    if session.get("tipo") != "admin":
+        return redirect("/estoque.html")
+
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    cursor.execute("SELECT id, email, tipo FROM usuarios ORDER BY id ASC")
+    usuarios = cursor.fetchall()
+    cursor.close()
+    conexao.close()
+
+    return render_template("criar_conta.html", usuarios=usuarios)
 
 
 @app.route("/salvar_conta", methods=["POST"])
 def salvar_conta():
+    email = request.form["email"]
+    senha = request.form["senha"]
+    tipo = request.form.get("tipo", "usuario")
+
+    # Se tentar criar conta de admin mas a sessão não for admin, força para usuario
+    if tipo == "admin" and session.get("tipo") != "admin":
+        tipo = "usuario"
+
+    senha_criptografada = bcrypt.hashpw(
+        senha.encode("utf-8"),
+        bcrypt.gensalt()
+    ).decode("utf-8")
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO usuarios (email, senha, tipo)
+        VALUES (%s, %s, %s)
+        """,
+        (email, senha_criptografada, tipo)
+    )
+
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+
+    if session.get("tipo") == "admin":
+        return redirect("/criar_conta")
+    return redirect("/")
+
+
+@app.route("/salvar_conta_admin", methods=["POST"])
+def salvar_conta_admin():
+    # Verifica se quem está logado é admin
+    if session.get("tipo") != "admin":
+        return "Acesso negado! Apenas administradores podem criar outros administradores.", 403
+
     email = request.form["email"]
     senha = request.form["senha"]
 
@@ -100,17 +147,38 @@ def salvar_conta():
     cursor.execute(
         """
         INSERT INTO usuarios (email, senha, tipo)
-        VALUES (%s, %s, 'usuario')
+        VALUES (%s, %s, 'admin')
         """,
         (email, senha_criptografada)
     )
 
     conexao.commit()
+    cursor.close()
+    conexao.close()
+
+    return redirect("/criar_conta")
+
+
+@app.route("/excluir_usuario/<int:id>", methods=["POST", "GET"])
+def excluir_usuario(id):
+    # 1. Verifica se está logado
+    if "email" not in session:
+        return redirect("/")
+
+    # 2. Verifica se é administrador
+    if session.get("tipo") != "admin":
+        return "Acesso negado! Apenas administradores podem excluir contas.", 403
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("DELETE FROM usuarios WHERE id = %s", (id,))
+    conexao.commit()
 
     cursor.close()
     conexao.close()
 
-    return redirect("/")
+    return redirect("/criar_conta")
 
 
 @app.route("/resetar_banco", methods=["POST"])
@@ -1098,6 +1166,150 @@ def api_criar_conta():
         return jsonify({
             "erro": str(e)
         }), 500
-        
+
+
+# API - CRIAR CONTA DE ADMINISTRADOR
+@app.route("/api/admin/criar_conta", methods=["POST"])
+def api_criar_admin():
+    try:
+        dados = request.get_json()
+
+        if not dados:
+            return jsonify({
+                "erro": "JSON não enviado"
+            }), 400
+
+        email = dados.get("email")
+        senha = dados.get("senha")
+
+        if not email or not senha:
+            return jsonify({
+                "erro": "Email e senha são obrigatórios"
+            }), 400
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT id FROM usuarios WHERE email = %s",
+            (email,)
+        )
+
+        usuario = cursor.fetchone()
+
+        if usuario:
+            cursor.close()
+            conexao.close()
+            return jsonify({
+                "erro": "Este email já está cadastrado"
+            }), 409
+
+        senha_criptografada = bcrypt.hashpw(
+            senha.encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        cursor.execute(
+            """
+            INSERT INTO usuarios (email, senha, tipo)
+            VALUES (%s, %s, 'admin')
+            """,
+            (email, senha_criptografada)
+        )
+
+        conexao.commit()
+
+        novo_id = cursor.lastrowid
+
+        cursor.close()
+        conexao.close()
+
+        return jsonify({
+            "mensagem": "Conta de administrador criada com sucesso",
+            "usuario": {
+                "id": novo_id,
+                "email": email,
+                "tipo": "admin"
+            }
+        }), 201
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+# API - EXCLUIR CONTA (Apenas Administradores)
+@app.route("/api/usuarios/<int:id>", methods=["DELETE"])
+def api_excluir_usuario(id):
+    try:
+        dados = request.get_json(silent=True) or {}
+
+        # 1. Verifica se o usuário autenticado na sessão web é admin
+        is_admin = session.get("tipo") == "admin"
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        # 2. Se não estiver logado por sessão, permite autenticar via credenciais de admin no JSON
+        if not is_admin:
+            admin_email = dados.get("admin_email")
+            admin_senha = dados.get("admin_senha")
+
+            if admin_email and admin_senha:
+                cursor.execute(
+                    "SELECT senha, tipo FROM usuarios WHERE email = %s AND tipo = 'admin'",
+                    (admin_email,)
+                )
+                admin_user = cursor.fetchone()
+
+                if admin_user and bcrypt.checkpw(
+                    admin_senha.encode("utf-8"),
+                    admin_user["senha"].encode("utf-8")
+                ):
+                    is_admin = True
+
+        if not is_admin:
+            cursor.close()
+            conexao.close()
+            return jsonify({
+                "erro": "Acesso negado! Apenas administradores podem excluir contas."
+            }), 403
+
+        # Verifica se o usuário a ser excluído existe
+        cursor.execute(
+            "SELECT id, email, tipo FROM usuarios WHERE id = %s",
+            (id,)
+        )
+        usuario_alvo = cursor.fetchone()
+
+        if not usuario_alvo:
+            cursor.close()
+            conexao.close()
+            return jsonify({
+                "erro": "Usuário não encontrado"
+            }), 404
+
+        # Remove o usuário do banco
+        cursor.execute(
+            "DELETE FROM usuarios WHERE id = %s",
+            (id,)
+        )
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        return jsonify({
+            "mensagem": f"Usuário '{usuario_alvo['email']}' excluído com sucesso",
+            "id_excluido": id
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
