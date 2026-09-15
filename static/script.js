@@ -92,72 +92,40 @@ function retirar(){
 }
 
 function confirmarResetEstoque() {
-
-    const tipoUsuario = "{{ session.get('tipo') }}";
-
-    // Verifica se o usuário é administrador
-    if (tipoUsuario !== "admin") {
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Acesso negado!',
-            text: 'Você não tem acesso a essa função.',
-            confirmButtonText: 'OK'
-        });
-
-        return;
-    }
-
-    // Se for admin, continua normalmente
     if (typeof Swal !== "undefined") {
-
         Swal.fire({
             title: 'Tem certeza?',
-            text: 'Esta ação irá apagar todos os itens do estoque!',
+            text: 'Esta ação irá zerar as quantidades de todos os itens do estoque (as movimentações serão preservadas)!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#ff8800',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sim, resetar!',
+            confirmButtonText: 'Sim, resetar estoque!',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
-
             if (result.isConfirmed) {
-
-                // Envia o formulário
                 const form = document.getElementById("formReset");
-
                 if (form) {
                     form.submit();
                 }
-
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-
                 Swal.fire(
                     'Cancelado',
                     'A operação foi cancelada. Seu estoque não foi alterado.',
                     'info'
                 );
             }
-
         });
-
     } else {
-
         const aceitou = confirm(
-            "⚠️ Tem certeza que deseja resetar todo o estoque?"
+            "⚠️ Tem certeza que deseja zerar a quantidade de todos os itens do estoque?"
         );
-
         if (aceitou) {
-
             const form = document.getElementById("formReset");
-
             if (form) {
                 form.submit();
             }
-
         } else {
-
             alert("❌ Operação cancelada!");
         }
     }

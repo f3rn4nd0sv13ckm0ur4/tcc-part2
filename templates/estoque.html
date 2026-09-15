@@ -101,9 +101,11 @@
 
 <!-- BARRA DE AÇÕES INFERIOR (RESETAR, EXPORTAR E IMPORTAR CSV NA MESMA LINHA) -->
 <div class="rodape-acoes">
+    {% if session.tipo == 'admin' %}
     <form id="formReset" action="/resetar_banco" method="POST" style="display: inline-block;">
         <button type="button" onclick="confirmarResetEstoque()" class="btn-reset"> Resetar Estoque</button>
     </form>
+    {% endif %}
 
     <a href="/exportar_estoque_csv" class="btn-csv-rodape csv">
         Exportar CSV

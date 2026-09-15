@@ -127,15 +127,8 @@ def resetar_banco():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # Remove movimentações
-    cursor.execute("DELETE FROM movimentacoes")
-
-    # Remove itens
-    cursor.execute("DELETE FROM itens")
-
-    # Reinicia os IDs
-    cursor.execute("ALTER TABLE movimentacoes AUTO_INCREMENT = 1")
-    cursor.execute("ALTER TABLE itens AUTO_INCREMENT = 1")
+    # Zera as quantidades do estoque sem apagar o histórico de movimentações
+    cursor.execute("UPDATE itens SET quantidade = 0")
 
     conexao.commit()
 
@@ -582,7 +575,7 @@ def service_worker():
 
 
 #API'S EXTERNAS
-@app.route("/api/estoque" , methods=["GET"])
+@app.route("/api/estoque", methods=["GET"])
 def listar_estoque():
     try:
         conexao = conectar()
@@ -993,6 +986,47 @@ def api_movimentacoes():
             "erro": str(e)
         }), 500
 
+@app.route("/api/login", methods=["POST"])
+def api_login():
+        try:
+            dados = request.get_json()
+            if not dados:
+                return jsonify({"erro": "Corpo da requisição deve ser JSON"}), 400
+
+            email = dados.get("email")
+            senha = dados.get("senha")
+            tipo = dados.get("tipo", "usuario")
+
+            if not email or not senha:
+                return jsonify({"erro": "Email e senha são obrigatórios"}), 400
+
+            conexao = conectar()
+            cursor = conexao.cursor(dictionary=True)
+
+            cursor.execute(
+                "SELECT id, email, senha, tipo FROM usuarios WHERE email = %s AND tipo = %s",
+                (email, tipo)
+            )
+            usuario = cursor.fetchone()
+
+            cursor.close()
+            conexao.close()
+
+            # Validação da senha com bcrypt
+            if usuario and bcrypt.checkpw(senha.encode("utf-8"), usuario["senha"].encode("utf-8")):
+                return jsonify({
+                    "mensagem": "Login realizado com sucesso",
+                    "usuario": {
+                        "id": usuario["id"],
+                        "email": usuario["email"],
+                        "tipo": usuario["tipo"]
+                    }
+                }), 200
+
+            return jsonify({"erro": "Email, senha ou tipo de usuário incorretos"}), 401
+
+        except Exception as e:
+            return jsonify({"erro": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
