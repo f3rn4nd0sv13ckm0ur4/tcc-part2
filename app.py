@@ -1028,5 +1028,76 @@ def api_login():
         except Exception as e:
             return jsonify({"erro": str(e)}), 500
 
+# API - CRIAR CONTA
+@app.route("/api/usuarios", methods=["POST"])
+def api_criar_conta():
+    try:
+        dados = request.get_json()
+
+        if not dados:
+            return jsonify({
+                "erro": "JSON não enviado"
+            }), 400
+
+        email = dados.get("email")
+        senha = dados.get("senha")
+
+        if not email or not senha:
+            return jsonify({
+                "erro": "Email e senha são obrigatórios"
+            }), 400
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT id FROM usuarios WHERE email = %s",
+            (email,)
+        )
+
+        usuario = cursor.fetchone()
+
+        if usuario:
+            cursor.close()
+            conexao.close()
+
+            return jsonify({
+                "erro": "Este email já está cadastrado"
+            }), 409
+
+        senha_criptografada = bcrypt.hashpw(
+            senha.encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        cursor.execute(
+            """
+            INSERT INTO usuarios (email, senha, tipo)
+            VALUES (%s, %s, 'usuario')
+            """,
+            (email, senha_criptografada)
+        )
+
+        conexao.commit()
+
+        novo_id = cursor.lastrowid
+
+        cursor.close()
+        conexao.close()
+
+        return jsonify({
+            "mensagem": "Conta criada com sucesso",
+            "usuario": {
+                "id": novo_id,
+                "email": email,
+                "tipo": "usuario"
+            }
+        }), 201
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+        
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
