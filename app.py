@@ -195,8 +195,9 @@ def resetar_banco():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # Zera as quantidades do estoque sem apagar o histórico de movimentações
-    cursor.execute("UPDATE itens SET quantidade = 0")
+    # Remove o histórico de movimentações e exclui os itens do banco de dados
+    cursor.execute("DELETE FROM movimentacoes")
+    cursor.execute("DELETE FROM itens")
 
     conexao.commit()
 
@@ -1562,8 +1563,9 @@ def api_resetar_banco():
         conexao = conectar()
         cursor = conexao.cursor()
 
-        # Zera o estoque
-        cursor.execute("UPDATE itens SET quantidade = 0")
+        # Remove o histórico de movimentações e exclui os itens do banco de dados
+        cursor.execute("DELETE FROM movimentacoes")
+        cursor.execute("DELETE FROM itens")
 
         conexao.commit()
 
@@ -1574,7 +1576,7 @@ def api_resetar_banco():
         atualizar_csv_local()
 
         return jsonify({
-            "mensagem": "Banco de dados resetado com sucesso"
+            "mensagem": "Itens e histórico excluídos do banco de dados com sucesso"
         }), 200
 
     except Exception as e:

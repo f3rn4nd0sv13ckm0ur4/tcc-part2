@@ -435,7 +435,7 @@ export default function App() {
         {/* CONTAINER ESCURO (#003f82) */}
         <View style={styles.webContainer}>
 
-          {/* MENU CARDS */}
+          {/* MENU CARDS EM UMA ÚNICA LINHA */}
           <View style={styles.webMenuRow}>
             
             <TouchableOpacity
@@ -443,7 +443,7 @@ export default function App() {
               onPress={() => { setAbaAtiva('estoque'); setModalAddVisivel(true); }}
             >
               <Text style={styles.cardBtnIcon}>➕</Text>
-              <Text style={styles.cardBtnTxt}>ADICIONAR</Text>
+              <Text style={styles.cardBtnTxt} numberOfLines={1}>ADD</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -458,7 +458,7 @@ export default function App() {
               }}
             >
               <Text style={styles.cardBtnIcon}>➖</Text>
-              <Text style={styles.cardBtnTxt}>RETIRAR</Text>
+              <Text style={styles.cardBtnTxt} numberOfLines={1}>RETIRAR</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -466,7 +466,7 @@ export default function App() {
               onPress={() => setAbaAtiva('historico')}
             >
               <Text style={styles.cardBtnIcon}>📋</Text>
-              <Text style={styles.cardBtnTxt}>HISTÓRICO</Text>
+              <Text style={styles.cardBtnTxt} numberOfLines={1}>HISTÓRICO</Text>
             </TouchableOpacity>
 
             {usuarioLogado.tipo === 'admin' && (
@@ -475,13 +475,13 @@ export default function App() {
                 onPress={() => setModalCriarContaVisivel(true)}
               >
                 <Text style={styles.cardBtnIcon}>👤</Text>
-                <Text style={styles.cardBtnTxt}>CRIAR CONTA</Text>
+                <Text style={styles.cardBtnTxt} numberOfLines={1}>CONTA</Text>
               </TouchableOpacity>
             )}
 
             <TouchableOpacity style={[styles.webCardBtn, styles.btnLogout]} onPress={handleLogout}>
               <Text style={styles.cardBtnIcon}>🚪</Text>
-              <Text style={styles.cardBtnTxt}>SAIR</Text>
+              <Text style={styles.cardBtnTxt} numberOfLines={1}>SAIR</Text>
             </TouchableOpacity>
 
           </View>
@@ -589,20 +589,20 @@ export default function App() {
         </View>
       </ScrollView>
 
-      {/* BARRA DE AÇÕES INFERIOR IGUAL AO SITE WEB (.rodape-acoes) */}
+      {/* BARRA DE AÇÕES INFERIOR EM UMA ÚNICA LINHA (.rodape-acoes) */}
       <View style={styles.webRodapeAcoes}>
         {usuarioLogado.tipo === 'admin' && (
           <TouchableOpacity style={styles.btnResetRodape} onPress={handleResetarEstoque}>
-            <Text style={styles.btnRodapeTxt}>⚠️ Resetar</Text>
+            <Text style={styles.btnRodapeTxt} numberOfLines={1}>⚠️ Reset</Text>
           </TouchableOpacity>
         )}
 
         <TouchableOpacity style={styles.btnExportCsvRodape} onPress={handleExportarCSV}>
-          <Text style={styles.btnRodapeTxt}>📥 Exportar CSV</Text>
+          <Text style={styles.btnRodapeTxt} numberOfLines={1}>📥 Exportar CSV</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnImportCsvRodape} onPress={handleImportarCSV}>
-          <Text style={styles.btnRodapeTxt}>📤 Importar CSV</Text>
+          <Text style={styles.btnRodapeTxt} numberOfLines={1}>📤 Importar CSV</Text>
         </TouchableOpacity>
       </View>
 
@@ -737,13 +737,14 @@ const styles = StyleSheet.create({
   webTopoTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
   webTopoUser: { color: '#d0e1ff', fontSize: 12 },
 
-  webContainer: { width: '95%', maxWidth: 1100, alignSelf: 'center', marginVertical: 15, backgroundColor: '#003f82', padding: 15, borderRadius: 15, elevation: 6 },
+  webContainer: { width: '96%', alignSelf: 'center', marginVertical: 12, backgroundColor: '#003f82', padding: 10, borderRadius: 15, elevation: 6 },
 
-  webMenuRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 15 },
-  webCardBtn: { width: 90, paddingVertical: 12, borderRadius: 12, alignItems: 'center', justifyContent: 'center', elevation: 3 },
+  // MENU SUPERIOR EM UMA ÚNICA LINHA
+  webMenuRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+  webCardBtn: { flex: 1, paddingVertical: 8, paddingHorizontal: 2, marginHorizontal: 2, borderRadius: 10, alignItems: 'center', justifyContent: 'center', elevation: 3 },
   webCardBtnSelected: { borderWidth: 2, borderColor: '#fff' },
-  cardBtnIcon: { fontSize: 20 },
-  cardBtnTxt: { color: '#fff', fontSize: 11, fontWeight: 'bold', marginTop: 4 },
+  cardBtnIcon: { fontSize: 16 },
+  cardBtnTxt: { color: '#fff', fontSize: 9, fontWeight: 'bold', marginTop: 2, textAlign: 'center' },
 
   btnAdd: { backgroundColor: '#0056b3' },
   btnRemove: { backgroundColor: '#e03131' },
@@ -751,36 +752,36 @@ const styles = StyleSheet.create({
   btnCreateAcc: { backgroundColor: '#27ae60' },
   btnLogout: { backgroundColor: '#7f8c8d' },
 
-  webSearchBox: { marginBottom: 15, alignItems: 'center' },
-  webSearchInput: { width: '100%', backgroundColor: '#fff', borderRadius: 8, paddingHorizontal: 15, paddingVertical: 10, fontSize: 14, textAlign: 'center' },
+  webSearchBox: { marginBottom: 12, alignItems: 'center' },
+  webSearchInput: { width: '100%', backgroundColor: '#fff', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 8, fontSize: 13, textAlign: 'center' },
 
   webTableCard: { backgroundColor: '#fff', borderRadius: 10, overflow: 'hidden' },
-  webTableHeaderRow: { flexDirection: 'row', backgroundColor: '#003f82', paddingVertical: 10, paddingHorizontal: 12 },
-  webTh: { color: '#fff', fontWeight: 'bold', fontSize: 12 },
+  webTableHeaderRow: { flexDirection: 'row', backgroundColor: '#003f82', paddingVertical: 10, paddingHorizontal: 10 },
+  webTh: { color: '#fff', fontWeight: 'bold', fontSize: 11 },
 
-  webTableRow: { flexDirection: 'row', paddingVertical: 12, paddingHorizontal: 12, borderBottomWidth: 1, borderBottomColor: '#eee', alignItems: 'center' },
+  webTableRow: { flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 10, borderBottomWidth: 1, borderBottomColor: '#eee', alignItems: 'center' },
   webTableRowAlt: { backgroundColor: '#f8f8f8' },
-  webTd: { fontSize: 13, color: '#333' },
+  webTd: { fontSize: 12, color: '#333' },
   webTdNome: { fontWeight: 'bold', color: '#003f82' },
   webTdQtd: { fontWeight: 'bold', color: '#0056b3' },
-  emptyTableTxt: { textAlign: 'center', color: '#666', padding: 25, fontSize: 14 },
+  emptyTableTxt: { textAlign: 'center', color: '#666', padding: 25, fontSize: 13 },
 
   filtrosRow: { flexDirection: 'row', marginBottom: 10, justifyContent: 'center' },
-  filtroChip: { paddingVertical: 6, paddingHorizontal: 14, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.2)', marginRight: 8 },
+  filtroChip: { paddingVertical: 5, paddingHorizontal: 12, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.2)', marginRight: 6 },
   filtroChipAtivo: { backgroundColor: '#fff' },
-  filtroTxt: { color: '#fff', fontWeight: 'bold', fontSize: 12 },
+  filtroTxt: { color: '#fff', fontWeight: 'bold', fontSize: 11 },
   filtroTxtAtivo: { color: '#003f82' },
 
-  badgeTipoTxt: { fontWeight: 'bold', fontSize: 11 },
+  badgeTipoTxt: { fontWeight: 'bold', fontSize: 10 },
   txtAdd: { color: '#27ae60' },
   txtRet: { color: '#e03131' },
 
-  // BARRA DE AÇÕES INFERIOR IGUAL AO SITE WEB (.rodape-acoes)
-  webRodapeAcoes: { position: 'absolute', bottom: 10, left: 10, right: 10, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' },
-  btnResetRodape: { backgroundColor: '#ff9800', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, elevation: 4 },
-  btnExportCsvRodape: { backgroundColor: '#16a085', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, elevation: 4 },
-  btnImportCsvRodape: { backgroundColor: '#8e44ad', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, elevation: 4 },
-  btnRodapeTxt: { color: '#fff', fontWeight: 'bold', fontSize: 12 },
+  // BARRA DE AÇÕES INFERIOR EM UMA ÚNICA LINHA
+  webRodapeAcoes: { position: 'absolute', bottom: 8, left: 6, right: 6, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  btnResetRodape: { flex: 1, backgroundColor: '#ff9800', paddingVertical: 8, paddingHorizontal: 4, marginHorizontal: 2, borderRadius: 8, alignItems: 'center', elevation: 4 },
+  btnExportCsvRodape: { flex: 1, backgroundColor: '#16a085', paddingVertical: 8, paddingHorizontal: 4, marginHorizontal: 2, borderRadius: 8, alignItems: 'center', elevation: 4 },
+  btnImportCsvRodape: { flex: 1, backgroundColor: '#8e44ad', paddingVertical: 8, paddingHorizontal: 4, marginHorizontal: 2, borderRadius: 8, alignItems: 'center', elevation: 4 },
+  btnRodapeTxt: { color: '#fff', fontWeight: 'bold', fontSize: 10, textAlign: 'center' },
 
   modalBg: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: 20 },
   modalCard: { backgroundColor: '#fff', borderRadius: 12, padding: 20 },
