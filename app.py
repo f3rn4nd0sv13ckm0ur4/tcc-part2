@@ -1014,6 +1014,68 @@ def api_retirar_item(id):
 @app.route("/api/movimentacoes", methods=["GET"])
 def api_movimentacoes():
     try:
+        tipo = request.args.get("tipo")
+        item_id = request.args.get("item_id")
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        query = """
+            SELECT
+                movimentacoes.id,
+                movimentacoes.item_id,
+                itens.nome AS item,
+                movimentacoes.tipo,
+                movimentacoes.quantidade,
+                movimentacoes.responsavel,
+                movimentacoes.data_hora
+            FROM movimentacoes
+            JOIN itens
+                ON movimentacoes.item_id = itens.id
+        """
+        params = []
+        condicoes = []
+
+        if tipo:
+            condicoes.append("movimentacoes.tipo = %s")
+            params.append(tipo.upper())
+
+        if item_id:
+            condicoes.append("movimentacoes.item_id = %s")
+            params.append(item_id)
+
+        if condicoes:
+            query += " WHERE " + " AND ".join(condicoes)
+
+        query += " ORDER BY movimentacoes.data_hora DESC"
+
+        cursor.execute(query, tuple(params))
+        movimentacoes = cursor.fetchall()
+
+        cursor.close()
+        conexao.close()
+
+        for movimentacao in movimentacoes:
+            for chave, valor in movimentacao.items():
+                if isinstance(valor, (
+                    datetime.timedelta,
+                    datetime.date,
+                    datetime.time,
+                    datetime.datetime
+                )):
+                    movimentacao[chave] = str(valor)
+
+        return jsonify(movimentacoes), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
+
+
+@app.route("/api/movimentacoes/item/<int:item_id>", methods=["GET"])
+def api_movimentacoes_por_item(item_id):
+    try:
         conexao = conectar()
         cursor = conexao.cursor(dictionary=True)
 
@@ -1029,8 +1091,9 @@ def api_movimentacoes():
             FROM movimentacoes
             JOIN itens
                 ON movimentacoes.item_id = itens.id
+            WHERE movimentacoes.item_id = %s
             ORDER BY movimentacoes.data_hora DESC
-        """)
+        """, (item_id,))
 
         movimentacoes = cursor.fetchall()
 
@@ -1053,6 +1116,188 @@ def api_movimentacoes():
         return jsonify({
             "erro": str(e)
         }), 500
+
+
+# API - EXPORTAR E IMPORTAR CSV
+@app.route("/api/estoque/exportar_csv", methods=["GET"])
+def api_exportar_estoque_csv():
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        cursor.execute("SELECT id, nome, quantidade, horario, responsavel FROM itens")
+        itens = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+
+        si = io.StringIO()
+        cw = csv.writer(si)
+        si.write('\ufeff')
+        cw.writerow(["ID", "Nome", "Quantidade", "Horário", "Responsável"])
+        for item in itens:
+            cw.writerow([
+                item['id'],
+                item['nome'],
+                item['quantidade'],
+                item['horario'],
+                item['responsavel']
+            ])
+
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=estoque.csv"
+        output.headers["Content-type"] = "text/csv; charset=utf-8"
+        return output
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route("/api/estoque/importar_csv", methods=["POST"])
+def api_importar_estoque_csv():
+    file = request.files.get("arquivo_csv")
+    if not file or not file.filename.endswith(".csv"):
+        return jsonify({"erro": "Arquivo CSV não fornecido ou formato inválido"}), 400
+
+    try:
+        raw_bytes = file.stream.read()
+        if not raw_bytes.strip():
+            return jsonify({"erro": "Arquivo CSV está vazio"}), 400
+
+        try:
+            conteudo = raw_bytes.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            try:
+                conteudo = raw_bytes.decode("latin-1")
+            except Exception:
+                conteudo = raw_bytes.decode("utf-8", errors="replace")
+
+        linhas_texto = [l for l in conteudo.splitlines() if l.strip()]
+        if not linhas_texto:
+            return jsonify({"erro": "Nenhuma linha válida encontrada no CSV"}), 400
+
+        primeira = linhas_texto[0]
+        if "\t" in primeira:
+            delimitador = "\t"
+        elif ";" in primeira:
+            delimitador = ";"
+        else:
+            delimitador = ","
+
+        stream = io.StringIO(conteudo, newline=None)
+        csv_reader = csv.reader(stream, delimiter=delimitador)
+
+        primeira_linha = next(csv_reader, None)
+        if not primeira_linha:
+            return jsonify({"erro": "CSV sem dados"}), 400
+
+        header_test = "".join(primeira_linha).lower()
+        if not ("id" in header_test or "nome" in header_test or "item" in header_test or "quantidade" in header_test):
+            stream.seek(0)
+            csv_reader = csv.reader(stream, delimiter=delimitador)
+
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+
+        import re
+        itens_processados = 0
+
+        for num_linha, linha in enumerate(csv_reader, start=1):
+            if not linha:
+                continue
+
+            try:
+                linha_limpa = [c.strip() for c in linha if c is not None]
+                if not linha_limpa or all(len(c) == 0 for c in linha_limpa):
+                    continue
+
+                if linha_limpa[0].isdigit() and len(linha_limpa) >= 3:
+                    nome = linha_limpa[1]
+                    qtd_str = linha_limpa[2]
+                    horario = linha_limpa[3] if len(linha_limpa) >= 4 and linha_limpa[3] else None
+                    responsavel = linha_limpa[4] if len(linha_limpa) >= 5 and linha_limpa[4] else "API CSV"
+                else:
+                    nome = linha_limpa[0]
+                    qtd_str = linha_limpa[1] if len(linha_limpa) >= 2 else "1"
+                    responsavel = linha_limpa[2] if len(linha_limpa) >= 3 and linha_limpa[2] else "API CSV"
+                    horario = linha_limpa[3] if len(linha_limpa) >= 4 and linha_limpa[3] else None
+
+                if not nome or nome.lower() in ["id", "nome", "item", "quantidade"]:
+                    continue
+
+                numeros = re.findall(r'\d+', qtd_str)
+                qtd = int(numeros[0]) if numeros else 1
+
+                cursor.execute("SELECT id FROM itens WHERE nome = %s", (nome,))
+                item_existente = cursor.fetchone()
+
+                if item_existente:
+                    cursor.execute("""
+                        UPDATE itens 
+                        SET quantidade = quantidade + %s, responsavel = %s
+                        WHERE id = %s
+                    """, (qtd, responsavel, item_existente["id"]))
+                else:
+                    cursor.execute("""
+                        INSERT INTO itens (nome, quantidade, responsavel, horario) 
+                        VALUES (%s, %s, %s, %s)
+                    """, (nome, qtd, responsavel, horario))
+
+                itens_processados += 1
+
+            except Exception as err_linha:
+                print(f"Aviso linha {num_linha}: {err_linha}")
+                continue
+
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "CSV importado com sucesso via API",
+            "itens_processados": itens_processados
+        }), 200
+
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route("/api/movimentacoes/exportar_csv", methods=["GET"])
+def api_exportar_movimentacoes_csv():
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT movimentacoes.id, itens.nome AS item_nome, movimentacoes.tipo, 
+                   movimentacoes.quantidade, movimentacoes.responsavel, movimentacoes.data_hora
+            FROM movimentacoes
+            JOIN itens ON movimentacoes.item_id = itens.id
+            ORDER BY movimentacoes.data_hora DESC
+        """)
+        movs = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+
+        si = io.StringIO()
+        cw = csv.writer(si)
+        si.write('\ufeff')
+        cw.writerow(["ID", "Item", "Tipo", "Quantidade", "Responsável", "Data/Hora"])
+        for m in movs:
+            cw.writerow([
+                m['id'],
+                m['item_nome'],
+                m['tipo'],
+                m['quantidade'],
+                m['responsavel'],
+                m['data_hora']
+            ])
+
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=historico_movimentacoes.csv"
+        output.headers["Content-type"] = "text/csv; charset=utf-8"
+        return output
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
