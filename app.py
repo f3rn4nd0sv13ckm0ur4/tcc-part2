@@ -1310,6 +1310,32 @@ def api_excluir_usuario(id):
             "erro": str(e)
         }), 500
 
+# API - RESETAR BANCO DE DADOS
+@app.route("/api/admin/resetar_banco", methods=["POST"])
+def api_resetar_banco():
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor()
+
+        # Zera o estoque
+        cursor.execute("UPDATE itens SET quantidade = 0")
+
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+
+        # Atualiza os arquivos CSV
+        atualizar_csv_local()
+
+        return jsonify({
+            "mensagem": "Banco de dados resetado com sucesso"
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            "erro": str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
