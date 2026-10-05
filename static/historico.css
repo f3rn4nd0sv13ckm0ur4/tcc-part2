@@ -6,12 +6,12 @@
 }
 
 body{
-    background-color: #f3f5f9; /* leve cinza para dar contraste */
-    min-height: 100vh;
-     background-image: url("fundo10.webp");
+    background-color: #f3f5f9;
+    background-image: url("fundo10.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 /* TOPO */

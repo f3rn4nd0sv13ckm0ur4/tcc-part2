@@ -1,13 +1,13 @@
 body{
     margin:0;
     padding:20px 0;
+    background-color:#0a1f44;
     background-image: url("fundo11.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
     font-family: Arial, sans-serif;
-    background-color:#0a1f44;
     display:flex;
     justify-content:center;
     align-items:center;

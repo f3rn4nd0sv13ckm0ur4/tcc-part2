@@ -11,9 +11,9 @@ app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
 configuracao = {
-    "host": "localhost",
+    "host": "db_almox",
     "user": "root",
-    "password": "",
+    "password": "root",
     "database": "almox"
 }
 
@@ -196,7 +196,6 @@ def resetar_banco():
     cursor = conexao.cursor()
 
     # Remove o histórico de movimentações e exclui os itens do banco de dados
-    cursor.execute("DELETE FROM movimentacoes")
     cursor.execute("DELETE FROM itens")
 
     conexao.commit()

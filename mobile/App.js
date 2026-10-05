@@ -16,7 +16,7 @@ import {
   Share
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-
+// para fazer
 export default function App() {
   // Configuração da API
   const [baseUrl, setBaseUrl] = useState('http://10.154.20.53:5000');
@@ -457,10 +457,7 @@ export default function App() {
                 }
               }}
             >
-              <Text style={styles.cardBtnIcon}>➖</Text>
-              <Text style={styles.cardBtnTxt} numberOfLines={1}>RETIRAR</Text>
-            </TouchableOpacity>
-
+      
             <TouchableOpacity
               style={[styles.webCardBtn, styles.btnHistory, abaAtiva === 'historico' && styles.webCardBtnSelected]}
               onPress={() => setAbaAtiva('historico')}
@@ -633,35 +630,6 @@ export default function App() {
         </View>
       </Modal>
 
-      {/* MODAL RETIRAR ITEM */}
-      <Modal visible={modalRetirarVisivel} animationType="fade" transparent>
-        <View style={styles.modalBg}>
-          <View style={styles.modalCard}>
-            <Text style={[styles.modalTitle, { color: '#b30000' }]}>➖ Retirar Item do Estoque</Text>
-            {itemSelecionado && (
-              <Text style={styles.modalSub}>
-                Item: <Text style={{ fontWeight: 'bold' }}>{itemSelecionado.nome}</Text> (Disponível: {itemSelecionado.quantidade})
-              </Text>
-            )}
-
-            <Text style={styles.webInputLabel}>Quantidade a Retirar</Text>
-            <TextInput style={styles.webInput} value={qtdRetirar} onChangeText={setQtdRetirar} keyboardType="numeric" placeholder="1" placeholderTextColor="#888" />
-
-            <Text style={styles.webInputLabel}>Responsável pela Retirada</Text>
-            <TextInput style={styles.webInput} value={respRetirar} onChangeText={setRespRetirar} />
-
-            <View style={styles.modalActions}>
-              <TouchableOpacity style={styles.btnCancelar} onPress={() => setModalRetirarVisivel(false)}>
-                <Text style={styles.btnCancelarTxt}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.btnSalvarRet} onPress={handleRetirarItem}>
-                <Text style={styles.btnSalvarTxt}>Confirmar Saída</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
       {/* MODAL CRIAR CONTA (ADMIN) */}
       <Modal visible={modalCriarContaVisivel} animationType="fade" transparent>
         <View style={styles.modalBg}>
@@ -747,7 +715,6 @@ const styles = StyleSheet.create({
   cardBtnTxt: { color: '#fff', fontSize: 9, fontWeight: 'bold', marginTop: 2, textAlign: 'center' },
 
   btnAdd: { backgroundColor: '#0056b3' },
-  btnRemove: { backgroundColor: '#e03131' },
   btnHistory: { backgroundColor: '#f39c12' },
   btnCreateAcc: { backgroundColor: '#27ae60' },
   btnLogout: { backgroundColor: '#7f8c8d' },
