@@ -1,34 +1,44 @@
+version: '3.8'
+
 services:
   db_almox:
     image: mysql:8.0
     container_name: db_almox
     restart: always
-
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: almox
-
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./bkp_almox.sql:/docker-entrypoint-initdb.d/backup.sql
       - mysql_data:/var/lib/mysql
+    # Adicionado o healthcheck para o "depends_on" funcionar
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rede-almox
 
-    
   web:
     build: .
     container_name: app_almox
     restart: always
-
     ports:
       - "5000:5000"
-
     environment:
       DB_HOST: db_almox
       DB_PASSWORD: root
-
     depends_on:
       db_almox:
         condition: service_healthy
+    networks:
+      - rede-almox
 
 volumes:
   mysql_data:
+
+networks:
+  rede-almox:
+    driver: bridge

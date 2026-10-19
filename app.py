@@ -195,8 +195,8 @@ def resetar_banco():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # Remove o histórico de movimentações e exclui os itens do banco de dados
-    cursor.execute("DELETE FROM itens")
+    # Zera a quantidade de todos os itens em vez de deletá-los
+    cursor.execute("UPDATE itens SET quantidade = 0")
 
     conexao.commit()
 

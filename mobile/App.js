@@ -16,7 +16,7 @@ import {
   Share
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-// para fazer
+// para fazer o qr code " cd mobile " "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process" "npx expo start"
 export default function App() {
   // Configuração da API
   const [baseUrl, setBaseUrl] = useState('http://10.154.20.53:5000');
@@ -452,12 +452,14 @@ export default function App() {
                 if (itensEstoque.length === 0) {
                   Alert.alert('Aviso', 'Nenhum item em estoque para retirar.');
                 } else {
-                  setItemSelecionado(itensEstoque[0]);
+                  setAbaAtiva('estoque');
                   setModalRetirarVisivel(true);
                 }
               }}
             >
-      
+              <Text style={styles.cardBtnIcon}>➖</Text>
+              <Text style={styles.cardBtnTxt} numberOfLines={1}>RETIRAR</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={[styles.webCardBtn, styles.btnHistory, abaAtiva === 'historico' && styles.webCardBtnSelected]}
               onPress={() => setAbaAtiva('historico')}
@@ -670,6 +672,56 @@ export default function App() {
         </View>
       </Modal>
 
+      {/* MODAL RETIRAR ITEM */}
+      <Modal visible={modalRetirarVisivel} animationType="fade" transparent>
+        <View style={styles.modalBg}>
+          <View style={styles.modalCard}>
+            <Text style={[styles.modalTitle, { color: '#e03131' }]}>➖ Retirar Item</Text>
+
+            <Text style={styles.webInputLabel}>Item</Text>
+            <View style={styles.webTipoSelector}>
+              {itensEstoque.map((it) => (
+                <TouchableOpacity
+                  key={it.id ? it.id.toString() : it.nome}
+                  style={[styles.webTipoBtn, itemSelecionado && itemSelecionado.id === it.id && styles.webTipoBtnActive, { marginBottom: 4 }]}
+                  onPress={() => setItemSelecionado(it)}
+                >
+                  <Text style={[styles.webTipoTxt, itemSelecionado && itemSelecionado.id === it.id && styles.webTipoTxtActive]} numberOfLines={1}>
+                    {it.nome} (Qtd: {it.quantidade})
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <Text style={styles.webInputLabel}>Quantidade a Retirar</Text>
+            <TextInput
+              style={styles.webInput}
+              value={qtdRetirar}
+              onChangeText={setQtdRetirar}
+              keyboardType="numeric"
+              placeholder="Ex: 2"
+              placeholderTextColor="#888"
+            />
+
+            <Text style={styles.webInputLabel}>Responsável</Text>
+            <TextInput
+              style={styles.webInput}
+              value={respRetirar}
+              onChangeText={setRespRetirar}
+            />
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity style={styles.btnCancelar} onPress={() => { setModalRetirarVisivel(false); setQtdRetirar(''); }}>
+                <Text style={styles.btnCancelarTxt}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btnSalvarRet} onPress={handleRetirarItem}>
+                <Text style={styles.btnSalvarTxt}>Confirmar Retirada</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -715,6 +767,7 @@ const styles = StyleSheet.create({
   cardBtnTxt: { color: '#fff', fontSize: 9, fontWeight: 'bold', marginTop: 2, textAlign: 'center' },
 
   btnAdd: { backgroundColor: '#0056b3' },
+  btnRemove: { backgroundColor: '#e03131' },
   btnHistory: { backgroundColor: '#f39c12' },
   btnCreateAcc: { backgroundColor: '#27ae60' },
   btnLogout: { backgroundColor: '#7f8c8d' },
