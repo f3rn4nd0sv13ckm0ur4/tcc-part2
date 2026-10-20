@@ -46,11 +46,120 @@ input{
     border:1px solid #ccc;
     outline:none;
     transition:.2s;
+    box-sizing: border-box;
 }
 
 input:focus{
     border-color:#0056b3;
     box-shadow:0 0 5px rgba(0,86,179,0.3);
+}
+
+/* ÁREA DE UPLOAD DE IMAGEM */
+.upload-imagem-area {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-file-oculto {
+    display: none !important;
+}
+
+.btn-escolher-img {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 18px;
+    background: #eef4ff;
+    color: #0056b3;
+    border: 2px dashed #0056b3;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.btn-escolher-img:hover {
+    background: #0056b3;
+    color: #ffffff;
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.25);
+}
+
+.previa-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease;
+}
+
+.previa-card {
+    position: relative;
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.previa-card img {
+    display: block;
+    max-width: 160px;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.btn-remover-img {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    margin: 0;
+    background: #e03131;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-remover-img:hover {
+    background: #c92a2a;
+    transform: scale(1.15);
+}
+
+.nome-arquivo-previa {
+    font-size: 12px;
+    color: #4a5568;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* botões */

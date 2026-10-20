@@ -16,25 +16,83 @@
     <h2>➕ Adicionar ao Estoque</h2>
 </div>
 
-<form class="container" action="/salvar_item" method="POST">
+<form class="container" action="/salvar_item" method="POST" enctype="multipart/form-data">
 
     <label>Nome do Item</label>
-    <input name="item" type="text" required>
+    <input name="item" id="item" type="text" placeholder="Ex: Teclado Mecânico" required>
 
     <label>Quantidade</label>
-    <input name="qtd" type="number" required>
+    <input name="qtd" id="qtd" type="number" placeholder="Ex: 10" required>
 
     <label>Pessoa responsável</label>
-    <input name="pessoa" type="text" required>
+    <input name="pessoa" id="pessoa" type="text" placeholder="Ex: Carlos Silva" required>
 
     <label>Horário</label>
     <input name="hora" id="hora" type="time" required>
 
+    <!-- OPÇÃO DE ADICIONAR IMAGEM DO DISPOSITIVO -->
+    <label>Foto do Produto (opcional)</label>
+    <div class="upload-imagem-area">
+        <label for="imagem" class="btn-escolher-img">
+            📷 Selecionar Imagem do Dispositivo
+        </label>
+        <input type="file" name="imagem" id="imagem" accept="image/*" class="input-file-oculto" onchange="mostrarPrevia(this)">
+
+        <div id="previa-container" class="previa-container" style="display: none;">
+            <div class="previa-card">
+                <img id="img-previa" src="" alt="Prévia da Imagem">
+                <button type="button" class="btn-remover-img" onclick="removerImagem()" title="Remover imagem">✕</button>
+            </div>
+            <span id="nome-arquivo-previa" class="nome-arquivo-previa"></span>
+        </div>
+    </div>
+
     <button class="btn-salvar" type="submit">Salvar</button>
 
     <a href="/estoque.html">
-    <button class="btn-voltar" type="button">⬅ Voltar ao Estoque</button>
+        <button class="btn-voltar" type="button">⬅ Voltar ao Estoque</button>
     </a>
-    </form>
+</form>
+
+<script>
+function mostrarPrevia(input) {
+    const container = document.getElementById('previa-container');
+    const img = document.getElementById('img-previa');
+    const nomeEl = document.getElementById('nome-arquivo-previa');
+    
+    if (input.files && input.files[0]) {
+        const arquivo = input.files[0];
+        
+        if (!arquivo.type.startsWith('image/')) {
+            alert('Por favor, selecione um arquivo de imagem válido (JPG, PNG, WEBP, etc.)');
+            input.value = '';
+            container.style.display = 'none';
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            nomeEl.textContent = arquivo.name;
+            container.style.display = 'flex';
+        };
+        reader.readAsDataURL(arquivo);
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+function removerImagem() {
+    const input = document.getElementById('imagem');
+    const container = document.getElementById('previa-container');
+    const img = document.getElementById('img-previa');
+    const nomeEl = document.getElementById('nome-arquivo-previa');
+    
+    input.value = '';
+    img.src = '';
+    nomeEl.textContent = '';
+    container.style.display = 'none';
+}
+</script>
 </body>
 </html>

@@ -5,20 +5,65 @@ import csv
 import io
 import datetime
 import os
+<<<<<<< HEAD
+import json
+import urllib.request
+import urllib.error
+=======
+import uuid
+from werkzeug.utils import secure_filename
+>>>>>>> 8bb1e278 (finalmente função de imagem)
 
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
+# Configuração de uploads de imagens dos produtos
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif", "bmp"}
+
+def arquivo_permitido(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 configuracao = {
-    "host": "db_almox",
-    "user": "root",
-    "password": "root",
-    "database": "almox"
+    "host": os.environ.get("DB_HOST", "db_almox"),
+    "user": os.environ.get("DB_USER", "root"),
+    "password": os.environ.get("DB_PASSWORD", "root"),
+    "database": os.environ.get("DB_NAME", "almox")
 }
 
 def conectar():
-    return mysql.connector.connect(**configuracao)
+    if "DB_HOST" in os.environ:
+        return mysql.connector.connect(
+            host=os.environ["DB_HOST"],
+            user=os.environ.get("DB_USER", "root"),
+            password=os.environ.get("DB_PASSWORD", "root"),
+            database=os.environ.get("DB_NAME", "almox")
+        )
+    try:
+        return mysql.connector.connect(
+            host="db_almox",
+            user="root",
+            password="root",
+            database="almox",
+            connection_timeout=2
+        )
+    except Exception:
+        try:
+            return mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="",
+                database="almox"
+            )
+        except Exception:
+            return mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="root",
+                database="almox"
+            )
 
 @app.route("/")
 def login():
@@ -521,6 +566,15 @@ def salvar_item():
     pessoa = request.form["pessoa"]
     hora = request.form["hora"]
 
+    # Processamento de imagem enviada do dispositivo
+    imagem_nome = None
+    if "imagem" in request.files:
+        arquivo = request.files["imagem"]
+        if arquivo and arquivo.filename and arquivo_permitido(arquivo.filename):
+            ext = arquivo.filename.rsplit(".", 1)[1].lower()
+            imagem_nome = f"{uuid.uuid4().hex[:12]}.{ext}"
+            arquivo.save(os.path.join(UPLOAD_FOLDER, imagem_nome))
+
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
 
@@ -532,16 +586,20 @@ def salvar_item():
     produto = cursor.fetchone()
 
     if produto:
+        # Se uma nova foto foi enviada, atualiza; senao mantem a foto anterior
+        imagem_final = imagem_nome if imagem_nome else produto.get("imagem")
         cursor.execute("""
             UPDATE itens
             SET quantidade = quantidade + %s,
                 responsavel = %s,
-                horario = %s
+                horario = %s,
+                imagem = %s
             WHERE id = %s
         """, (
             qtd,
             pessoa,
             hora,
+            imagem_final,
             produto["id"]
         ))
         item_id = produto["id"]
@@ -549,13 +607,14 @@ def salvar_item():
     else:
         cursor.execute("""
             INSERT INTO itens
-            (nome, quantidade, responsavel, horario)
-            VALUES (%s, %s, %s, %s)
+            (nome, quantidade, responsavel, horario, imagem)
+            VALUES (%s, %s, %s, %s, %s)
         """, (
             item,
             qtd,
             pessoa,
-            hora
+            hora,
+            imagem_nome
         ))
         item_id = cursor.lastrowid
 
@@ -671,7 +730,7 @@ def api_buscar_item(id):
         cursor = conexao.cursor(dictionary=True)
 
         cursor.execute("""
-            SELECT id, nome, quantidade, horario, responsavel
+            SELECT id, nome, quantidade, horario, responsavel, imagem
             FROM itens
             WHERE id = %s
         """, (id,))
@@ -703,15 +762,109 @@ def api_buscar_item(id):
         }), 500
 
 
+@app.route("/api/estoque/<int:id>/descricao", methods=["GET"])
+def api_descricao_item(id):
+    """Gera uma descrição curta, usando IA se OPENAI_API_KEY estiver configurada."""
+    if "tipo" not in session:
+        return jsonify({"erro": "Não autorizado"}), 401
+
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        cursor.execute(
+            "SELECT id, nome, quantidade, horario, responsavel FROM itens WHERE id = %s",
+            (id,)
+        )
+        item = cursor.fetchone()
+        cursor.close()
+        conexao.close()
+        if not item:
+            return jsonify({"erro": "Item não encontrado"}), 404
+
+        nome = item["nome"]
+        quantidade = item["quantidade"]
+        estoque_status = "disponível" if quantidade > 0 else "sem estoque"
+        fallback = (
+            f"{nome} está {estoque_status}, com {quantidade} unidade(s) registrada(s) no estoque. "
+            "Consulte o histórico para ver as últimas movimentações."
+        )
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            return jsonify({"descricao": fallback, "origem": "local"}), 200
+
+        base_url = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1").rstrip("/")
+        modelo = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+        prompt = (
+            "Descreva este item de estoque em português do Brasil, em no máximo 2 frases. "
+            "Não invente especificações técnicas nem características que não estejam nos dados. "
+            f"Item: {nome}. Quantidade: {quantidade}. Status: {estoque_status}. "
+            f"Responsável pelo último registro: {item.get('responsavel') or 'não informado'}."
+        )
+        payload = {
+            "model": modelo,
+            "messages": [
+                {"role": "system", "content": "Você é um assistente de almoxarifado objetivo e confiável."},
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.2,
+            "max_tokens": 120
+        }
+        requisicao = urllib.request.Request(
+            f"{base_url}/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(requisicao, timeout=12) as resposta:
+            resultado = json.loads(resposta.read().decode("utf-8"))
+        descricao = resultado["choices"][0]["message"]["content"].strip()
+        return jsonify({"descricao": descricao or fallback, "origem": "ia"}), 200
+    except (urllib.error.URLError, KeyError, IndexError, json.JSONDecodeError, TimeoutError):
+        return jsonify({"descricao": fallback, "origem": "local"}), 200
+    except Exception:
+        app.logger.exception("Erro ao gerar descrição do item")
+        return jsonify({"erro": "Não foi possível gerar a descrição agora."}), 500
+
+
 @app.route("/api/estoque", methods=["POST"])
 def api_adicionar_item():
     try:
-        dados = request.get_json()
+        nome_imagem = None
 
-        nome = dados.get("nome")
-        quantidade = dados.get("quantidade")
-        responsavel = dados.get("responsavel", "API")
-        horario = dados.get("horario")
+        if request.is_json:
+            dados = request.get_json() or {}
+            nome = dados.get("nome")
+            quantidade = dados.get("quantidade")
+            responsavel = dados.get("responsavel", "API")
+            horario = dados.get("horario")
+            imagem_data = dados.get("imagem")
+
+            if imagem_data and isinstance(imagem_data, str) and imagem_data.startswith("data:image"):
+                import base64
+                header, encoded = imagem_data.split(",", 1)
+                ext = "png"
+                if "jpeg" in header or "jpg" in header:
+                    ext = "jpg"
+                elif "webp" in header:
+                    ext = "webp"
+                nome_imagem = f"{uuid.uuid4().hex[:12]}.{ext}"
+                with open(os.path.join(UPLOAD_FOLDER, nome_imagem), "wb") as f_img:
+                    f_img.write(base64.b64decode(encoded))
+            elif imagem_data and isinstance(imagem_data, str) and not imagem_data.startswith("data:"):
+                nome_imagem = imagem_data
+        else:
+            dados = request.form
+            nome = dados.get("nome")
+            quantidade = dados.get("quantidade")
+            responsavel = dados.get("responsavel", "API")
+            horario = dados.get("horario")
+
+            if "imagem" in request.files:
+                arquivo = request.files["imagem"]
+                if arquivo and arquivo.filename and arquivo_permitido(arquivo.filename):
+                    ext = arquivo.filename.rsplit(".", 1)[1].lower()
+                    nome_imagem = f"{uuid.uuid4().hex[:12]}.{ext}"
+                    arquivo.save(os.path.join(UPLOAD_FOLDER, nome_imagem))
 
         if not nome or quantidade is None:
             return jsonify({
@@ -737,33 +890,35 @@ def api_adicionar_item():
         item = cursor.fetchone()
 
         if item:
-
+            imagem_final = nome_imagem if nome_imagem else item.get("imagem")
             cursor.execute("""
                 UPDATE itens
                 SET quantidade = quantidade + %s,
                     responsavel = %s,
-                    horario = %s
+                    horario = %s,
+                    imagem = %s
                 WHERE id = %s
             """, (
                 quantidade,
                 responsavel,
                 horario,
+                imagem_final,
                 item["id"]
             ))
 
             item_id = item["id"]
 
         else:
-
             cursor.execute("""
                 INSERT INTO itens
-                (nome, quantidade, responsavel, horario)
-                VALUES (%s, %s, %s, %s)
+                (nome, quantidade, responsavel, horario, imagem)
+                VALUES (%s, %s, %s, %s, %s)
             """, (
                 nome,
                 quantidade,
                 responsavel,
-                horario
+                horario,
+                nome_imagem
             ))
 
             item_id = cursor.lastrowid
@@ -788,7 +943,8 @@ def api_adicionar_item():
 
         return jsonify({
             "mensagem": "Item adicionado com sucesso",
-            "id": item_id
+            "id": item_id,
+            "imagem": nome_imagem
         }), 201
 
     except ValueError:
@@ -830,24 +986,29 @@ def api_atualizar_item(id):
                 "erro": "Item não encontrado"
             }), 404
 
+        imagem = dados.get("imagem")
+
         # Mantém os valores antigos quando não forem enviados
         nome = nome if nome is not None else item["nome"]
         quantidade = quantidade if quantidade is not None else item["quantidade"]
         responsavel = responsavel if responsavel is not None else item["responsavel"]
         horario = horario if horario is not None else item["horario"]
+        imagem = imagem if imagem is not None else item.get("imagem")
 
         cursor.execute("""
             UPDATE itens
             SET nome = %s,
                 quantidade = %s,
                 responsavel = %s,
-                horario = %s
+                horario = %s,
+                imagem = %s
             WHERE id = %s
         """, (
             nome,
             quantidade,
             responsavel,
             horario,
+            imagem,
             id
         ))
 

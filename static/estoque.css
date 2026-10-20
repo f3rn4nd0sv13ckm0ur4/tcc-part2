@@ -115,6 +115,40 @@ body {
         box-shadow: 0 0 8px rgba(0, 86, 179, 0.4);
     }
 
+.pesquisa-assistente { width: 100%; }
+.linha-pesquisa { display: flex; gap: 10px; }
+.linha-pesquisa input { flex: 1; }
+.btn-assistente {
+    border: 0;
+    border-radius: 8px;
+    padding: 0 18px;
+    background: linear-gradient(135deg, #6c3fb5, #9b59b6);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+    white-space: nowrap;
+}
+.btn-assistente:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0, 0, 0, .2); }
+.resposta-assistente {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 12px;
+    padding: 12px 15px;
+    border-left: 4px solid #9b59b6;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .96);
+    color: #20344d;
+    text-align: left;
+    font-size: 14px;
+}
+.resposta-assistente strong { display: flex; justify-content: space-between; gap: 10px; }
+.resposta-assistente small { color: #6c3fb5; font-weight: normal; }
+.resposta-assistente.sucesso { border-left-color: #1abc9c; }
+.resposta-assistente.aviso { border-left-color: #f39c12; }
+.resposta-assistente.carregando { opacity: .75; }
+
 /* TABELA COM SCROLL */
 .tabela-container {
     max-height: 260px; /* Reduzido para ativar a rolagem com menos itens */
@@ -279,6 +313,8 @@ tr:hover td {
     .tabela-container {
         max-height: 220px;
     }
+    .linha-pesquisa { flex-direction: column; }
+    .btn-assistente { min-height: 42px; }
 }
 
 /* ── ELEMENTOS DO MENU LATERAL (DESKTOP) ── */
@@ -288,3 +324,40 @@ tr:hover td {
 .menu-desktop-original {
     display: block;
 }
+<<<<<<< HEAD
+=======
+
+
+/* ── FOTO DO PRODUTO NO ESTOQUE ── */
+.col-foto {
+    width: 65px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px !important;
+}
+
+.foto-produto-thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.foto-produto-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+.sem-foto-icone {
+    font-size: 24px;
+    display: inline-block;
+    opacity: 0.65;
+    user-select: none;
+}
+>>>>>>> 8bb1e278 (finalmente função de imagem)

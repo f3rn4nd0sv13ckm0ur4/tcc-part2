@@ -13,7 +13,8 @@ import {
   StatusBar,
   ScrollView,
   RefreshControl,
-  Share
+  Share,
+  Image
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 // para fazer o qr code " cd mobile " "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process" "npx expo start"
@@ -48,6 +49,21 @@ export default function App() {
   const [novaQtd, setNovaQtd] = useState('');
   const [novoResp, setNovoResp] = useState('');
   const [novoHorario, setNovoHorario] = useState('');
+  const [novaImagem, setNovaImagem] = useState(null);
+
+  const handleSelecionarImagem = async () => {
+    try {
+      const res = await DocumentPicker.getDocumentAsync({
+        type: 'image/*',
+        copyToCacheDirectory: true
+      });
+      if (!res.canceled && res.assets && res.assets.length > 0) {
+        setNovaImagem(res.assets[0]);
+      }
+    } catch (err) {
+      Alert.alert('Erro', 'Não foi possível selecionar a imagem.');
+    }
+  };
 
   // Formulário Retirar Item
   const [qtdRetirar, setQtdRetirar] = useState('');
@@ -146,16 +162,36 @@ export default function App() {
     }
     setCarregando(true);
     try {
-      const response = await fetch(`${baseUrl}/api/estoque`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: novoNome,
-          quantidade: parseInt(novaQtd, 10),
-          responsavel: novoResp || usuarioLogado.email,
-          horario: novoHorario || new Date().toLocaleTimeString()
-        })
-      });
+      let response;
+      if (novaImagem) {
+        const formData = new FormData();
+        formData.append('nome', novoNome);
+        formData.append('quantidade', novaQtd);
+        formData.append('responsavel', novoResp || usuarioLogado.email);
+        formData.append('horario', novoHorario || new Date().toLocaleTimeString());
+        
+        formData.append('imagem', {
+          uri: novaImagem.uri,
+          name: novaImagem.name || 'foto.jpg',
+          type: novaImagem.mimeType || 'image/jpeg'
+        });
+
+        response = await fetch(`${baseUrl}/api/estoque`, {
+          method: 'POST',
+          body: formData
+        });
+      } else {
+        response = await fetch(`${baseUrl}/api/estoque`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome: novoNome,
+            quantidade: parseInt(novaQtd, 10),
+            responsavel: novoResp || usuarioLogado.email,
+            horario: novoHorario || new Date().toLocaleTimeString()
+          })
+        });
+      }
       const data = await response.json();
       setCarregando(false);
 
@@ -165,6 +201,7 @@ export default function App() {
         setNovoNome('');
         setNovaQtd('');
         setNovoHorario('');
+        setNovaImagem(null);
         carregarEstoque();
       } else {
         Alert.alert('Erro', data.erro || 'Erro ao adicionar item.');
@@ -520,6 +557,16 @@ export default function App() {
                         setModalRetirarVisivel(true);
                       }}
                     >
+                      <View style={{ width: 36, height: 36, justifyContent: 'center', alignItems: 'center', marginRight: 6 }}>
+                        {item.imagem ? (
+                          <Image
+                            source={{ uri: `${baseUrl}/static/uploads/${item.imagem}` }}
+                            style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: '#eee' }}
+                          />
+                        ) : (
+                          <Text style={{ fontSize: 16 }}>📦</Text>
+                        )}
+                      </View>
                       <Text style={[styles.webTd, styles.webTdNome, { flex: 2 }]}>{item.nome}</Text>
                       <Text style={[styles.webTd, styles.webTdQtd, { flex: 1, textAlign: 'center' }]}>{item.quantidade}</Text>
                       <Text style={[styles.webTd, { flex: 2 }]}>{item.responsavel || 'Sistema'}</Text>
@@ -620,8 +667,25 @@ export default function App() {
             <Text style={styles.webInputLabel}>Responsável</Text>
             <TextInput style={styles.webInput} value={novoResp} onChangeText={setNovoResp} />
 
+            <Text style={styles.webInputLabel}>Imagem do Produto (opcional)</Text>
+            <TouchableOpacity style={styles.btnEscolherImagemMobile} onPress={handleSelecionarImagem}>
+              <Text style={styles.btnEscolherImagemTxt}>📷 Selecionar Imagem do Dispositivo</Text>
+            </TouchableOpacity>
+
+            {novaImagem && (
+              <View style={styles.previewContainerMobile}>
+                <Image source={{ uri: novaImagem.uri }} style={styles.previewImgMobile} />
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Text style={styles.previewNomeMobile} numberOfLines={1}>{novaImagem.name}</Text>
+                  <TouchableOpacity style={styles.btnRemoverImgMobile} onPress={() => setNovaImagem(null)}>
+                    <Text style={styles.btnRemoverImgTxt}>✕ Remover</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
             <View style={styles.modalActions}>
-              <TouchableOpacity style={styles.btnCancelar} onPress={() => setModalAddVisivel(false)}>
+              <TouchableOpacity style={styles.btnCancelar} onPress={() => { setModalAddVisivel(false); setNovaImagem(null); }}>
                 <Text style={styles.btnCancelarTxt}>Cancelar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btnSalvarAdd} onPress={handleAdicionarItem}>
@@ -812,5 +876,54 @@ const styles = StyleSheet.create({
   btnCancelarTxt: { color: '#666', fontWeight: 'bold' },
   btnSalvarAdd: { backgroundColor: '#0056b3', paddingVertical: 10, paddingHorizontal: 18, borderRadius: 6 },
   btnSalvarRet: { backgroundColor: '#e03131', paddingVertical: 10, paddingHorizontal: 18, borderRadius: 6 },
-  btnSalvarTxt: { color: '#fff', fontWeight: 'bold' }
+  btnSalvarTxt: { color: '#fff', fontWeight: 'bold' },
+  btnEscolherImagemMobile: {
+    backgroundColor: '#eef4ff',
+    borderWidth: 1.5,
+    borderColor: '#0056b3',
+    borderStyle: 'dashed',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    marginBottom: 8
+  },
+  btnEscolherImagemTxt: {
+    color: '#0056b3',
+    fontWeight: '600',
+    fontSize: 13
+  },
+  previewContainerMobile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    padding: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    marginBottom: 10
+  },
+  previewImgMobile: {
+    width: 48,
+    height: 48,
+    borderRadius: 6,
+    backgroundColor: '#eee'
+  },
+  previewNomeMobile: {
+    fontSize: 12,
+    color: '#333',
+    marginBottom: 4
+  },
+  btnRemoverImgMobile: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#e03131',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 4
+  },
+  btnRemoverImgTxt: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: 'bold'
+  }
 });

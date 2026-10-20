@@ -14,7 +14,8 @@ CREATE TABLE itens (
     nome VARCHAR(100) NOT NULL,
     quantidade INT NOT NULL DEFAULT 0,
     horario TIME,
-    responsavel VARCHAR(100)
+    responsavel VARCHAR(100),
+    imagem VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE movimentacoes (
@@ -36,4 +37,4 @@ VALUES (
 
 SELECT * FROM   usuarios;
 SELECT * FROM   itens;
-SELECT * FROM   movimentacoes
+SELECT * FROM   movimentacoes;

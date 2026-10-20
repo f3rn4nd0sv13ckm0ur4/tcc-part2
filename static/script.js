@@ -147,6 +147,46 @@ function filtrarTabela() {
     });
 }
 
+async function descreverItemPesquisado() {
+    const input = document.getElementById("campo-de-pesquisa");
+    const painel = document.getElementById("resposta-assistente");
+    if (!input || !painel) return;
+
+    const termo = input.value.toLowerCase().trim();
+    const linhas = [...document.querySelectorAll("tbody tr[data-item-id]")];
+    const linha = linhas.find(item => item.textContent.toLowerCase().includes(termo));
+
+    if (!termo || !linha) {
+        painel.className = "resposta-assistente aviso";
+        painel.innerHTML = "<strong>Item não encontrado</strong><span>Digite o nome de um item que esteja na tabela.</span>";
+        return;
+    }
+
+    painel.className = "resposta-assistente carregando";
+    painel.innerHTML = "<strong>Assistente pensando...</strong><span>Preparando a descrição do item.</span>";
+
+    try {
+        const resposta = await fetch(`/api/estoque/${linha.dataset.itemId}/descricao`);
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.erro || "Falha ao consultar o assistente");
+
+        const origem = dados.origem === "ia" ? "Gerado por IA" : "Resumo automático";
+        painel.className = "resposta-assistente sucesso";
+        painel.replaceChildren();
+        const titulo = document.createElement("strong");
+        titulo.textContent = `✨ ${linha.cells[0].textContent.trim()} `;
+        const origemEl = document.createElement("small");
+        origemEl.textContent = origem;
+        titulo.appendChild(origemEl);
+        const descricao = document.createElement("span");
+        descricao.textContent = dados.descricao;
+        painel.append(titulo, descricao);
+    } catch (erro) {
+        painel.className = "resposta-assistente aviso";
+        painel.innerHTML = `<strong>Não foi possível gerar a descrição</strong><span>${erro.message}</span>`;
+    }
+}
+
 function toggleMenu() {
     const menu = document.getElementById("menu-lateral");
     const overlay = document.getElementById("overlay-menu");
@@ -155,3 +195,23 @@ function toggleMenu() {
         overlay.classList.toggle("open");
     }
 }
+<<<<<<< HEAD
+=======
+
+
+function ampliarImagem(url, nome) {
+    if (typeof Swal !== "undefined") {
+        Swal.fire({
+            title: nome || "Imagem do Produto",
+            imageUrl: url,
+            imageAlt: nome || "Imagem do Produto",
+            showCloseButton: true,
+            showConfirmButton: false,
+            focusClose: false,
+            background: "#ffffff"
+        });
+    } else {
+        window.open(url, "_blank");
+    }
+}
+>>>>>>> 8bb1e278 (finalmente função de imagem)
