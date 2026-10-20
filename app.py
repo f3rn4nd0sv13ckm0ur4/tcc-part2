@@ -5,15 +5,6 @@ import csv
 import io
 import datetime
 import os
-<<<<<<< HEAD
-import json
-import urllib.request
-import urllib.error
-=======
-import uuid
-from werkzeug.utils import secure_filename
->>>>>>> 8bb1e278 (finalmente função de imagem)
-
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
