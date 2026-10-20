@@ -11,7 +11,6 @@ import urllib.error
 import uuid
 from werkzeug.utils import secure_filename
 
-
 app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
