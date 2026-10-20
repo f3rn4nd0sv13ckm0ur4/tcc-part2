@@ -67,19 +67,18 @@
         </div>
     </div>
 
-    <!-- PESQUISA E TABELA -->
+    <!-- PESQUISA, ASSISTENTE E TABELA -->
     <div class="estoque-conteudo">
         <div class="brr-pesquisa">
             <div class="pesquisa-assistente">
                 <div class="linha-pesquisa">
-                    <input type="text" id="campo-de-pesquisa" oninput="filtrarTabela(); atualizarAssistenteAoDigitar()" onkeydown="event.key === 'Enter' && descreverItemPesquisado()" placeholder="🔍 Pesquisar item no estoque...">
-                    <button type="button" class="btn-assistente" onclick="descreverItemPesquisado()">✨ Descrever</button>
-                </div>
-                <div id="resposta-assistente" class="resposta-assistente" aria-live="polite">
-                    <strong>Assistente do estoque</strong>
-                    <span>Digite o nome de um item para verificar se ele está no sistema.</span>
+                    <input type="text" id="campo-de-pesquisa" oninput="filtrarTabela(); atualizarAssistenteAoDigitar()" placeholder="🔍 Pesquisar item no estoque...">
                 </div>
             </div>
+        </div>
+        <div id="resposta-assistente" class="resposta-assistente assistente-oculto" aria-live="polite">
+            <strong>Assistente do estoque</strong>
+            <span>Digite o nome de um item para verificar se ele está no sistema.</span>
         </div>
         <!-- TABELA -->
         <div class="tabela-container">

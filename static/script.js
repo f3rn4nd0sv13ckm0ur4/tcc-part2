@@ -158,11 +158,12 @@ function atualizarAssistenteAoDigitar() {
 
     const termo = input.value.trim();
     if (!termo) {
-        painel.className = "resposta-assistente";
+        painel.className = "resposta-assistente assistente-oculto";
         painel.innerHTML = "<strong>Assistente do estoque</strong><span>Digite o nome de um item para verificar se ele está no sistema.</span>";
         return;
     }
 
+    painel.classList.remove("assistente-oculto");
     painel.className = "resposta-assistente carregando";
     painel.innerHTML = "<strong>Consultando o sistema...</strong><span>Verificando o item informado.</span>";
     assistenteTimer = setTimeout(() => descreverItemPesquisado(), 450);
@@ -180,6 +181,7 @@ async function descreverItemPesquisado() {
     }
 
     const consultaAtual = ++assistenteConsulta;
+    painel.classList.remove("assistente-oculto");
     painel.className = "resposta-assistente carregando";
     painel.innerHTML = "<strong>Consultando o sistema...</strong><span>Verificando o item informado.</span>";
 

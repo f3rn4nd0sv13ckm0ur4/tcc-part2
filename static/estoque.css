@@ -90,8 +90,8 @@ body {
 }
 
 .brr-pesquisa {
-    flex: 0 0 310px;
-    width: 310px;
+    flex: 0 0 auto;
+    width: 100%;
     margin-bottom: 25px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Separação discreta */
@@ -101,8 +101,9 @@ body {
 
 .estoque-conteudo {
     display: flex;
-    align-items: flex-start;
-    gap: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     width: 100%;
 }
 
@@ -126,6 +127,7 @@ body {
 .pesquisa-assistente { width: 100%; }
 .linha-pesquisa { display: flex; gap: 10px; }
 .linha-pesquisa input { flex: 1; }
+.assistente-oculto { display: none; }
 .btn-assistente {
     border: 0;
     border-radius: 8px;
@@ -150,6 +152,9 @@ body {
     color: #20344d;
     text-align: left;
     font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 25px;
 }
 .resposta-assistente strong { display: flex; justify-content: space-between; gap: 10px; }
 .resposta-assistente small { color: #6c3fb5; font-weight: normal; }
@@ -323,7 +328,6 @@ tr:hover td {
     .tabela-container {
         max-height: 220px;
     }
-    .estoque-conteudo { flex-direction: column; }
     .brr-pesquisa { flex: 1 1 auto; width: 100%; }
     .tabela-container { width: 100%; }
     .linha-pesquisa { flex-direction: column; }
