@@ -5,14 +5,11 @@ import csv
 import io
 import datetime
 import os
-<<<<<<< HEAD
 import json
 import urllib.request
 import urllib.error
-=======
 import uuid
 from werkzeug.utils import secure_filename
->>>>>>> 8bb1e278 (finalmente função de imagem)
 
 
 app = Flask(__name__)
@@ -721,6 +718,47 @@ def listar_estoque():
         return jsonify(itens), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+
+
+@app.route("/api/estoque/buscar", methods=["GET"])
+def api_buscar_item_por_nome():
+    """Busca o item mais próximo do nome informado para o assistente."""
+    if "tipo" not in session:
+        return jsonify({"erro": "Não autorizado"}), 401
+
+    nome = request.args.get("nome", "").strip()
+    if not nome:
+        return jsonify({"encontrado": False}), 200
+
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        termo = f"%{nome}%"
+        cursor.execute(
+            """
+            SELECT id, nome, quantidade, horario, responsavel, imagem
+            FROM itens
+            WHERE nome LIKE %s
+            ORDER BY CASE WHEN LOWER(nome) = LOWER(%s) THEN 0 ELSE 1 END, nome
+            LIMIT 1
+            """,
+            (termo, nome)
+        )
+        item = cursor.fetchone()
+        cursor.close()
+        conexao.close()
+
+        if not item:
+            return jsonify({"encontrado": False}), 200
+
+        for chave, valor in item.items():
+            if isinstance(valor, (datetime.timedelta, datetime.date, datetime.time, datetime.datetime)):
+                item[chave] = str(valor)
+
+        return jsonify({"encontrado": True, "item": item}), 200
+    except Exception:
+        app.logger.exception("Erro ao buscar item por nome")
+        return jsonify({"erro": "Não foi possível consultar o estoque agora."}), 500
     
 
 @app.route("/api/estoque/<int:id>", methods=["GET"])

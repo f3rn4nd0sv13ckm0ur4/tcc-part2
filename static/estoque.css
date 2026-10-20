@@ -90,12 +90,20 @@ body {
 }
 
 .brr-pesquisa {
-    width: 100%;
+    flex: 0 0 310px;
+    width: 310px;
     margin-bottom: 25px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Separação discreta */
     display: flex;
     justify-content: center;
+}
+
+.estoque-conteudo {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    width: 100%;
 }
 
 .brr-pesquisa input {
@@ -151,6 +159,8 @@ body {
 
 /* TABELA COM SCROLL */
 .tabela-container {
+    flex: 1 1 auto;
+    min-width: 0;
     max-height: 260px; /* Reduzido para ativar a rolagem com menos itens */
     overflow-y: scroll; /* Força a exibição da barra de rolagem vertical */
     overflow-x: auto;   /* Rolagem horizontal se a tela for pequena */
@@ -313,6 +323,9 @@ tr:hover td {
     .tabela-container {
         max-height: 220px;
     }
+    .estoque-conteudo { flex-direction: column; }
+    .brr-pesquisa { flex: 1 1 auto; width: 100%; }
+    .tabela-container { width: 100%; }
     .linha-pesquisa { flex-direction: column; }
     .btn-assistente { min-height: 42px; }
 }
@@ -324,10 +337,6 @@ tr:hover td {
 .menu-desktop-original {
     display: block;
 }
-<<<<<<< HEAD
-=======
-
-
 /* ── FOTO DO PRODUTO NO ESTOQUE ── */
 .col-foto {
     width: 65px;
@@ -360,4 +369,3 @@ tr:hover td {
     opacity: 0.65;
     user-select: none;
 }
->>>>>>> 8bb1e278 (finalmente função de imagem)

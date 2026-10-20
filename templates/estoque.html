@@ -68,53 +68,51 @@
     </div>
 
     <!-- PESQUISA E TABELA -->
-    <div class="brr-pesquisa">
-        <div class="pesquisa-assistente">
-            <div class="linha-pesquisa">
-                <input type="text" id="campo-de-pesquisa" oninput="filtrarTabela()" onkeydown="event.key === 'Enter' && descreverItemPesquisado()" placeholder="🔍 Pesquisar item no estoque...">
-                <button type="button" class="btn-assistente" onclick="descreverItemPesquisado()">✨ Descrever</button>
-            </div>
-            <div id="resposta-assistente" class="resposta-assistente" aria-live="polite">
-                <strong>Assistente do estoque</strong>
-                <span>Pesquise um item e clique em “Descrever” para obter um resumo.</span>
+    <div class="estoque-conteudo">
+        <div class="brr-pesquisa">
+            <div class="pesquisa-assistente">
+                <div class="linha-pesquisa">
+                    <input type="text" id="campo-de-pesquisa" oninput="filtrarTabela(); atualizarAssistenteAoDigitar()" onkeydown="event.key === 'Enter' && descreverItemPesquisado()" placeholder="🔍 Pesquisar item no estoque...">
+                    <button type="button" class="btn-assistente" onclick="descreverItemPesquisado()">✨ Descrever</button>
+                </div>
+                <div id="resposta-assistente" class="resposta-assistente" aria-live="polite">
+                    <strong>Assistente do estoque</strong>
+                    <span>Digite o nome de um item para verificar se ele está no sistema.</span>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- TABELA -->
-    <div class="tabela-container">
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 65px;">FOTO</th>
-                    <th>NOME</th>
-                    <th>QTDE</th>
-                    <th>RESPONSÁVEL</th>
-                    <th>HORÁRIO</th>
-                </tr>
-            </thead>
+        <!-- TABELA -->
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 65px;">FOTO</th>
+                        <th>NOME</th>
+                        <th>QTDE</th>
+                        <th>RESPONSÁVEL</th>
+                        <th>HORÁRIO</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                {% for item in itens %}
-<<<<<<< HEAD
-                <tr data-item-id="{{ item.id }}">
-=======
-                <tr>
-                    <td class="col-foto">
-                        {% if item.imagem %}
-                        <img src="/static/uploads/{{ item.imagem }}" alt="{{ item.nome }}" class="foto-produto-thumb" onclick="ampliarImagem('/static/uploads/{{ item.imagem }}', '{{ item.nome }}')" title="Clique para ampliar">
-                        {% else %}
-                        <span class="sem-foto-icone" title="Sem imagem disponível">📦</span>
-                        {% endif %}
-                    </td>
->>>>>>> 8bb1e278 (finalmente função de imagem)
-                    <td>{{ item.nome }}</td>
-                    <td>{{ item.quantidade }}</td>
-                    <td>{{ item.responsavel }}</td>
-                    <td>{{ item.horario }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <tbody>
+                    {% for item in itens %}
+                    <tr data-item-id="{{ item.id }}">
+                        <td class="col-foto">
+                            {% if item.imagem %}
+                            <img src="/static/uploads/{{ item.imagem }}" alt="{{ item.nome }}" class="foto-produto-thumb" onclick="ampliarImagem('/static/uploads/{{ item.imagem }}', '{{ item.nome }}')" title="Clique para ampliar">
+                            {% else %}
+                            <span class="sem-foto-icone" title="Sem imagem disponível">📦</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.nome }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>{{ item.responsavel }}</td>
+                        <td>{{ item.horario }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

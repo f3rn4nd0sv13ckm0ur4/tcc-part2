@@ -147,41 +147,76 @@ function filtrarTabela() {
     });
 }
 
+let assistenteTimer;
+let assistenteConsulta = 0;
+
+function atualizarAssistenteAoDigitar() {
+    clearTimeout(assistenteTimer);
+    const input = document.getElementById("campo-de-pesquisa");
+    const painel = document.getElementById("resposta-assistente");
+    if (!input || !painel) return;
+
+    const termo = input.value.trim();
+    if (!termo) {
+        painel.className = "resposta-assistente";
+        painel.innerHTML = "<strong>Assistente do estoque</strong><span>Digite o nome de um item para verificar se ele está no sistema.</span>";
+        return;
+    }
+
+    painel.className = "resposta-assistente carregando";
+    painel.innerHTML = "<strong>Consultando o sistema...</strong><span>Verificando o item informado.</span>";
+    assistenteTimer = setTimeout(() => descreverItemPesquisado(), 450);
+}
+
 async function descreverItemPesquisado() {
     const input = document.getElementById("campo-de-pesquisa");
     const painel = document.getElementById("resposta-assistente");
     if (!input || !painel) return;
 
-    const termo = input.value.toLowerCase().trim();
-    const linhas = [...document.querySelectorAll("tbody tr[data-item-id]")];
-    const linha = linhas.find(item => item.textContent.toLowerCase().includes(termo));
-
-    if (!termo || !linha) {
-        painel.className = "resposta-assistente aviso";
-        painel.innerHTML = "<strong>Item não encontrado</strong><span>Digite o nome de um item que esteja na tabela.</span>";
+    const termo = input.value.trim();
+    if (!termo) {
+        atualizarAssistenteAoDigitar();
         return;
     }
 
+    const consultaAtual = ++assistenteConsulta;
     painel.className = "resposta-assistente carregando";
-    painel.innerHTML = "<strong>Assistente pensando...</strong><span>Preparando a descrição do item.</span>";
+    painel.innerHTML = "<strong>Consultando o sistema...</strong><span>Verificando o item informado.</span>";
 
     try {
-        const resposta = await fetch(`/api/estoque/${linha.dataset.itemId}/descricao`);
+        const busca = await fetch(`/api/estoque/buscar?nome=${encodeURIComponent(termo)}`);
+        const resultadoBusca = await busca.json();
+        if (!busca.ok) throw new Error(resultadoBusca.erro || "Falha ao consultar o estoque");
+        if (consultaAtual !== assistenteConsulta) return;
+
+        if (!resultadoBusca.encontrado) {
+            painel.className = "resposta-assistente aviso";
+            painel.innerHTML = "<strong>Item não encontrado</strong><span>Esse item ainda não está cadastrado no sistema.</span>";
+            return;
+        }
+
+        const item = resultadoBusca.item;
+        const quantidade = Number(item.quantidade) || 0;
+        const status = quantidade > 0 ? "Está disponível no sistema" : "Está cadastrado, mas sem estoque";
+        painel.className = `resposta-assistente ${quantidade > 0 ? "sucesso" : "aviso"}`;
+        painel.innerHTML = `<strong>${item.nome}<small>${status}</small></strong><span>Gerando uma descrição...</span>`;
+
+        const resposta = await fetch(`/api/estoque/${item.id}/descricao`);
         const dados = await resposta.json();
         if (!resposta.ok) throw new Error(dados.erro || "Falha ao consultar o assistente");
+        if (consultaAtual !== assistenteConsulta) return;
 
-        const origem = dados.origem === "ia" ? "Gerado por IA" : "Resumo automático";
-        painel.className = "resposta-assistente sucesso";
+        const descricao = document.createElement("span");
+        descricao.textContent = `${dados.descricao} Quantidade registrada: ${quantidade}.`;
         painel.replaceChildren();
         const titulo = document.createElement("strong");
-        titulo.textContent = `✨ ${linha.cells[0].textContent.trim()} `;
-        const origemEl = document.createElement("small");
-        origemEl.textContent = origem;
-        titulo.appendChild(origemEl);
-        const descricao = document.createElement("span");
-        descricao.textContent = dados.descricao;
+        titulo.textContent = item.nome;
+        const statusEl = document.createElement("small");
+        statusEl.textContent = status;
+        titulo.appendChild(statusEl);
         painel.append(titulo, descricao);
     } catch (erro) {
+        if (consultaAtual !== assistenteConsulta) return;
         painel.className = "resposta-assistente aviso";
         painel.innerHTML = `<strong>Não foi possível gerar a descrição</strong><span>${erro.message}</span>`;
     }
@@ -195,10 +230,6 @@ function toggleMenu() {
         overlay.classList.toggle("open");
     }
 }
-<<<<<<< HEAD
-=======
-
-
 function ampliarImagem(url, nome) {
     if (typeof Swal !== "undefined") {
         Swal.fire({
@@ -214,4 +245,3 @@ function ampliarImagem(url, nome) {
         window.open(url, "_blank");
     }
 }
->>>>>>> 8bb1e278 (finalmente função de imagem)
