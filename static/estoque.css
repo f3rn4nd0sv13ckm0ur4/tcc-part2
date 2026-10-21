@@ -106,6 +106,16 @@ body {
     gap: 0;
     width: 100%;
 }
+.estoque-painel {
+    display: grid;
+    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    width: 100%;
+}
+.estoque-painel:has(.assistente-oculto) .tabela-container {
+    grid-column: 1 / -1;
+}
 
 .brr-pesquisa input {
         width: 100%;
@@ -154,7 +164,8 @@ body {
     font-size: 14px;
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 25px;
+    margin: 0;
+    min-height: 118px;
 }
 .resposta-assistente strong { display: flex; justify-content: space-between; gap: 10px; }
 .resposta-assistente small { color: #6c3fb5; font-weight: normal; }
@@ -329,6 +340,7 @@ tr:hover td {
         max-height: 220px;
     }
     .brr-pesquisa { flex: 1 1 auto; width: 100%; }
+    .estoque-painel { grid-template-columns: 1fr; }
     .tabela-container { width: 100%; }
     .linha-pesquisa { flex-direction: column; }
     .btn-assistente { min-height: 42px; }

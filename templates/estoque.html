@@ -76,13 +76,14 @@
                 </div>
             </div>
         </div>
-        <div id="resposta-assistente" class="resposta-assistente assistente-oculto" aria-live="polite">
-            <strong>Assistente do estoque</strong>
-            <span>Digite o nome de um item para verificar se ele está no sistema.</span>
-        </div>
-        <!-- TABELA -->
-        <div class="tabela-container">
-            <table>
+        <div class="estoque-painel">
+            <div id="resposta-assistente" class="resposta-assistente assistente-oculto" aria-live="polite">
+                <strong>Assistente do estoque</strong>
+                <span>Digite o nome de um item para verificar se ele está no sistema.</span>
+            </div>
+            <!-- TABELA -->
+            <div class="tabela-container">
+                <table>
                 <thead>
                     <tr>
                         <th style="width: 65px;">FOTO</th>
@@ -110,7 +111,8 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 

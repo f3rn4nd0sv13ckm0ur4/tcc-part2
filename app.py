@@ -832,8 +832,9 @@ def api_descricao_item(id):
         base_url = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1").rstrip("/")
         modelo = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
         prompt = (
-            "Descreva este item de estoque em português do Brasil, em no máximo 2 frases. "
-            "Não invente especificações técnicas nem características que não estejam nos dados. "
+            "Descreva este item de estoque em português do Brasil, em no máximo 3 frases. "
+            "Explique de forma simples para que ele normalmente serve e informe a situação dele no estoque. "
+            "Não invente especificações técnicas; se a função não puder ser deduzida com segurança pelo nome, diga isso. "
             f"Item: {nome}. Quantidade: {quantidade}. Status: {estoque_status}. "
             f"Responsável pelo último registro: {item.get('responsavel') or 'não informado'}."
         )
