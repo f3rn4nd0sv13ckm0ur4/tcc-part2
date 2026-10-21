@@ -22,6 +22,35 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif", "bmp"}
 def arquivo_permitido(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/uploads/<path:filename>")
+def servir_imagem_produto(filename):
+    """Serve apenas imagens armazenadas na pasta de uploads do estoque."""
+    nome_seguro = secure_filename(filename)
+    if not nome_seguro or nome_seguro != filename:
+        return "Imagem inválida", 400
+    return send_from_directory(UPLOAD_FOLDER, nome_seguro)
+
+def funcao_item_local(nome):
+    """Descreve a função provável quando a API de IA não está disponível."""
+    nome_lower = nome.lower()
+    funcoes = {
+        "parafuso": "serve para fixar ou unir peças, geralmente com uma porca ou rosca.",
+        "porca": "serve para prender peças junto com um parafuso.",
+        "arruela": "serve para distribuir a pressão do aperto e proteger a superfície da peça.",
+        "mangueira": "serve para conduzir líquidos, ar ou outros materiais entre pontos.",
+        "cabo": "serve para conduzir energia elétrica ou transmitir sinais entre equipamentos.",
+        "filtro": "serve para reter partículas e impurezas de um fluido ou fluxo de ar.",
+        "polia": "serve para transmitir movimento e força por meio de uma correia ou cabo.",
+        "junta": "serve para vedar a união entre peças e evitar vazamentos.",
+        "rolamento": "serve para reduzir o atrito e facilitar o movimento de eixos e peças giratórias.",
+        "chave": "serve para apertar, soltar ou ajustar componentes e fixadores.",
+        "alicate": "serve para segurar, cortar ou ajustar materiais e componentes.",
+    }
+    for termo, funcao in funcoes.items():
+        if termo in nome_lower:
+            return funcao
+    return "a função exata depende da aplicação desse produto; confirme o uso no manual ou com o responsável técnico."
+
 configuracao = {
     "host": os.environ.get("DB_HOST", "db_almox"),
     "user": os.environ.get("DB_USER", "root"),
@@ -821,9 +850,10 @@ def api_descricao_item(id):
         nome = item["nome"]
         quantidade = item["quantidade"]
         estoque_status = "disponível" if quantidade > 0 else "sem estoque"
+        funcao = funcao_item_local(nome)
         fallback = (
             f"{nome} está {estoque_status}, com {quantidade} unidade(s) registrada(s) no estoque. "
-            "Consulte o histórico para ver as últimas movimentações."
+            f"Função: {funcao} Consulte o histórico para ver as últimas movimentações."
         )
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
@@ -832,7 +862,7 @@ def api_descricao_item(id):
         base_url = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1").rstrip("/")
         modelo = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
         prompt = (
-            "Descreva este item de estoque em português do Brasil, em no máximo 3 frases. "
+            "Descreva este item de estoque em português do Brasil, em no máximo 3 frases. Comece com 'Função:' e explique para que o produto serve. "
             "Explique de forma simples para que ele normalmente serve e informe a situação dele no estoque. "
             "Não invente especificações técnicas; se a função não puder ser deduzida com segurança pelo nome, diga isso. "
             f"Item: {nome}. Quantidade: {quantidade}. Status: {estoque_status}. "

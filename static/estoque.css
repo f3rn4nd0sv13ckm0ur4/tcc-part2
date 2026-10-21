@@ -180,6 +180,7 @@ body {
 }
 .resposta-assistente strong { display: flex; justify-content: space-between; gap: 10px; }
 .resposta-assistente small { color: #6c3fb5; font-weight: normal; }
+.resposta-assistente .rotulo-assistente { color: #20344d; font-weight: bold; }
 .resposta-assistente.sucesso { border-left-color: #1abc9c; }
 .resposta-assistente.aviso { border-left-color: #f39c12; }
 .resposta-assistente.carregando { opacity: .75; }

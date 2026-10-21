@@ -216,7 +216,10 @@ async function descreverItemPesquisado() {
         const statusEl = document.createElement("small");
         statusEl.textContent = status;
         titulo.appendChild(statusEl);
-        painel.append(titulo, descricao);
+        const rotulo = document.createElement("small");
+        rotulo.className = "rotulo-assistente";
+        rotulo.textContent = "Informações e função do produto";
+        painel.append(titulo, rotulo, descricao);
     } catch (erro) {
         if (consultaAtual !== assistenteConsulta) return;
         painel.className = "resposta-assistente aviso";

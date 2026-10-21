@@ -33,6 +33,8 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
       OPENAI_API_BASE: ${OPENAI_API_BASE:-https://api.openai.com/v1}
+    volumes:
+      - ./static/uploads:/app/static/uploads
     depends_on:
       db_almox:
         condition: service_healthy
