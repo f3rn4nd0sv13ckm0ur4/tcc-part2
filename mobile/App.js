@@ -106,7 +106,7 @@ export default function App() {
       }
     } catch (error) {
       setCarregando(false);
-      Alert.alert('Erro de Conexão', `Não foi possível conectar ao servidor: ${baseUrl}`);
+      Alert.alert('Erro de Conexão', `Não foi possível conectar ao servidor: ${baseUrl}\n\n${error.message || 'Verifique o IP, a porta e a rede Wi-Fi.'}`);
     }
   };
 
@@ -560,7 +560,7 @@ export default function App() {
                       <View style={{ width: 36, height: 36, justifyContent: 'center', alignItems: 'center', marginRight: 6 }}>
                         {item.imagem ? (
                           <Image
-                            source={{ uri: `${baseUrl}/static/uploads/${item.imagem}` }}
+                            source={{ uri: `${baseUrl}/uploads/${item.imagem}` }}
                             style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: '#eee' }}
                           />
                         ) : (
