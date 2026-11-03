@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 // para fazer o qr code " cd mobile " "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process" "npx expo start"
+// caso de problema com versão no qr code "Remove-Item -Recurse -Force node_modules" "npm ci" "npx expo-doctor" "npx expo start -c"
+
 export default function App() {
   // Configuração da API
   const [baseUrl, setBaseUrl] = useState('http://10.154.20.53:5000');
