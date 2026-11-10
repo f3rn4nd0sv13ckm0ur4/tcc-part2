@@ -14,43 +14,6 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = "chave_secreta_do_tcc"
 
-# Configuração de uploads de imagens dos produtos
-UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif", "bmp"}
-
-def arquivo_permitido(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route("/uploads/<path:filename>")
-def servir_imagem_produto(filename):
-    """Serve apenas imagens armazenadas na pasta de uploads do estoque."""
-    nome_seguro = secure_filename(filename)
-    if not nome_seguro or nome_seguro != filename:
-        return "Imagem inválida", 400
-    return send_from_directory(UPLOAD_FOLDER, nome_seguro)
-
-def funcao_item_local(nome):
-    """Descreve a função provável quando a API de IA não está disponível."""
-    nome_lower = nome.lower()
-    funcoes = {
-        "parafuso": "serve para fixar ou unir peças, geralmente com uma porca ou rosca.",
-        "porca": "serve para prender peças junto com um parafuso.",
-        "arruela": "serve para distribuir a pressão do aperto e proteger a superfície da peça.",
-        "mangueira": "serve para conduzir líquidos, ar ou outros materiais entre pontos.",
-        "cabo": "serve para conduzir energia elétrica ou transmitir sinais entre equipamentos.",
-        "filtro": "serve para reter partículas e impurezas de um fluido ou fluxo de ar.",
-        "polia": "serve para transmitir movimento e força por meio de uma correia ou cabo.",
-        "junta": "serve para vedar a união entre peças e evitar vazamentos.",
-        "rolamento": "serve para reduzir o atrito e facilitar o movimento de eixos e peças giratórias.",
-        "chave": "serve para apertar, soltar ou ajustar componentes e fixadores.",
-        "alicate": "serve para segurar, cortar ou ajustar materiais e componentes.",
-    }
-    for termo, funcao in funcoes.items():
-        if termo in nome_lower:
-            return funcao
-    return "a função exata depende da aplicação desse produto; confirme o uso no manual ou com o responsável técnico."
-
 configuracao = {
     "host": os.environ.get("DB_HOST", "db_almox"),
     "user": os.environ.get("DB_USER", "root"),
@@ -662,6 +625,21 @@ def salvar_item():
 
     return redirect("/estoque.html")
 
+# Configuração de uploads de imagens dos produtos
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif", "bmp"}
+
+def arquivo_permitido(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/uploads/<path:filename>")
+def servir_imagem_produto(filename):
+    """Serve apenas imagens armazenadas na pasta de uploads do estoque."""
+    nome_seguro = secure_filename(filename)
+    if not nome_seguro or nome_seguro != filename:
+        return "Imagem inválida", 400
+    return send_from_directory(UPLOAD_FOLDER, nome_seguro)
 
 @app.route("/retirar_item", methods=["POST"])
 def retirar_item():
@@ -741,13 +719,13 @@ def listar_estoque():
         for item in itens:
             for chave, valor in item.items():
                 if isinstance(valor, (datetime.timedelta, datetime.date, datetime.time, datetime.datetime)):
-                    item[chave] = str(valor)  # <--- Correção aqui (item no singular)
+                    item[chave] = str(valor)
                     
         return jsonify(itens), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
 
-
+# API da barra de pesquisa integrada com o assistente de IA
 @app.route("/api/estoque/buscar", methods=["GET"])
 def api_buscar_item_por_nome():
     """Busca o item mais próximo do nome informado para o assistente."""
@@ -1804,7 +1782,7 @@ def api_resetar_banco():
         atualizar_csv_local()
 
         return jsonify({
-            "mensagem": "Itens e histórico excluídos do banco de dados com sucesso"
+            "mensagem": "Itens excluídos do banco de dados com sucesso"
         }), 200
 
     except Exception as e:
