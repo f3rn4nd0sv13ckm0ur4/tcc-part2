@@ -45,6 +45,12 @@ def funcao_item_local(nome):
         "rolamento": "serve para reduzir o atrito e facilitar o movimento de eixos e peças giratórias.",
         "chave": "serve para apertar, soltar ou ajustar componentes e fixadores.",
         "alicate": "serve para segurar, cortar ou ajustar materiais e componentes.",
+        "parafusadeira": "é uma ferramenta elétrica usada para apertar e soltar parafusos com rapidez e controle.",
+        "furadeira": "é uma ferramenta usada para fazer furos em diferentes materiais e, com o acessório adequado, também apertar parafusos.",
+        "broca": "é um acessório de corte usado em furadeiras para fazer furos em materiais.",
+        "serra": "é uma ferramenta usada para cortar madeira, metal ou outros materiais, conforme o tipo de lâmina.",
+        "martelo": "serve para aplicar impactos, pregar, ajustar ou desmontar peças.",
+        "torquimetro": "é uma ferramenta usada para apertar parafusos com um torque previamente definido.",
     }
     for termo, funcao in funcoes.items():
         if termo in nome_lower:
