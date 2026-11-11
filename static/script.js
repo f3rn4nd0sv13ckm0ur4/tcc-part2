@@ -208,8 +208,15 @@ async function descreverItemPesquisado() {
         if (!resposta.ok) throw new Error(dados.erro || "Falha ao consultar o assistente");
         if (consultaAtual !== assistenteConsulta) return;
 
+        const funcao = document.createElement("span");
+        funcao.className = "informacao-assistente";
+        funcao.textContent = `Função: ${dados.funcao || "função não informada"}`;
         const descricao = document.createElement("span");
-        descricao.textContent = `${dados.descricao} Quantidade registrada: ${quantidade}.`;
+        descricao.className = "informacao-assistente";
+        descricao.textContent = `Descrição: ${dados.descricao}`;
+        const quantidadeInfo = document.createElement("span");
+        quantidadeInfo.className = "informacao-assistente";
+        quantidadeInfo.textContent = `Quantidade registrada: ${quantidade}.`;
         painel.replaceChildren();
         const titulo = document.createElement("strong");
         titulo.textContent = item.nome;
@@ -219,7 +226,7 @@ async function descreverItemPesquisado() {
         const rotulo = document.createElement("small");
         rotulo.className = "rotulo-assistente";
         rotulo.textContent = "Informações e função do produto";
-        painel.append(titulo, rotulo, descricao);
+        painel.append(titulo, rotulo, funcao, descricao, quantidadeInfo);
     } catch (erro) {
         if (consultaAtual !== assistenteConsulta) return;
         painel.className = "resposta-assistente aviso";
