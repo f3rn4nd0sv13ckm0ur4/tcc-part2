@@ -30,33 +30,6 @@ def servir_imagem_produto(filename):
         return "Imagem inválida", 400
     return send_from_directory(UPLOAD_FOLDER, nome_seguro)
 
-def funcao_item_local(nome):
-    """Descreve a função provável quando a API de IA não está disponível."""
-    nome_lower = nome.lower()
-    funcoes = {
-        "parafuso": "serve para fixar ou unir peças, geralmente com uma porca ou rosca.",
-        "porca": "serve para prender peças junto com um parafuso.",
-        "arruela": "serve para distribuir a pressão do aperto e proteger a superfície da peça.",
-        "mangueira": "serve para conduzir líquidos, ar ou outros materiais entre pontos.",
-        "cabo": "serve para conduzir energia elétrica ou transmitir sinais entre equipamentos.",
-        "filtro": "serve para reter partículas e impurezas de um fluido ou fluxo de ar.",
-        "polia": "serve para transmitir movimento e força por meio de uma correia ou cabo.",
-        "junta": "serve para vedar a união entre peças e evitar vazamentos.",
-        "rolamento": "serve para reduzir o atrito e facilitar o movimento de eixos e peças giratórias.",
-        "chave": "serve para apertar, soltar ou ajustar componentes e fixadores.",
-        "alicate": "serve para segurar, cortar ou ajustar materiais e componentes.",
-        "parafusadeira": "é uma ferramenta elétrica usada para apertar e soltar parafusos com rapidez e controle.",
-        "furadeira": "é uma ferramenta usada para fazer furos em diferentes materiais e, com o acessório adequado, também apertar parafusos.",
-        "broca": "é um acessório de corte usado em furadeiras para fazer furos em materiais.",
-        "serra": "é uma ferramenta usada para cortar madeira, metal ou outros materiais, conforme o tipo de lâmina.",
-        "martelo": "serve para aplicar impactos, pregar, ajustar ou desmontar peças.",
-        "torquimetro": "é uma ferramenta usada para apertar parafusos com um torque previamente definido.",
-    }
-    for termo, funcao in funcoes.items():
-        if termo in nome_lower:
-            return funcao
-    return "a função exata depende da aplicação desse produto; confirme o uso no manual ou com o responsável técnico."
-
 configuracao = {
     "host": os.environ.get("DB_HOST", "db_almox"),
     "user": os.environ.get("DB_USER", "root"),
@@ -836,7 +809,7 @@ def api_buscar_item(id):
 
 @app.route("/api/estoque/<int:id>/descricao", methods=["GET"])
 def api_descricao_item(id):
-    """Gera uma descrição curta, usando IA se OPENAI_API_KEY estiver configurada."""
+    """Gera função e descrição exclusivamente por IA."""
     if "tipo" not in session:
         return jsonify({"erro": "Não autorizado"}), 401
 
@@ -856,21 +829,17 @@ def api_descricao_item(id):
         nome = item["nome"]
         quantidade = item["quantidade"]
         estoque_status = "disponível" if quantidade > 0 else "sem estoque"
-        funcao = funcao_item_local(nome)
-        fallback = (
-            f"{nome} está {estoque_status}, com {quantidade} unidade(s) registrada(s) no estoque. "
-            "Consulte o histórico para ver as últimas movimentações."
-        )
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
-            return jsonify({"descricao": fallback, "funcao": funcao, "origem": "local"}), 200
+            return jsonify({"erro": "A chave da IA não está configurada."}), 503
 
         base_url = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1").rstrip("/")
         modelo = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
         prompt = (
-            "Descreva este item de estoque em português do Brasil, em no máximo 2 frases. "
-            "Explique a situação do item no estoque, sem repetir a função do produto. "
-            "Não invente especificações técnicas nem características que não estejam nos dados. "
+            "Responda somente com um objeto JSON válido, sem markdown, usando exatamente as chaves "
+            "funcao e descricao. Em funcao, explique para que o produto normalmente serve. "
+            "Em descricao, informe a situação do item no estoque em no máximo 2 frases. "
+            "Não invente especificações técnicas; se não souber a função com segurança, informe essa limitação em funcao. "
             f"Item: {nome}. Quantidade: {quantidade}. Status: {estoque_status}. "
             f"Responsável pelo último registro: {item.get('responsavel') or 'não informado'}."
         )
@@ -880,8 +849,9 @@ def api_descricao_item(id):
                 {"role": "system", "content": "Você é um assistente de almoxarifado objetivo e confiável."},
                 {"role": "user", "content": prompt}
             ],
+            "response_format": {"type": "json_object"},
             "temperature": 0.2,
-            "max_tokens": 120
+            "max_tokens": 180
         }
         requisicao = urllib.request.Request(
             f"{base_url}/chat/completions",
@@ -891,10 +861,16 @@ def api_descricao_item(id):
         )
         with urllib.request.urlopen(requisicao, timeout=12) as resposta:
             resultado = json.loads(resposta.read().decode("utf-8"))
-        descricao = resultado["choices"][0]["message"]["content"].strip()
-        return jsonify({"descricao": descricao or fallback, "funcao": funcao, "origem": "ia"}), 200
-    except (urllib.error.URLError, KeyError, IndexError, json.JSONDecodeError, TimeoutError):
-        return jsonify({"descricao": fallback, "funcao": funcao, "origem": "local"}), 200
+        conteudo = resultado["choices"][0]["message"]["content"].strip()
+        resposta_ia = json.loads(conteudo)
+        funcao = str(resposta_ia.get("funcao", "")).strip()
+        descricao = str(resposta_ia.get("descricao", "")).strip()
+        if not funcao or not descricao:
+            raise ValueError("A IA não retornou função e descrição completas.")
+        return jsonify({"descricao": descricao, "funcao": funcao, "origem": "ia"}), 200
+    except (urllib.error.URLError, KeyError, IndexError, json.JSONDecodeError, TimeoutError, ValueError) as erro:
+        app.logger.warning("Falha na resposta da IA: %s", erro)
+        return jsonify({"erro": "A IA não conseguiu retornar a função e a descrição do item."}), 502
     except Exception:
         app.logger.exception("Erro ao gerar descrição do item")
         return jsonify({"erro": "Não foi possível gerar a descrição agora."}), 500
